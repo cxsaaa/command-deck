@@ -1,4 +1,5 @@
 import { useState, useEffect, type RefObject } from "react";
+import { useTranslation } from "react-i18next";
 import { ChevronUp } from "lucide-react";
 
 interface ScrollToTopProps {
@@ -6,6 +7,7 @@ interface ScrollToTopProps {
 }
 
 export function ScrollToTop({ scrollRef }: ScrollToTopProps) {
+  const { t } = useTranslation();
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
@@ -34,7 +36,7 @@ export function ScrollToTop({ scrollRef }: ScrollToTopProps) {
         color: "var(--color-text-secondary)",
         zIndex: 50,
       }}
-      title="回到顶部"
+      title={t("scrollToTop.title")}
     >
       <ChevronUp size={18} />
     </button>

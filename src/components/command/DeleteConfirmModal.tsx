@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Modal } from "../common/Modal";
 import { Button } from "../common/Button";
@@ -16,6 +17,7 @@ export function DeleteConfirmModal({
   commandId,
   onClose,
 }: DeleteConfirmModalProps) {
+  const { t } = useTranslation();
   const queryClient = useQueryClient();
   const [error, setError] = useState<string | null>(null);
 
@@ -23,12 +25,12 @@ export function DeleteConfirmModal({
     mutationFn: (id: string) => commandRepository.deleteCommand(id),
     onSuccess: async () => {
       await queryClient.invalidateQueries();
-      toast("已删除", "success");
+      toast(t("deleteConfirm.deleted"), "success");
       onClose();
     },
     onError: (err: Error) => {
-      setError(err.message || "删除失败");
-      toast("删除失败", "error");
+      setError(err.message || t("deleteConfirm.deleteFailed"));
+      toast(t("deleteConfirm.deleteFailed"), "error");
     },
   });
 
@@ -53,14 +55,14 @@ export function DeleteConfirmModal({
         onClick={handleClose}
         disabled={isDeleting}
       >
-        取消
+        {t("deleteConfirm.cancel")}
       </Button>
       <Button
         variant="danger"
         onClick={handleDelete}
         disabled={isDeleting}
       >
-        {isDeleting ? "删除中..." : "删除"}
+        {isDeleting ? t("deleteConfirm.deleting") : t("deleteConfirm.delete")}
       </Button>
     </>
   );
@@ -69,7 +71,7 @@ export function DeleteConfirmModal({
     <Modal
       open={open}
       onClose={handleClose}
-      title="确定删除这条命令吗？"
+      title={t("deleteConfirm.title")}
       footer={footer}
     >
       <div className="flex flex-col gap-3">
@@ -77,7 +79,7 @@ export function DeleteConfirmModal({
           className="text-sm"
           style={{ color: "var(--color-text-secondary)" }}
         >
-          删除后不可恢复。
+          {t("deleteConfirm.description")}
         </p>
         {error && (
           <p

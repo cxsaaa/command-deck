@@ -58,7 +58,7 @@ layout:
       - "sidebar"
       - "content"
   top_bar:
-    height: 56
+    height: 44
     padding_x: "space.6"
     padding_y: "space.0"
     border_bottom: "1px solid color.border.default"
@@ -100,7 +100,7 @@ layout:
   command_list:
     display: "flex"
     direction: "column"
-    gap: "space.3"
+    gap: "space.2"
     max_width: 860
     width: "100%"
 
@@ -287,12 +287,12 @@ components:
     placeholder: "搜索命令、描述、标签、参数..."
     shortcut_hint: "⌘K"
     size:
-      height: 36
+      height: 30
       min_width: 280
       max_width: 520
       radius: "radius.md"
-      padding_x: "space.3"
-      gap: "space.2"
+      padding_x: "space.2.5"
+      gap: "space.1.5"
     typography:
       font_size: "typography.font_size.sm"
       font_weight: "typography.font_weight.regular"
@@ -399,9 +399,9 @@ components:
       max: 860
       value: "100%"
     size:
-      padding: "space.4"
+      padding: "space.3"
       radius: "radius.lg"
-      gap: "space.3"
+      gap: "space.2"
     style:
       background: "color.bg.surface"
       border: "1px solid color.border.default"
@@ -428,12 +428,12 @@ components:
     code_block:
       font_family: "typography.font_family.mono"
       typography:
-        font_size: "typography.font_size.sm"
+        font_size: "typography.font_size.xs"
         color: "color.text.primary"
       size:
-        padding_x: "space.3"
-        padding_y: 10
-        radius: "radius.md"
+        padding_x: "space.2.5"
+        padding_y: 6
+        radius: "radius.sm"
         max_lines_default: 2
       style:
         background: "color.bg.subtle"
@@ -482,9 +482,9 @@ components:
       default: "复制"
       copied: "已复制"
     size:
-      height: 30
-      padding_x: 10
-      radius: "radius.md"
+      height: 24
+      padding_x: 8
+      radius: "radius.sm"
     typography:
       font_size: "typography.font_size.sm"
       font_weight: "typography.font_weight.medium"
@@ -515,9 +515,9 @@ components:
       - "settings"
       - "close"
     size:
-      width: 28
-      height: 28
-      radius: "radius.md"
+      width: 24
+      height: 24
+      radius: "radius.sm"
       icon_size: 16
     state:
       default:
@@ -537,6 +537,7 @@ components:
       active:
         icon: "star_filled"
         color: "color.state.warning.default"
+        background: "transparent"
 
   more_menu:
     trigger: "icon_button"
@@ -575,9 +576,9 @@ components:
         - "save"
         - "confirm"
       size:
-        height: 34
-        padding_x: 14
-        radius: "radius.md"
+        height: 28
+        padding_x: 12
+        radius: "radius.sm"
       typography:
         font_size: "typography.font_size.sm"
         font_weight: "typography.font_weight.medium"
@@ -596,9 +597,9 @@ components:
         - "export"
         - "manage_platforms"
       size:
-        height: 34
-        padding_x: 14
-        radius: "radius.md"
+        height: 28
+        padding_x: 12
+        radius: "radius.sm"
       state:
         default:
           background: "color.bg.surface"
@@ -611,9 +612,9 @@ components:
       usage:
         - "confirm_delete"
       size:
-        height: 34
-        padding_x: 14
-        radius: "radius.md"
+        height: 28
+        padding_x: 12
+        radius: "radius.sm"
       state:
         default:
           background: "color.state.danger.default"
@@ -1013,6 +1014,7 @@ implementation:
       - "Toast"
       - "EmptyState"
       - "MoreMenu"
+      - "InputDialog"
   tailwind:
     allowed: true
     requirement: "tailwind.config 必须映射 tokens"

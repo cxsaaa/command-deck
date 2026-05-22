@@ -1,4 +1,5 @@
 import { useState, type KeyboardEvent } from "react";
+import { useTranslation } from "react-i18next";
 import { X } from "lucide-react";
 
 interface TagInputProps {
@@ -7,6 +8,7 @@ interface TagInputProps {
 }
 
 export function TagInput({ tags, onChange }: TagInputProps) {
+  const { t } = useTranslation();
   const [inputValue, setInputValue] = useState("");
 
   function addTag(raw: string) {
@@ -94,7 +96,7 @@ export function TagInput({ tags, onChange }: TagInputProps) {
         onChange={(e) => setInputValue(e.target.value)}
         onKeyDown={handleKeyDown}
         onBlur={handleBlur}
-        placeholder={tags.length === 0 ? "输入标签，按 Enter 添加" : ""}
+        placeholder={tags.length === 0 ? t("commandForm.tagsPlaceholder") : ""}
         className="flex-1 min-w-[80px] outline-none text-sm"
         style={{
           border: "none",

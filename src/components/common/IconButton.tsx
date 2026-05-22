@@ -38,25 +38,21 @@ export function IconButton({
       title={tooltip}
       className={`inline-flex items-center justify-center transition-colors select-none ${className}`}
       style={{
-        width: "28px",
-        height: "28px",
-        borderRadius: "var(--radius-md)",
-        backgroundColor: active ? "var(--color-accent-soft)" : "transparent",
+        width: "24px",
+        height: "24px",
+        borderRadius: "var(--radius-sm)",
+        backgroundColor: "transparent",
         color: active ? "var(--color-accent)" : baseColor,
         border: "none",
         cursor: "pointer",
       }}
       onMouseEnter={(e) => {
-        if (!active) {
-          e.currentTarget.style.backgroundColor = hoverBg;
-          e.currentTarget.style.color = hoverColor;
-        }
+        e.currentTarget.style.backgroundColor = hoverBg;
+        if (!active) e.currentTarget.style.color = hoverColor;
       }}
       onMouseLeave={(e) => {
-        if (!active) {
-          e.currentTarget.style.backgroundColor = "transparent";
-          e.currentTarget.style.color = baseColor;
-        }
+        e.currentTarget.style.backgroundColor = "transparent";
+        e.currentTarget.style.color = active ? "var(--color-accent)" : baseColor;
       }}
     >
       {icon}

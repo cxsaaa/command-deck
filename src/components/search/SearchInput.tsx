@@ -1,4 +1,5 @@
 import { forwardRef } from "react";
+import { useTranslation } from "react-i18next";
 import { Search, X } from "lucide-react";
 import { useUiStore } from "../../state/uiStore";
 
@@ -6,25 +7,26 @@ export const SearchInput = forwardRef<HTMLInputElement>(function SearchInput(
   _props,
   ref,
 ) {
+  const { t } = useTranslation();
   const searchQuery = useUiStore((s) => s.searchQuery);
   const setSearchQuery = useUiStore((s) => s.setSearchQuery);
 
   return (
     <div
-      className="flex items-center gap-2 px-3 py-2 rounded-lg transition-colors"
+      className="flex items-center gap-1.5 px-2.5 py-1 rounded-md transition-colors"
       style={{
         backgroundColor: "var(--color-bg-subtle)",
         border: "1px solid var(--color-border)",
       }}
     >
       <Search
-        size={16}
+        size={14}
         style={{ color: "var(--color-text-placeholder)", flexShrink: 0 }}
       />
       <input
         ref={ref}
         type="text"
-        placeholder="搜索命令、描述、标签、参数..."
+        placeholder={t("search.placeholder")}
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}
         className="flex-1 bg-transparent outline-none text-sm"
@@ -53,7 +55,7 @@ export const SearchInput = forwardRef<HTMLInputElement>(function SearchInput(
           }}
           className="shrink-0 cursor-pointer"
           style={{ color: "var(--color-text-placeholder)", background: "none", border: "none", padding: 0, display: "flex" }}
-          aria-label="清除搜索"
+          aria-label={t("search.clear")}
         >
           <X size={14} />
         </button>

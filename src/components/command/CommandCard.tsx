@@ -1,6 +1,7 @@
 import { useQueryClient } from "@tanstack/react-query";
 import { Star, Edit, Trash, Check, ChevronDown, ChevronUp } from "lucide-react";
 import { useState, useRef, useCallback, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import { CommandCodeBlock } from "./CommandCodeBlock";
 import { Button } from "../common/Button";
 import { IconButton } from "../common/IconButton";
@@ -18,6 +19,7 @@ interface CommandCardProps {
 }
 
 export function CommandCard({ command, isSelected = false, searchQuery }: CommandCardProps) {
+  const { t } = useTranslation();
   const queryClient = useQueryClient();
   const openEditCommandModal = useUiStore((s) => s.openEditCommandModal);
   const openDeleteConfirm = useUiStore((s) => s.openDeleteConfirm);
@@ -42,7 +44,7 @@ export function CommandCard({ command, isSelected = false, searchQuery }: Comman
       timerRef.current = setTimeout(() => setCopied(false), 1500);
       await queryClient.invalidateQueries();
     } catch {
-      toast("复制失败", "error");
+      toast(t("command.copyFailed"), "error");
     }
   }, [command.command, command.id, queryClient]);
 
@@ -51,7 +53,7 @@ export function CommandCard({ command, isSelected = false, searchQuery }: Comman
       await commandRepository.toggleFavorite(command.id);
       await queryClient.invalidateQueries();
     } catch {
-      toast("操作失败", "error");
+      toast(t("command.actionFailed"), "error");
     }
   }
 
@@ -75,7 +77,7 @@ export function CommandCard({ command, isSelected = false, searchQuery }: Comman
           ? "1px solid var(--color-accent)"
           : "1px solid var(--color-border)",
         borderRadius: "var(--radius-lg)",
-        padding: "var(--density-card-padding)",
+        padding: "var(--density-card-padding-y) var(--density-card-padding-x)",
         boxShadow: isSelected ? "0 0 0 2px var(--color-accent-soft)" : "none",
       }}
       onMouseEnter={(e) => {
@@ -92,7 +94,7 @@ export function CommandCard({ command, isSelected = false, searchQuery }: Comman
       }}
     >
       {/* Header: title + actions */}
-      <div className="flex items-start justify-between gap-2 mb-2">
+      <div className="flex items-start justify-between gap-2 mb-1.5">
         <h3
           className="text-sm font-semibold leading-snug"
           style={{ color: "var(--color-text-primary)" }}
@@ -103,7 +105,7 @@ export function CommandCard({ command, isSelected = false, searchQuery }: Comman
           {hasDetails && (
             <IconButton
               icon={isExpanded ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
-              tooltip={isExpanded ? "收起详情" : "展开详情"}
+              tooltip={isExpanded ? t("command.collapse") : t("command.expand")}
               onClick={() => setIsExpanded(!isExpanded)}
             />
           )}
@@ -115,7 +117,7 @@ export function CommandCard({ command, isSelected = false, searchQuery }: Comman
                 <Star size={16} />
               )
             }
-            tooltip={command.isFavorite ? "取消收藏" : "收藏"}
+            tooltip={command.isFavorite ? t("command.unfavorite") : t("command.favorite")}
             active={command.isFavorite}
             onClick={handleToggleFavorite}
           />
@@ -123,13 +125,13 @@ export function CommandCard({ command, isSelected = false, searchQuery }: Comman
             items={[
               {
                 id: "edit",
-                label: "编辑",
+                label: t("command.edit"),
                 icon: <Edit size={14} />,
                 onClick: () => openEditCommandModal(command.id),
               },
               {
                 id: "delete",
-                label: "删除",
+                label: t("command.delete"),
                 icon: <Trash size={14} />,
                 danger: true,
                 onClick: () => openDeleteConfirm(command.id),
@@ -140,14 +142,14 @@ export function CommandCard({ command, isSelected = false, searchQuery }: Comman
       </div>
 
       {/* Code block */}
-      <div className="mb-2">
+      <div className="mb-1.5">
         <CommandCodeBlock code={command.command} maxLines={2} searchQuery={searchQuery} />
       </div>
 
       {/* Description */}
       {command.description && (
         <p
-          className="text-xs leading-relaxed mb-2"
+          className="text-xs leading-relaxed mb-1.5"
           style={{
             color: "var(--color-text-secondary)",
             display: "var(--density-description-display)",
@@ -160,13 +162,13 @@ export function CommandCard({ command, isSelected = false, searchQuery }: Comman
       {/* Expanded details */}
       {isExpanded && hasDetails && (
         <div
-          className="mb-2 pt-2"
+          className="mb-1.5 pt-1.5"
           style={{ borderTop: "1px solid var(--color-border)" }}
         >
           {command.examples && command.examples.length > 0 && (
             <div className="mb-2">
               <span className="text-xs font-medium mb-1 block" style={{ color: "var(--color-text-secondary)" }}>
-                示例
+                {t("command.examples")}
               </span>
               {command.examples.map((ex, i) => (
                 <div key={i} className="mb-1">
@@ -178,7 +180,7 @@ export function CommandCard({ command, isSelected = false, searchQuery }: Comman
           {command.parameters && command.parameters.length > 0 && (
             <div className="mb-2">
               <span className="text-xs font-medium mb-1 block" style={{ color: "var(--color-text-secondary)" }}>
-                参数
+                {t("command.parameters")}
               </span>
               {command.parameters.map((p, i) => (
                 <div key={i} className="flex gap-2 text-xs mb-0.5">
@@ -191,7 +193,7 @@ export function CommandCard({ command, isSelected = false, searchQuery }: Comman
           {command.notes && (
             <div>
               <span className="text-xs font-medium mb-1 block" style={{ color: "var(--color-text-secondary)" }}>
-                备注
+                {t("command.notes")}
               </span>
               <p className="text-xs" style={{ color: "var(--color-text-tertiary)" }}>{command.notes}</p>
             </div>
@@ -215,10 +217,10 @@ export function CommandCard({ command, isSelected = false, searchQuery }: Comman
             backgroundColor: "var(--color-state-success-soft)",
             color: "var(--color-state-success)",
             borderColor: "var(--color-state-success)",
-            minWidth: 72,
-          } : { minWidth: 72 }}
+            minWidth: 56,
+          } : { minWidth: 56 }}
         >
-          {copied ? <><Check size={14} /> 已复制</> : "复制"}
+          {copied ? <><Check size={14} /> {t("command.copied")}</> : t("command.copy")}
         </Button>
       </div>
     </div>

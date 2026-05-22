@@ -1,26 +1,29 @@
 import { useRef } from "react";
+import { useTranslation } from "react-i18next";
 import { Plus, Settings, Rows3, LayoutGrid } from "lucide-react";
 import { Button, IconButton } from "../common";
 import { SearchInput } from "../search/SearchInput";
 import { useUiStore } from "../../state/uiStore";
 
 export function TopBar() {
+  const { t } = useTranslation();
   const searchInputRef = useRef<HTMLInputElement>(null);
   const openCreateCommandModal = useUiStore((s) => s.openCreateCommandModal);
   const densityMode = useUiStore((s) => s.densityMode);
   const toggleDensityMode = useUiStore((s) => s.toggleDensityMode);
+  const openSettings = useUiStore((s) => s.openSettings);
 
   return (
     <header
-      className="flex items-center gap-4 px-6 border-b shrink-0"
+      className="flex items-center justify-between gap-4 px-6 border-b shrink-0"
       style={{
-        height: "56px",
+        height: "44px",
         backgroundColor: "var(--color-bg-surface)",
         borderColor: "var(--color-border)",
       }}
     >
       {/* Search Box */}
-      <div className="flex-1 max-w-lg">
+      <div className="flex-1 max-w-xs">
         <SearchInput ref={searchInputRef} />
       </div>
 
@@ -32,14 +35,14 @@ export function TopBar() {
           onClick={() => openCreateCommandModal()}
         >
           <Plus size={16} />
-          <span>新建</span>
+          <span>{t("topBar.create")}</span>
         </Button>
         <IconButton
           icon={densityMode === "compact" ? <Rows3 size={18} /> : <LayoutGrid size={18} />}
-          tooltip={densityMode === "compact" ? "切换到舒适模式" : "切换到紧凑模式"}
+          tooltip={densityMode === "compact" ? t("topBar.switchToComfortable") : t("topBar.switchToCompact")}
           onClick={toggleDensityMode}
         />
-        <IconButton icon={<Settings size={18} />} tooltip="设置" />
+        <IconButton icon={<Settings size={18} />} tooltip={t("topBar.settings")} onClick={openSettings} />
       </div>
     </header>
   );

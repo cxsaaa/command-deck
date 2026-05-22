@@ -98,6 +98,17 @@ const migrations: Migration[] = [
       CREATE INDEX IF NOT EXISTS idx_platforms_sort ON platforms (sort_index ASC);
     `,
   },
+  {
+    version: 3,
+    sql: `
+      INSERT INTO categories (id, name, platform_id, sort_order)
+      SELECT 'uncategorized_' || id, '未分类', id, 9999
+      FROM platforms
+      WHERE NOT EXISTS (
+        SELECT 1 FROM categories WHERE id = 'uncategorized_' || platforms.id
+      );
+    `,
+  },
 ];
 
 export async function runMigrations(db: Database): Promise<void> {

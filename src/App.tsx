@@ -1,4 +1,6 @@
-import { useRef, useCallback, useMemo } from "react";
+import { useRef, useCallback, useMemo, useEffect } from "react";
+import { useTranslation } from "react-i18next";
+import i18n from "./i18n";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { AppShell } from "./components/layout/AppShell";
 import { TopBar } from "./components/layout/TopBar";
@@ -8,6 +10,7 @@ import { CommandList } from "./components/command/CommandList";
 import { ContentHeader } from "./components/command/ContentHeader";
 import { CommandFormModal } from "./components/command/CommandFormModal";
 import { DeleteConfirmModal } from "./components/command/DeleteConfirmModal";
+import { SettingsModal } from "./components/settings/SettingsModal";
 import { EmptyState } from "./components/common";
 import { toast } from "./components/common/Toast";
 import { useUiStore } from "./state/uiStore";
@@ -20,6 +23,7 @@ import { Terminal, Search } from "lucide-react";
 import type { Command, CommandFilter } from "./domain/types";
 
 function App() {
+  const { t } = useTranslation();
   const navType = useUiStore((s) => s.navType);
   const currentPlatformId = useUiStore((s) => s.currentPlatformId);
   const currentCategoryId = useUiStore((s) => s.currentCategoryId);
@@ -32,9 +36,58 @@ function App() {
   const closeDeleteConfirm = useUiStore((s) => s.closeDeleteConfirm);
   const densityMode = useUiStore((s) => s.densityMode);
   const sortMode = useUiStore((s) => s.sortMode);
+  const themeMode = useUiStore((s) => s.themeMode);
+  const locale = useUiStore((s) => s.locale);
+  const settingsOpen = useUiStore((s) => s.settingsOpen);
+  const closeSettings = useUiStore((s) => s.closeSettings);
+  const hideOnBlur = useUiStore((s) => s.hideOnBlur);
 
   const queryClient = useQueryClient();
   const searchInputRef = useRef<HTMLInputElement>(null);
+
+  // Theme effect: apply data-theme to <html>
+  useEffect(() => {
+    const root = document.documentElement;
+    if (themeMode === "system") {
+      const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+      root.setAttribute("data-theme", prefersDark ? "dark" : "light");
+    } else {
+      root.setAttribute("data-theme", themeMode);
+    }
+  }, [themeMode]);
+
+  // Listen for system theme changes when in "system" mode
+  useEffect(() => {
+    if (themeMode !== "system") return;
+    const mq = window.matchMedia("(prefers-color-scheme: dark)");
+    const handler = (e: MediaQueryListEvent) => {
+      document.documentElement.setAttribute("data-theme", e.matches ? "dark" : "light");
+    };
+    mq.addEventListener("change", handler);
+    return () => mq.removeEventListener("change", handler);
+  }, [themeMode]);
+
+  // Locale effect: sync i18n language with store
+  useEffect(() => {
+    i18n.changeLanguage(locale);
+  }, [locale]);
+
+  // Hide on blur effect
+  useEffect(() => {
+    if (!hideOnBlur) return;
+    let unlisten: (() => void) | undefined;
+    import("@tauri-apps/api/window").then(({ getCurrentWindow }) => {
+      const win = getCurrentWindow();
+      win.onFocusChanged(({ payload: focused }) => {
+        if (!focused) win.hide();
+      }).then((fn) => {
+        unlisten = fn;
+      });
+    });
+    return () => {
+      unlisten?.();
+    };
+  }, [hideOnBlur]);
 
   // Build the filter for the current view
   const filter: CommandFilter = useMemo(
@@ -74,10 +127,10 @@ function App() {
         );
         await writeText(command.command);
         await commandRepository.recordCommandCopied(command.id);
-        toast("已复制", "success");
+        toast(t("command.copied"), "success");
         await queryClient.invalidateQueries();
       } catch {
-        toast("复制失败", "error");
+        toast(t("command.copyFailed"), "error");
       }
     },
     [queryClient],
@@ -107,35 +160,35 @@ function App() {
             {showSearchResults ? (
               <EmptyState
                 icon={<Search size={40} />}
-                title="未找到匹配结果"
-                description={`没有找到与 "${searchQuery}" 相关的命令`}
+                title={t("emptyState.noResults")}
+                description={t("emptyState.noResultsDesc", { query: searchQuery })}
               />
             ) : navType === "platform" ? (
               <EmptyState
                 icon={<Terminal size={40} />}
-                title="暂无命令"
-                description="添加第一条命令开始使用"
+                title={t("emptyState.noCommands")}
+                description={t("emptyState.noCommandsDesc")}
                 action={{
-                  label: "新建命令",
+                  label: t("emptyState.createCommand"),
                   onClick: () => openCreateCommandModal(),
                 }}
               />
             ) : navType === "favorites" ? (
               <EmptyState
-                title="暂无收藏"
-                description="收藏常用命令，方便快速查找"
+                title={t("emptyState.noFavorites")}
+                description={t("emptyState.noFavoritesDesc")}
               />
             ) : navType === "recent" ? (
               <EmptyState
-                title="暂无最近使用"
-                description="使用过的命令会显示在这里"
+                title={t("emptyState.noRecent")}
+                description={t("emptyState.noRecentDesc")}
               />
             ) : (
               <EmptyState
-                title="暂无命令"
-                description="添加第一条命令开始使用"
+                title={t("emptyState.noCommands")}
+                description={t("emptyState.noCommandsDesc")}
                 action={{
-                  label: "新建命令",
+                  label: t("emptyState.createCommand"),
                   onClick: () => openCreateCommandModal(),
                 }}
               />
@@ -166,6 +219,12 @@ function App() {
         open={!!deleteConfirmCommandId}
         commandId={deleteConfirmCommandId}
         onClose={closeDeleteConfirm}
+      />
+
+      {/* Settings modal */}
+      <SettingsModal
+        open={settingsOpen}
+        onClose={closeSettings}
       />
     </>
   );

@@ -276,6 +276,26 @@ export async function recordCommandCopied(id: string): Promise<void> {
   );
 }
 
+export async function clearRecentHistory(): Promise<void> {
+  const db = await getDb();
+  await db.execute("UPDATE commands SET usage_count = 0, last_used_at = NULL");
+}
+
+export async function factoryReset(): Promise<void> {
+  const db = await getDb();
+  await db.execute("DELETE FROM command_tags");
+  await db.execute("DELETE FROM command_examples");
+  await db.execute("DELETE FROM command_parameters");
+  await db.execute("DELETE FROM commands");
+  await db.execute("DELETE FROM categories");
+  await db.execute("DELETE FROM platforms");
+  await db.execute("DELETE FROM tags");
+  await db.execute("DELETE FROM schema_migrations");
+  // Re-initialize
+  const { initDatabase } = await import("../db");
+  await initDatabase();
+}
+
 async function saveRelatedData(
   db: Awaited<ReturnType<typeof getDb>>,
   commandId: string,

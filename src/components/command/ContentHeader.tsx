@@ -1,4 +1,5 @@
 import { ArrowUpDown, Calendar, BarChart3, Star } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import { useUiStore } from "../../state/uiStore";
 import { useQuery } from "@tanstack/react-query";
@@ -12,18 +13,19 @@ interface ContentHeaderProps {
 
 interface SortOption {
   mode: SortMode;
-  label: string;
+  labelKey: string;
   icon: React.ReactNode;
   showIn: ("platform" | "all" | "favorites" | "recent")[];
 }
 
 const sortOptions: SortOption[] = [
-  { mode: "createdAt", label: "按创建时间", icon: <Calendar size={14} />, showIn: ["platform", "all", "favorites", "recent"] },
-  { mode: "usageCount", label: "按使用次数", icon: <BarChart3 size={14} />, showIn: ["platform", "all", "favorites", "recent"] },
-  { mode: "favoritedAt", label: "按收藏时间", icon: <Star size={14} />, showIn: ["favorites"] },
+  { mode: "createdAt", labelKey: "contentHeader.sortByCreatedAt", icon: <Calendar size={14} />, showIn: ["platform", "all", "favorites", "recent"] },
+  { mode: "usageCount", labelKey: "contentHeader.sortByUsageCount", icon: <BarChart3 size={14} />, showIn: ["platform", "all", "favorites", "recent"] },
+  { mode: "favoritedAt", labelKey: "contentHeader.sortByFavoritedAt", icon: <Star size={14} />, showIn: ["favorites"] },
 ];
 
 export function ContentHeader({ count }: ContentHeaderProps) {
+  const { t } = useTranslation();
   const navType = useUiStore((s) => s.navType);
   const currentPlatformId = useUiStore((s) => s.currentPlatformId);
   const searchQuery = useUiStore((s) => s.searchQuery);
@@ -38,23 +40,23 @@ export function ContentHeader({ count }: ContentHeaderProps) {
   const currentPlatform = platforms?.find((p) => p.id === currentPlatformId);
 
   let title = "";
-  let unit = "条命令";
+  let unit = t("contentHeader.commandsUnit");
 
   if (searchQuery.trim()) {
-    title = `搜索结果：${searchQuery}`;
-    unit = "条结果";
+    title = t("contentHeader.searchResults", { query: searchQuery });
+    unit = t("contentHeader.resultsUnit");
   } else if (navType === "platform" && currentPlatform) {
     title = currentPlatform.name;
   } else if (navType === "all") {
-    title = "全部命令";
+    title = t("contentHeader.allCommands");
   } else if (navType === "favorites") {
-    title = "收藏";
+    title = t("contentHeader.favorites");
   } else if (navType === "recent") {
-    title = "最近使用";
+    title = t("contentHeader.recent");
   }
 
   const availableOptions = sortOptions.filter((o) => o.showIn.includes(navType));
-  const currentLabel = availableOptions.find((o) => o.mode === sortMode)?.label ?? "排序";
+  const currentLabel = availableOptions.find((o) => o.mode === sortMode)?.labelKey ?? "contentHeader.sort";
 
   return (
     <div className="flex items-center gap-2 px-4 pt-3 pb-1">
@@ -83,7 +85,7 @@ export function ContentHeader({ count }: ContentHeaderProps) {
             }}
           >
             <ArrowUpDown size={14} />
-            <span>{currentLabel}</span>
+            <span>{t(currentLabel)}</span>
           </button>
         </DropdownMenu.Trigger>
         <DropdownMenu.Portal>
@@ -106,7 +108,7 @@ export function ContentHeader({ count }: ContentHeaderProps) {
                 onSelect={() => setSortMode(option.mode)}
               >
                 {option.icon}
-                <span>{option.label}</span>
+                <span>{t(option.labelKey)}</span>
               </DropdownMenu.Item>
             ))}
           </DropdownMenu.Content>

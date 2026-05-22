@@ -1,4 +1,5 @@
 import { Plus, X } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 interface DynamicListInputProps {
   items: string[];
@@ -10,9 +11,12 @@ interface DynamicListInputProps {
 export function DynamicListInput({
   items,
   onChange,
-  placeholder = "输入内容",
-  addLabel = "添加",
+  placeholder,
+  addLabel,
 }: DynamicListInputProps) {
+  const { t } = useTranslation();
+  const resolvedPlaceholder = placeholder ?? t("dynamicList.defaultPlaceholder");
+  const resolvedAddLabel = addLabel ?? t("dynamicList.defaultAddLabel");
   function updateItem(index: number, value: string) {
     const next = [...items];
     next[index] = value;
@@ -44,7 +48,7 @@ export function DynamicListInput({
             value={item}
             onChange={(e) => updateItem(index, e.target.value)}
             onBlur={handleBlur}
-            placeholder={placeholder}
+            placeholder={resolvedPlaceholder}
             className="flex-1 text-sm outline-none"
             style={{
               height: "36px",
@@ -105,7 +109,7 @@ export function DynamicListInput({
         }}
       >
         <Plus size={14} />
-        {addLabel}
+        {resolvedAddLabel}
       </button>
     </div>
   );

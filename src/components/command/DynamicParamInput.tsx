@@ -1,4 +1,5 @@
 import { Plus, X } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import type { CommandParameter } from "../../domain/types";
 
 interface DynamicParamInputProps {
@@ -7,6 +8,7 @@ interface DynamicParamInputProps {
 }
 
 export function DynamicParamInput({ items, onChange }: DynamicParamInputProps) {
+  const { t } = useTranslation();
   function updateItem(
     index: number,
     field: keyof CommandParameter,
@@ -44,7 +46,7 @@ export function DynamicParamInput({ items, onChange }: DynamicParamInputProps) {
             value={item.name}
             onChange={(e) => updateItem(index, "name", e.target.value)}
             onBlur={handleBlur}
-            placeholder="参数名"
+            placeholder={t("commandForm.parameterName")}
             className="text-sm outline-none"
             style={{
               width: "120px",
@@ -62,7 +64,7 @@ export function DynamicParamInput({ items, onChange }: DynamicParamInputProps) {
             value={item.description}
             onChange={(e) => updateItem(index, "description", e.target.value)}
             onBlur={handleBlur}
-            placeholder="参数说明"
+            placeholder={t("commandForm.parameterDesc")}
             className="flex-1 text-sm outline-none"
             style={{
               height: "36px",
@@ -124,7 +126,7 @@ export function DynamicParamInput({ items, onChange }: DynamicParamInputProps) {
         }}
       >
         <Plus size={14} />
-        添加参数
+        {t("commandForm.addParameter")}
       </button>
     </div>
   );

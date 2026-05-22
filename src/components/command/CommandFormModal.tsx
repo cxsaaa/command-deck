@@ -1,4 +1,5 @@
 import { useState, useEffect, useMemo, type FormEvent } from "react";
+import { useTranslation } from "react-i18next";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { Modal } from "../common/Modal";
 import { Button } from "../common/Button";
@@ -7,6 +8,7 @@ import { DynamicListInput } from "./DynamicListInput";
 import { DynamicParamInput } from "./DynamicParamInput";
 import { toast } from "../common/Toast";
 import { queryKeys } from "../../state/queryKeys";
+import { useUiStore } from "../../state/uiStore";
 import * as platformRepository from "../../data/repositories/platformRepository";
 import * as categoryRepository from "../../data/repositories/categoryRepository";
 import * as commandRepository from "../../data/repositories/commandRepository";
@@ -31,6 +33,7 @@ export function CommandFormModal({
   commandId,
   initialTitle,
 }: CommandFormModalProps) {
+  const { t } = useTranslation();
   const queryClient = useQueryClient();
 
   // Form state
@@ -84,9 +87,14 @@ export function CommandFormModal({
   // Reset form when modal opens in create mode
   useEffect(() => {
     if (open && mode === "create") {
+      const store = useUiStore.getState();
+      const defaultPlatformId =
+        store.navType === "platform" ? store.currentPlatformId ?? "" : "";
+      const defaultCategoryId =
+        store.navType === "platform" ? store.currentCategoryId ?? "" : "";
       setTitle(initialTitle ?? "");
-      setPlatformId("");
-      setCategoryId("");
+      setPlatformId(defaultPlatformId);
+      setCategoryId(defaultCategoryId);
       setCommandText("");
       setDescription("");
       setTags([]);
@@ -106,10 +114,6 @@ export function CommandFormModal({
     }
   }, [open]);
 
-  // Reset category when platform changes
-  useEffect(() => {
-    setCategoryId("");
-  }, [platformId]);
 
   // Build validation maps
   const platformIds = useMemo(
@@ -133,11 +137,11 @@ export function CommandFormModal({
       commandRepository.createCommand(input),
     onSuccess: async () => {
       await queryClient.invalidateQueries();
-      toast("已保存", "success");
+      toast(t("commandForm.saved"), "success");
       onClose();
     },
     onError: (err: Error) => {
-      setSubmitError(err.message || "保存失败");
+      setSubmitError(err.message || t("commandForm.saveFailed"));
     },
   });
 
@@ -146,11 +150,11 @@ export function CommandFormModal({
       commandRepository.updateCommand(commandId!, input),
     onSuccess: async () => {
       await queryClient.invalidateQueries();
-      toast("已保存", "success");
+      toast(t("commandForm.saved"), "success");
       onClose();
     },
     onError: (err: Error) => {
-      setSubmitError(err.message || "保存失败");
+      setSubmitError(err.message || t("commandForm.saveFailed"));
     },
   });
 
@@ -207,14 +211,14 @@ export function CommandFormModal({
   const footer = (
     <>
       <Button variant="secondary" onClick={onClose} disabled={isSaving}>
-        取消
+        {t("commandForm.cancel")}
       </Button>
       <Button
         variant="primary"
         onClick={doSubmit}
         disabled={isSaving || isLoading}
       >
-        {isSaving ? "保存中..." : "保存"}
+        {isSaving ? t("commandForm.saving") : t("commandForm.save")}
       </Button>
     </>
   );
@@ -223,7 +227,7 @@ export function CommandFormModal({
     <Modal
       open={open}
       onClose={onClose}
-      title={mode === "create" ? "新建命令" : "编辑命令"}
+      title={mode === "create" ? t("commandForm.createTitle") : t("commandForm.editTitle")}
       maxWidth="560px"
       footer={footer}
     >
@@ -232,7 +236,7 @@ export function CommandFormModal({
           className="flex items-center justify-center"
           style={{ height: "200px", color: "var(--color-text-tertiary)" }}
         >
-          加载中...
+          {t("commandForm.loading")}
         </div>
       ) : (
         <form
@@ -241,26 +245,29 @@ export function CommandFormModal({
           style={{ gap: "16px" }}
         >
           {/* Title */}
-          <FormField label="标题" required error={getError("title")}>
+          <FormField label={t("commandForm.title")} required error={getError("title")}>
             <input
               type="text"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              placeholder="命令标题"
+              placeholder={t("commandForm.titlePlaceholder")}
               className="w-full text-sm outline-none"
               style={inputStyle}
             />
           </FormField>
 
           {/* Platform */}
-          <FormField label="平台" required error={getError("platformId")}>
+          <FormField label={t("commandForm.platform")} required error={getError("platformId")}>
             <select
               value={platformId}
-              onChange={(e) => setPlatformId(e.target.value)}
+              onChange={(e) => {
+                setPlatformId(e.target.value);
+                setCategoryId("");
+              }}
               className="w-full text-sm outline-none"
               style={inputStyle}
             >
-              <option value="">选择平台</option>
+              <option value="">{t("commandForm.platformPlaceholder")}</option>
               {platforms?.map((p) => (
                 <option key={p.id} value={p.id}>
                   {p.name}
@@ -270,7 +277,7 @@ export function CommandFormModal({
           </FormField>
 
           {/* Category */}
-          <FormField label="分类" error={getError("categoryId")}>
+          <FormField label={t("commandForm.category")} error={getError("categoryId")}>
             <select
               value={categoryId}
               onChange={(e) => setCategoryId(e.target.value)}
@@ -281,7 +288,7 @@ export function CommandFormModal({
                 opacity: !platformId ? 0.5 : 1,
               }}
             >
-              <option value="">无分类</option>
+              <option value="">{t("commandForm.categoryPlaceholder")}</option>
               {categories?.map((c) => (
                 <option key={c.id} value={c.id}>
                   {c.name}
@@ -291,11 +298,11 @@ export function CommandFormModal({
           </FormField>
 
           {/* Command */}
-          <FormField label="命令内容" required error={getError("command")}>
+          <FormField label={t("commandForm.commandContent")} required error={getError("command")}>
             <textarea
               value={commandText}
               onChange={(e) => setCommandText(e.target.value)}
-              placeholder="输入命令"
+              placeholder={t("commandForm.commandPlaceholder")}
               rows={3}
               className="w-full text-sm outline-none resize-y"
               style={{
@@ -307,11 +314,11 @@ export function CommandFormModal({
           </FormField>
 
           {/* Description */}
-          <FormField label="描述" error={getError("description")}>
+          <FormField label={t("commandForm.description")} error={getError("description")}>
             <textarea
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              placeholder="命令用途说明"
+              placeholder={t("commandForm.descriptionPlaceholder")}
               rows={2}
               className="w-full text-sm outline-none resize-y"
               style={{ ...inputStyle, minHeight: "60px" }}
@@ -319,32 +326,32 @@ export function CommandFormModal({
           </FormField>
 
           {/* Tags */}
-          <FormField label="标签" error={getError("tags")}>
+          <FormField label={t("commandForm.tags")} error={getError("tags")}>
             <TagInput tags={tags} onChange={setTags} />
-            <HelperText>按 Enter 或逗号添加标签</HelperText>
+            <HelperText>{t("commandForm.tagsPlaceholder")}</HelperText>
           </FormField>
 
           {/* Examples */}
-          <FormField label="示例">
+          <FormField label={t("commandForm.examples")}>
             <DynamicListInput
               items={examples}
               onChange={setExamples}
-              placeholder="输入示例命令"
-              addLabel="添加示例"
+              placeholder={t("commandForm.examplePlaceholder")}
+              addLabel={t("commandForm.addExample")}
             />
           </FormField>
 
           {/* Parameters */}
-          <FormField label="参数说明">
+          <FormField label={t("commandForm.parameters")}>
             <DynamicParamInput items={parameters} onChange={setParameters} />
           </FormField>
 
           {/* Notes */}
-          <FormField label="备注">
+          <FormField label={t("commandForm.notes")}>
             <textarea
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
-              placeholder="补充说明"
+              placeholder={t("commandForm.notesPlaceholder")}
               rows={2}
               className="w-full text-sm outline-none resize-y"
               style={{ ...inputStyle, minHeight: "60px" }}

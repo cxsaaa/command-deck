@@ -4,6 +4,8 @@ export type NavType = "all" | "favorites" | "recent" | "platform";
 export type SearchScope = "current" | "global";
 export type DensityMode = "comfortable" | "compact";
 export type SortMode = "createdAt" | "usageCount" | "favoritedAt";
+export type ThemeMode = "system" | "light" | "dark";
+export type Locale = "zh-CN" | "en-US";
 
 interface CommandModalState {
   type: "create" | "edit";
@@ -28,6 +30,26 @@ interface UiState {
   // Sort
   sortMode: SortMode;
 
+  // Theme
+  themeMode: ThemeMode;
+
+  // Locale
+  locale: Locale;
+
+  // Settings
+  settingsOpen: boolean;
+
+  // Window behavior
+  hideOnBlur: boolean;
+  dockToggle: boolean;
+
+  // Autostart
+  autostartEnabled: boolean;
+
+  // Inline editing
+  platformRenameId: string | null;
+  categoryRenameId: string | null;
+
   // Modals
   commandModal: CommandModalState | null;
   deleteConfirmCommandId: string | null;
@@ -46,6 +68,15 @@ interface UiState {
   closeDeleteConfirm: () => void;
   toggleDensityMode: () => void;
   setSortMode: (mode: SortMode) => void;
+  setThemeMode: (mode: ThemeMode) => void;
+  setLocale: (locale: Locale) => void;
+  openSettings: () => void;
+  closeSettings: () => void;
+  setPlatformRenameId: (id: string | null) => void;
+  setCategoryRenameId: (id: string | null) => void;
+  setHideOnBlur: (enabled: boolean) => void;
+  setDockToggle: (enabled: boolean) => void;
+  setAutostartEnabled: (enabled: boolean) => void;
 }
 
 export const useUiStore = create<UiState>((set, get) => ({
@@ -57,6 +88,14 @@ export const useUiStore = create<UiState>((set, get) => ({
   selectedResultIndex: -1,
   densityMode: "comfortable",
   sortMode: "createdAt",
+  themeMode: "system",
+  locale: "zh-CN",
+  settingsOpen: false,
+  hideOnBlur: false,
+  dockToggle: false,
+  autostartEnabled: false,
+  platformRenameId: null,
+  categoryRenameId: null,
   commandModal: null,
   deleteConfirmCommandId: null,
 
@@ -87,4 +126,13 @@ export const useUiStore = create<UiState>((set, get) => ({
   toggleDensityMode: () =>
     set({ densityMode: get().densityMode === "comfortable" ? "compact" : "comfortable" }),
   setSortMode: (mode) => set({ sortMode: mode }),
+  setThemeMode: (mode) => set({ themeMode: mode }),
+  setLocale: (locale) => set({ locale }),
+  openSettings: () => set({ settingsOpen: true }),
+  closeSettings: () => set({ settingsOpen: false }),
+  setPlatformRenameId: (id) => set({ platformRenameId: id }),
+  setCategoryRenameId: (id) => set({ categoryRenameId: id }),
+  setHideOnBlur: (enabled) => set({ hideOnBlur: enabled }),
+  setDockToggle: (enabled) => set({ dockToggle: enabled }),
+  setAutostartEnabled: (enabled) => set({ autostartEnabled: enabled }),
 }));

@@ -20,8 +20,8 @@ const variantClasses: Record<string, string> = {
 };
 
 const sizeClasses: Record<string, string> = {
-  sm: "h-7 px-2.5 text-[13px]",
-  md: "h-[34px] px-3.5 text-sm",
+  sm: "h-6 px-2 text-xs",
+  md: "h-7 px-3 text-[13px]",
 };
 
 export function Button({
@@ -39,7 +39,7 @@ export function Button({
       onClick={onClick}
       disabled={disabled}
       style={style}
-      className={`inline-flex items-center justify-center gap-1.5 font-medium rounded-[var(--radius-md)] transition-colors select-none ${
+      className={`inline-flex items-center justify-center gap-1.5 font-medium rounded-[var(--radius-sm)] transition-colors select-none ${
         variantClasses[variant]
       } ${sizeClasses[size]} ${disabled ? "opacity-50 cursor-not-allowed" : "cursor-pointer"} ${className}`}
     >
