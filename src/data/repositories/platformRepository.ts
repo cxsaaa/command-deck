@@ -9,6 +9,7 @@ interface PlatformRow {
   description: string | null;
   sort_order: number;
   is_visible: number;
+  sort_index: number;
   created_at: string;
   updated_at: string;
   command_count: number;
@@ -23,6 +24,7 @@ function rowToPlatform(row: PlatformRow): Platform {
     description: row.description,
     sortOrder: row.sort_order,
     isVisible: row.is_visible === 1,
+    sortIndex: row.sort_index,
     commandCount: row.command_count,
     createdAt: row.created_at,
     updatedAt: row.updated_at,
@@ -37,7 +39,7 @@ export async function listPlatforms(): Promise<Platform[]> {
      LEFT JOIN commands c ON c.platform_id = p.id
      WHERE p.is_visible = 1
      GROUP BY p.id
-     ORDER BY p.sort_order`
+     ORDER BY p.sort_index ASC`
   );
   return rows.map(rowToPlatform);
 }
@@ -54,4 +56,16 @@ export async function getPlatform(id: string): Promise<Platform | null> {
   );
   if (rows.length === 0) return null;
   return rowToPlatform(rows[0]);
+}
+
+export async function updatePlatformSortOrder(
+  platformIds: string[]
+): Promise<void> {
+  const db = await getDb();
+  for (let i = 0; i < platformIds.length; i++) {
+    await db.execute(
+      "UPDATE platforms SET sort_index = $1, updated_at = $2 WHERE id = $3",
+      [i, new Date().toISOString(), platformIds[i]]
+    );
+  }
 }

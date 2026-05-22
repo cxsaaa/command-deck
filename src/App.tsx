@@ -30,6 +30,8 @@ function App() {
   const closeCommandModal = useUiStore((s) => s.closeCommandModal);
   const deleteConfirmCommandId = useUiStore((s) => s.deleteConfirmCommandId);
   const closeDeleteConfirm = useUiStore((s) => s.closeDeleteConfirm);
+  const densityMode = useUiStore((s) => s.densityMode);
+  const sortMode = useUiStore((s) => s.sortMode);
 
   const queryClient = useQueryClient();
   const searchInputRef = useRef<HTMLInputElement>(null);
@@ -56,12 +58,12 @@ function App() {
   // Apply client-side search/sorting
   const commands: Command[] = useMemo(() => {
     if (!rawCommands) return [];
-    const sorted = sortCommands(rawCommands, navType);
+    const sorted = sortCommands(rawCommands, navType, sortMode);
     if (searchQuery.trim()) {
       return clientSearch(sorted, searchQuery, filter);
     }
     return sorted;
-  }, [rawCommands, searchQuery, filter, navType]);
+  }, [rawCommands, searchQuery, filter, navType, sortMode]);
 
   // Copy handler (also used by keyboard shortcuts)
   const handleCopyCommand = useCallback(
@@ -90,11 +92,13 @@ function App() {
 
   return (
     <>
-      <AppShell topBar={<TopBar />} sidebar={<Sidebar />}>
-        {/* Category tabs (only for platform view) */}
-        <CategoryTabs />
-
-        {/* Content header */}
+      <AppShell
+        topBar={<TopBar />}
+        sidebar={<Sidebar />}
+        header={<CategoryTabs />}
+        density={densityMode}
+      >
+        {/* Content header - scrolls with content */}
         <ContentHeader count={commands.length} />
 
         {/* Command list or empty state */}
@@ -141,6 +145,7 @@ function App() {
           <CommandList
             commands={commands}
             selectedResultIndex={showSearchResults ? selectedResultIndex : -1}
+            searchQuery={showSearchResults ? searchQuery : undefined}
           />
         )}
       </AppShell>

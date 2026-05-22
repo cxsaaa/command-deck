@@ -91,6 +91,13 @@ const migrations: Migration[] = [
       CREATE INDEX IF NOT EXISTS idx_command_tags_tag ON command_tags(tag_id);
     `,
   },
+  {
+    version: 2,
+    sql: `
+      ALTER TABLE platforms ADD COLUMN sort_index INTEGER DEFAULT 0;
+      CREATE INDEX IF NOT EXISTS idx_platforms_sort ON platforms (sort_index ASC);
+    `,
+  },
 ];
 
 export async function runMigrations(db: Database): Promise<void> {

@@ -1,5 +1,5 @@
 import { forwardRef } from "react";
-import { Search } from "lucide-react";
+import { Search, X } from "lucide-react";
 import { useUiStore } from "../../state/uiStore";
 
 export const SearchInput = forwardRef<HTMLInputElement>(function SearchInput(
@@ -44,6 +44,20 @@ export const SearchInput = forwardRef<HTMLInputElement>(function SearchInput(
           e.currentTarget.parentElement!.style.boxShadow = "none";
         }}
       />
+      {searchQuery.length > 0 && (
+        <button
+          type="button"
+          onClick={() => {
+            setSearchQuery("");
+            if (ref && "current" in ref && ref.current) ref.current.focus();
+          }}
+          className="shrink-0 cursor-pointer"
+          style={{ color: "var(--color-text-placeholder)", background: "none", border: "none", padding: 0, display: "flex" }}
+          aria-label="清除搜索"
+        >
+          <X size={14} />
+        </button>
+      )}
       <kbd
         className="text-xs px-1.5 py-0.5 rounded shrink-0"
         style={{

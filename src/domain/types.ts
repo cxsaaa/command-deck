@@ -1,5 +1,6 @@
 export type NavType = "all" | "favorites" | "recent" | "platform";
 export type SearchScope = "current" | "global";
+export type SortMode = "createdAt" | "usageCount" | "favoritedAt";
 
 export interface Platform {
   id: string;
@@ -9,6 +10,7 @@ export interface Platform {
   description: string | null;
   sortOrder: number;
   isVisible: boolean;
+  sortIndex: number;
   commandCount: number;
   createdAt: string;
   updatedAt: string;

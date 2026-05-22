@@ -64,3 +64,11 @@ body {
   background-color: var(--color-accent-soft);
   color: var(--color-accent);
 }
+
+/* Search highlight */
+mark {
+  background-color: var(--color-highlight-bg);
+  color: var(--color-highlight-text);
+  border-radius: 2px;
+  padding: 0 1px;
+}

@@ -1,5 +1,6 @@
 import { useQueryClient } from "@tanstack/react-query";
-import { Star, Edit, Trash } from "lucide-react";
+import { Star, Edit, Trash, Check, ChevronDown, ChevronUp } from "lucide-react";
+import { useState, useRef, useCallback, useEffect } from "react";
 import { CommandCodeBlock } from "./CommandCodeBlock";
 import { Button } from "../common/Button";
 import { IconButton } from "../common/IconButton";
@@ -7,29 +8,43 @@ import { MoreMenu } from "../common/MoreMenu";
 import { toast } from "../common/Toast";
 import * as commandRepository from "../../data/repositories/commandRepository";
 import { useUiStore } from "../../state/uiStore";
+import { highlightText } from "../../domain/highlight";
 import type { Command } from "../../domain/types";
 
 interface CommandCardProps {
   command: Command;
   isSelected?: boolean;
+  searchQuery?: string;
 }
 
-export function CommandCard({ command, isSelected = false }: CommandCardProps) {
+export function CommandCard({ command, isSelected = false, searchQuery }: CommandCardProps) {
   const queryClient = useQueryClient();
   const openEditCommandModal = useUiStore((s) => s.openEditCommandModal);
   const openDeleteConfirm = useUiStore((s) => s.openDeleteConfirm);
+  const [copied, setCopied] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(false);
+  const timerRef = useRef<ReturnType<typeof setTimeout>>(undefined);
+  const cardRef = useRef<HTMLDivElement>(null);
 
-  async function handleCopy() {
+  useEffect(() => {
+    if (isSelected && cardRef.current) {
+      cardRef.current.scrollIntoView({ block: "nearest" });
+    }
+  }, [isSelected]);
+
+  const handleCopy = useCallback(async () => {
     try {
       const { writeText } = await import("@tauri-apps/plugin-clipboard-manager");
       await writeText(command.command);
       await commandRepository.recordCommandCopied(command.id);
-      toast("已复制", "success");
+      setCopied(true);
+      clearTimeout(timerRef.current);
+      timerRef.current = setTimeout(() => setCopied(false), 1500);
       await queryClient.invalidateQueries();
     } catch {
       toast("复制失败", "error");
     }
-  }
+  }, [command.command, command.id, queryClient]);
 
   async function handleToggleFavorite() {
     try {
@@ -46,8 +61,13 @@ export function CommandCard({ command, isSelected = false }: CommandCardProps) {
     ...command.tags,
   ].filter(Boolean);
 
+  const hasDetails = (command.examples?.length ?? 0) > 0
+    || (command.parameters?.length ?? 0) > 0
+    || !!command.notes;
+
   return (
     <div
+      ref={cardRef}
       className="rounded-lg transition-colors"
       style={{
         backgroundColor: "var(--color-bg-surface)",
@@ -55,7 +75,7 @@ export function CommandCard({ command, isSelected = false }: CommandCardProps) {
           ? "1px solid var(--color-accent)"
           : "1px solid var(--color-border)",
         borderRadius: "var(--radius-lg)",
-        padding: "16px",
+        padding: "var(--density-card-padding)",
         boxShadow: isSelected ? "0 0 0 2px var(--color-accent-soft)" : "none",
       }}
       onMouseEnter={(e) => {
@@ -77,9 +97,16 @@ export function CommandCard({ command, isSelected = false }: CommandCardProps) {
           className="text-sm font-semibold leading-snug"
           style={{ color: "var(--color-text-primary)" }}
         >
-          {command.title}
+          {searchQuery ? highlightText(command.title, searchQuery) : command.title}
         </h3>
         <div className="flex items-center gap-1 shrink-0">
+          {hasDetails && (
+            <IconButton
+              icon={isExpanded ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
+              tooltip={isExpanded ? "收起详情" : "展开详情"}
+              onClick={() => setIsExpanded(!isExpanded)}
+            />
+          )}
           <IconButton
             icon={
               command.isFavorite ? (
@@ -114,7 +141,7 @@ export function CommandCard({ command, isSelected = false }: CommandCardProps) {
 
       {/* Code block */}
       <div className="mb-2">
-        <CommandCodeBlock code={command.command} maxLines={2} />
+        <CommandCodeBlock code={command.command} maxLines={2} searchQuery={searchQuery} />
       </div>
 
       {/* Description */}
@@ -123,14 +150,53 @@ export function CommandCard({ command, isSelected = false }: CommandCardProps) {
           className="text-xs leading-relaxed mb-2"
           style={{
             color: "var(--color-text-secondary)",
-            display: "-webkit-box",
-            WebkitLineClamp: 2,
-            WebkitBoxOrient: "vertical",
-            overflow: "hidden",
+            display: "var(--density-description-display)",
           }}
         >
-          {command.description}
+          {searchQuery ? highlightText(command.description, searchQuery) : command.description}
         </p>
+      )}
+
+      {/* Expanded details */}
+      {isExpanded && hasDetails && (
+        <div
+          className="mb-2 pt-2"
+          style={{ borderTop: "1px solid var(--color-border)" }}
+        >
+          {command.examples && command.examples.length > 0 && (
+            <div className="mb-2">
+              <span className="text-xs font-medium mb-1 block" style={{ color: "var(--color-text-secondary)" }}>
+                示例
+              </span>
+              {command.examples.map((ex, i) => (
+                <div key={i} className="mb-1">
+                  <CommandCodeBlock code={ex} maxLines={10} searchQuery={searchQuery} />
+                </div>
+              ))}
+            </div>
+          )}
+          {command.parameters && command.parameters.length > 0 && (
+            <div className="mb-2">
+              <span className="text-xs font-medium mb-1 block" style={{ color: "var(--color-text-secondary)" }}>
+                参数
+              </span>
+              {command.parameters.map((p, i) => (
+                <div key={i} className="flex gap-2 text-xs mb-0.5">
+                  <code className="font-mono shrink-0" style={{ color: "var(--color-accent)" }}>{p.name}</code>
+                  <span style={{ color: "var(--color-text-tertiary)" }}>{p.description}</span>
+                </div>
+              ))}
+            </div>
+          )}
+          {command.notes && (
+            <div>
+              <span className="text-xs font-medium mb-1 block" style={{ color: "var(--color-text-secondary)" }}>
+                备注
+              </span>
+              <p className="text-xs" style={{ color: "var(--color-text-tertiary)" }}>{command.notes}</p>
+            </div>
+          )}
+        </div>
       )}
 
       {/* Footer: meta + copy */}
@@ -141,8 +207,18 @@ export function CommandCard({ command, isSelected = false }: CommandCardProps) {
         >
           {metaParts.join(" · ")}
         </span>
-        <Button variant="primary" size="sm" onClick={handleCopy}>
-          复制
+        <Button
+          variant={copied ? "secondary" : "primary"}
+          size="sm"
+          onClick={handleCopy}
+          style={copied ? {
+            backgroundColor: "var(--color-state-success-soft)",
+            color: "var(--color-state-success)",
+            borderColor: "var(--color-state-success)",
+            minWidth: 72,
+          } : { minWidth: 72 }}
+        >
+          {copied ? <><Check size={14} /> 已复制</> : "复制"}
         </Button>
       </div>
     </div>

@@ -1,9 +1,12 @@
+import { highlightText } from "../../domain/highlight";
+
 interface CommandCodeBlockProps {
   code: string;
   maxLines?: number;
+  searchQuery?: string;
 }
 
-export function CommandCodeBlock({ code, maxLines = 2 }: CommandCodeBlockProps) {
+export function CommandCodeBlock({ code, maxLines = 2, searchQuery }: CommandCodeBlockProps) {
   const lines = code.split("\n");
   const displayCode =
     lines.length > maxLines
@@ -15,7 +18,7 @@ export function CommandCodeBlock({ code, maxLines = 2 }: CommandCodeBlockProps) 
       style={{
         fontFamily: "'SF Mono', Menlo, Monaco, Consolas, monospace",
         fontSize: "13px",
-        lineHeight: "1.5",
+        lineHeight: "var(--density-code-line-height)",
         backgroundColor: "var(--color-bg-subtle)",
         border: "1px solid var(--color-border)",
         borderRadius: "var(--radius-md)",
@@ -25,7 +28,7 @@ export function CommandCodeBlock({ code, maxLines = 2 }: CommandCodeBlockProps) 
         color: "var(--color-text-primary)",
       }}
     >
-      {displayCode}
+      {searchQuery ? highlightText(displayCode, searchQuery) : displayCode}
     </div>
   );
 }

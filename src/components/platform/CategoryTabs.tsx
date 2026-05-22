@@ -4,6 +4,7 @@ import { queryKeys } from "../../state/queryKeys";
 import { useUiStore } from "../../state/uiStore";
 
 export function CategoryTabs() {
+  const navType = useUiStore((s) => s.navType);
   const currentPlatformId = useUiStore((s) => s.currentPlatformId);
   const currentCategoryId = useUiStore((s) => s.currentCategoryId);
   const setCurrentCategory = useUiStore((s) => s.setCurrentCategory);
@@ -14,14 +15,17 @@ export function CategoryTabs() {
     enabled: !!currentPlatformId,
   });
 
-  if (!currentPlatformId || !categories || categories.length === 0) {
+  if (navType !== "platform" || !currentPlatformId || !categories || categories.length === 0) {
     return null;
   }
 
   return (
     <div
-      className="flex items-center gap-1 px-4 py-2 border-b overflow-x-auto"
-      style={{ borderColor: "var(--color-border)" }}
+      className="flex items-center gap-1 px-4 py-2 border-b overflow-x-auto shrink-0"
+      style={{
+        borderColor: "var(--color-border)",
+        backgroundColor: "var(--color-bg-surface)",
+      }}
     >
       <TabButton
         label="全部"

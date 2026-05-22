@@ -904,11 +904,12 @@ export async function seedIfEmpty(db: Database): Promise<void> {
   const now = new Date().toISOString();
 
   // Insert platforms
-  for (const p of platforms) {
+  for (let i = 0; i < platforms.length; i++) {
+    const p = platforms[i];
     await db.execute(
-      `INSERT INTO platforms (id, name, icon, color, description, sort_order, is_visible, created_at, updated_at)
-       VALUES ($1, $2, $3, $4, $5, $6, 1, $7, $7)`,
-      [p.id, p.name, p.icon, p.color, p.description, p.sortOrder, now]
+      `INSERT INTO platforms (id, name, icon, color, description, sort_order, is_visible, sort_index, created_at, updated_at)
+       VALUES ($1, $2, $3, $4, $5, $6, 1, $7, $8, $8)`,
+      [p.id, p.name, p.icon, p.color, p.description, p.sortOrder, i, now]
     );
   }
 

@@ -2,6 +2,8 @@ import { create } from "zustand";
 
 export type NavType = "all" | "favorites" | "recent" | "platform";
 export type SearchScope = "current" | "global";
+export type DensityMode = "comfortable" | "compact";
+export type SortMode = "createdAt" | "usageCount" | "favoritedAt";
 
 interface CommandModalState {
   type: "create" | "edit";
@@ -20,6 +22,12 @@ interface UiState {
   searchScope: SearchScope;
   selectedResultIndex: number;
 
+  // Density
+  densityMode: DensityMode;
+
+  // Sort
+  sortMode: SortMode;
+
   // Modals
   commandModal: CommandModalState | null;
   deleteConfirmCommandId: string | null;
@@ -36,19 +44,29 @@ interface UiState {
   closeCommandModal: () => void;
   openDeleteConfirm: (commandId: string) => void;
   closeDeleteConfirm: () => void;
+  toggleDensityMode: () => void;
+  setSortMode: (mode: SortMode) => void;
 }
 
-export const useUiStore = create<UiState>((set) => ({
+export const useUiStore = create<UiState>((set, get) => ({
   navType: "platform",
   currentPlatformId: null,
   currentCategoryId: null,
   searchQuery: "",
   searchScope: "current",
   selectedResultIndex: -1,
+  densityMode: "comfortable",
+  sortMode: "createdAt",
   commandModal: null,
   deleteConfirmCommandId: null,
 
-  setNavType: (navType) => set({ navType, currentCategoryId: null }),
+  setNavType: (navType) =>
+    set({
+      navType,
+      currentCategoryId: null,
+      currentPlatformId: navType === "platform" ? get().currentPlatformId : null,
+      sortMode: "createdAt",
+    }),
   setCurrentPlatform: (platformId) =>
     set({
       currentPlatformId: platformId,
@@ -66,4 +84,7 @@ export const useUiStore = create<UiState>((set) => ({
   closeCommandModal: () => set({ commandModal: null }),
   openDeleteConfirm: (commandId) => set({ deleteConfirmCommandId: commandId }),
   closeDeleteConfirm: () => set({ deleteConfirmCommandId: null }),
+  toggleDensityMode: () =>
+    set({ densityMode: get().densityMode === "comfortable" ? "compact" : "comfortable" }),
+  setSortMode: (mode) => set({ sortMode: mode }),
 }));

@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import { Plus, Settings } from "lucide-react";
+import { Plus, Settings, Rows3, LayoutGrid } from "lucide-react";
 import { Button, IconButton } from "../common";
 import { SearchInput } from "../search/SearchInput";
 import { useUiStore } from "../../state/uiStore";
@@ -7,6 +7,8 @@ import { useUiStore } from "../../state/uiStore";
 export function TopBar() {
   const searchInputRef = useRef<HTMLInputElement>(null);
   const openCreateCommandModal = useUiStore((s) => s.openCreateCommandModal);
+  const densityMode = useUiStore((s) => s.densityMode);
+  const toggleDensityMode = useUiStore((s) => s.toggleDensityMode);
 
   return (
     <header
@@ -32,6 +34,11 @@ export function TopBar() {
           <Plus size={16} />
           <span>新建</span>
         </Button>
+        <IconButton
+          icon={densityMode === "compact" ? <Rows3 size={18} /> : <LayoutGrid size={18} />}
+          tooltip={densityMode === "compact" ? "切换到舒适模式" : "切换到紧凑模式"}
+          onClick={toggleDensityMode}
+        />
         <IconButton icon={<Settings size={18} />} tooltip="设置" />
       </div>
     </header>

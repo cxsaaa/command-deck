@@ -1,4 +1,4 @@
-import { type ReactNode } from "react";
+import { type ReactNode, type CSSProperties } from "react";
 
 interface ButtonProps {
   variant?: "primary" | "secondary" | "danger";
@@ -7,6 +7,7 @@ interface ButtonProps {
   onClick?: () => void;
   disabled?: boolean;
   className?: string;
+  style?: CSSProperties;
 }
 
 const variantClasses: Record<string, string> = {
@@ -30,12 +31,14 @@ export function Button({
   onClick,
   disabled = false,
   className = "",
+  style,
 }: ButtonProps) {
   return (
     <button
       type="button"
       onClick={onClick}
       disabled={disabled}
+      style={style}
       className={`inline-flex items-center justify-center gap-1.5 font-medium rounded-[var(--radius-md)] transition-colors select-none ${
         variantClasses[variant]
       } ${sizeClasses[size]} ${disabled ? "opacity-50 cursor-not-allowed" : "cursor-pointer"} ${className}`}

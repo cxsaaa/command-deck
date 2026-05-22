@@ -1059,6 +1059,10 @@ css_variables_example:
       --radius-lg: 12px;
       --radius-xl: 16px;
       --radius-full: 999px;
+      --color-highlight-bg: #e0f2fe;
+      --color-highlight-text: #0369a1;
+      --color-success-action: #10b981;
+      --color-success-action-hover: #059669;
     }
   dark: |
     [data-theme="dark"] {
@@ -1079,6 +1083,8 @@ css_variables_example:
       --color-accent-active: #2563EB;
       --color-accent-soft: #172554;
       --color-accent-border: #1D4ED8;
+      --color-highlight-bg: #0369a1;
+      --color-highlight-text: #e0f2fe;
     }
 
 forbidden:
