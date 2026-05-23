@@ -1,4 +1,4 @@
-import { useQueryClient } from "@tanstack/react-query";
+import { useQueryClient, useQuery } from "@tanstack/react-query";
 import { Star, Edit, Trash, Check, ChevronDown, ChevronUp } from "lucide-react";
 import { useState, useRef, useCallback, useEffect } from "react";
 import { useTranslation } from "react-i18next";
@@ -9,7 +9,12 @@ import { MoreMenu } from "../common/MoreMenu";
 import { toast } from "../common/Toast";
 import * as commandRepository from "../../data/repositories/commandRepository";
 import { useUiStore } from "../../state/uiStore";
+import { queryKeys } from "../../state/queryKeys";
 import { highlightText } from "../../domain/highlight";
+import {
+  hasPlaceholders,
+  replacePlaceholders,
+} from "../../domain/placeholders";
 import type { Command } from "../../domain/types";
 
 interface CommandCardProps {
@@ -25,8 +30,33 @@ export function CommandCard({ command, isSelected = false, searchQuery }: Comman
   const openDeleteConfirm = useUiStore((s) => s.openDeleteConfirm);
   const [copied, setCopied] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
+  const [variableValues, setVariableValues] = useState<Record<string, string>>({});
   const timerRef = useRef<ReturnType<typeof setTimeout>>(undefined);
   const cardRef = useRef<HTMLDivElement>(null);
+  const initializedRef = useRef(false);
+
+  const isInteractive = hasPlaceholders(command.command);
+
+  // Load variable memory from DB
+  const { data: savedVariables } = useQuery({
+    queryKey: queryKeys.variableHistories(command.id),
+    queryFn: () => commandRepository.getVariableHistories(command.id),
+    enabled: isInteractive,
+  });
+
+  // Initialize variableValues from saved memory (only once per mount)
+  useEffect(() => {
+    if (!initializedRef.current && savedVariables) {
+      initializedRef.current = true;
+      if (Object.keys(savedVariables).length > 0) {
+        setVariableValues(savedVariables);
+      }
+    }
+  }, [savedVariables]);
+
+  const handleVariableChange = useCallback((name: string, value: string) => {
+    setVariableValues((prev) => ({ ...prev, [name]: value }));
+  }, []);
 
   useEffect(() => {
     if (isSelected && cardRef.current) {
@@ -37,8 +67,15 @@ export function CommandCard({ command, isSelected = false, searchQuery }: Comman
   const handleCopy = useCallback(async () => {
     try {
       const { writeText } = await import("@tauri-apps/plugin-clipboard-manager");
-      await writeText(command.command);
+      const textToCopy = isInteractive
+        ? replacePlaceholders(command.command, variableValues)
+        : command.command;
+      await writeText(textToCopy);
       await commandRepository.recordCommandCopied(command.id);
+      // Save variable memory
+      if (isInteractive && Object.keys(variableValues).length > 0) {
+        await commandRepository.saveVariableHistories(command.id, variableValues);
+      }
       setCopied(true);
       clearTimeout(timerRef.current);
       timerRef.current = setTimeout(() => setCopied(false), 1500);
@@ -46,7 +83,7 @@ export function CommandCard({ command, isSelected = false, searchQuery }: Comman
     } catch {
       toast(t("command.copyFailed"), "error");
     }
-  }, [command.command, command.id, queryClient]);
+  }, [command.command, command.id, queryClient, isInteractive, variableValues]);
 
   async function handleToggleFavorite() {
     try {
@@ -143,7 +180,14 @@ export function CommandCard({ command, isSelected = false, searchQuery }: Comman
 
       {/* Code block */}
       <div className="mb-1.5">
-        <CommandCodeBlock code={command.command} maxLines={2} searchQuery={searchQuery} />
+        <CommandCodeBlock
+          code={command.command}
+          maxLines={2}
+          searchQuery={searchQuery}
+          interactive={isInteractive}
+          variableValues={variableValues}
+          onVariableChange={handleVariableChange}
+        />
       </div>
 
       {/* Description */}

@@ -61,9 +61,16 @@ export async function listCommands(filter: CommandFilter): Promise<Command[]> {
   }
 
   if (filter.searchQuery && filter.searchQuery.trim().length > 0) {
-    const query = `%${filter.searchQuery.trim()}%`;
-    params.push(query, query, query, query);
-    whereClause += ` AND (c.title LIKE $${params.length - 3} OR c.command LIKE $${params.length - 2} OR c.description LIKE $${params.length - 1} OR c.notes LIKE $${params.length})`;
+    const trimmed = filter.searchQuery.trim();
+    // Skip SQL LIKE for pure ASCII queries — they may be pinyin,
+    // and LIKE cannot match Chinese text against romanized input.
+    // The TS-layer search (searchCommands) handles pinyin scoring.
+    const isPureAscii = /^[a-z0-9]+$/i.test(trimmed);
+    if (!isPureAscii) {
+      const query = `%${trimmed}%`;
+      params.push(query, query, query, query);
+      whereClause += ` AND (c.title LIKE $${params.length - 3} OR c.command LIKE $${params.length - 2} OR c.description LIKE $${params.length - 1} OR c.notes LIKE $${params.length})`;
+    }
   }
 
   const commandRows = await db.select<CommandRow[]>(
@@ -274,6 +281,44 @@ export async function recordCommandCopied(id: string): Promise<void> {
      WHERE id = $2`,
     [now, id]
   );
+}
+
+export async function getVariableHistories(
+  commandId: string
+): Promise<Record<string, string>> {
+  const db = await getDb();
+  const rows = await db.select<{ variable_name: string; last_value: string }[]>(
+    "SELECT variable_name, last_value FROM command_variable_histories WHERE command_id = $1",
+    [commandId]
+  );
+  const result: Record<string, string> = {};
+  for (const row of rows) {
+    result[row.variable_name] = row.last_value;
+  }
+  return result;
+}
+
+export async function saveVariableHistories(
+  commandId: string,
+  values: Record<string, string>
+): Promise<void> {
+  const db = await getDb();
+  const now = new Date().toISOString();
+  // First, delete all existing histories for this command
+  await db.execute(
+    "DELETE FROM command_variable_histories WHERE command_id = $1",
+    [commandId]
+  );
+  // Then insert only non-empty values
+  for (const [name, value] of Object.entries(values)) {
+    if (value === "") continue;
+    const id = `${commandId}_var_${name}`;
+    await db.execute(
+      `INSERT INTO command_variable_histories (id, command_id, variable_name, last_value, updated_at)
+       VALUES ($1, $2, $3, $4, $5)`,
+      [id, commandId, name, value, now]
+    );
+  }
 }
 
 export async function clearRecentHistory(): Promise<void> {

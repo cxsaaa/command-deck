@@ -109,6 +109,21 @@ const migrations: Migration[] = [
       );
     `,
   },
+  {
+    version: 4,
+    sql: `
+      CREATE TABLE IF NOT EXISTS command_variable_histories (
+        id TEXT PRIMARY KEY,
+        command_id TEXT NOT NULL,
+        variable_name TEXT NOT NULL,
+        last_value TEXT NOT NULL,
+        updated_at TEXT NOT NULL,
+        FOREIGN KEY (command_id) REFERENCES commands(id) ON DELETE CASCADE
+      );
+      CREATE UNIQUE INDEX IF NOT EXISTS idx_cvh_command_variable
+        ON command_variable_histories(command_id, variable_name);
+    `,
+  },
 ];
 
 export async function runMigrations(db: Database): Promise<void> {

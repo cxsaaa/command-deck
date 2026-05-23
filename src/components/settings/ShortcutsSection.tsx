@@ -7,6 +7,7 @@ interface ShortcutItem {
 
 const shortcuts: ShortcutItem[] = [
   { keys: ["⌘", "K"], labelKey: "shortcuts.focusSearch" },
+  { keys: ["⌘", "N"], labelKey: "shortcuts.createCommand" },
   { keys: ["↑", "↓"], labelKey: "shortcuts.navigateResults" },
   { keys: ["Enter"], labelKey: "shortcuts.copySelected" },
   { keys: ["Esc"], labelKey: "shortcuts.closeOrClear" },

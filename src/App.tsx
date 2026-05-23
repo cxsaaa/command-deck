@@ -146,7 +146,7 @@ function App() {
   return (
     <>
       <AppShell
-        topBar={<TopBar />}
+        topBar={<TopBar searchInputRef={searchInputRef} />}
         sidebar={<Sidebar />}
         header={<CategoryTabs />}
         density={densityMode}

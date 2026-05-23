@@ -23,6 +23,7 @@
     "delete": "Delete",
     "favorite": "Favorite",
     "unfavorite": "Unfavorite",
+    "moreActions": "More actions",
     "expand": "Expand details",
     "collapse": "Collapse details",
     "examples": "Examples",
@@ -130,6 +131,7 @@
   },
   "shortcuts": {
     "focusSearch": "Focus search",
+    "createCommand": "New command",
     "navigateResults": "Navigate results",
     "copySelected": "Copy selected command",
     "closeOrClear": "Close dialog / Clear search"

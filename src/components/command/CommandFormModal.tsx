@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo, type FormEvent } from "react";
+import { useState, useEffect, useMemo, useRef, type FormEvent } from "react";
 import { useTranslation } from "react-i18next";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { Modal } from "../common/Modal";
@@ -16,6 +16,7 @@ import {
   validateCommandInput,
   type ValidationError,
 } from "../../domain/validation";
+import { analyzeClipboard } from "../../domain/clipboardIngestion";
 import type { CommandInput, CommandParameter } from "../../domain/types";
 
 interface CommandFormModalProps {
@@ -48,6 +49,7 @@ export function CommandFormModal({
   const [notes, setNotes] = useState("");
   const [errors, setErrors] = useState<ValidationError[]>([]);
   const [submitError, setSubmitError] = useState<string | null>(null);
+  const clipboardHintRef = useRef<string | null>(null);
 
   // Fetch platforms
   const { data: platforms } = useQuery({
@@ -103,6 +105,9 @@ export function CommandFormModal({
       setNotes("");
       setErrors([]);
       setSubmitError(null);
+
+      // Smart clipboard ingestion
+      readClipboardAndAnalyze();
     }
   }, [open, mode, initialTitle]);
 
@@ -159,6 +164,34 @@ export function CommandFormModal({
   });
 
   const isSaving = createMutation.isPending || updateMutation.isPending;
+
+  async function readClipboardAndAnalyze() {
+    try {
+      const { readText } = await import("@tauri-apps/plugin-clipboard-manager");
+      const text = await readText();
+      if (!text) return;
+      const analysis = analyzeClipboard(text);
+      if (analysis.isCliCommand && analysis.commandText) {
+        setCommandText(analysis.commandText);
+        clipboardHintRef.current = analysis.suggestedPlatformName;
+      }
+    } catch {
+      // Clipboard read failed — silent degradation
+    }
+  }
+
+  // Auto-select platform when platforms load and clipboard hint exists
+  useEffect(() => {
+    if (open && mode === "create" && clipboardHintRef.current && platforms && !platformId) {
+      const matched = platforms.find(
+        (p) => p.name.toLowerCase() === clipboardHintRef.current
+      );
+      if (matched) {
+        setPlatformId(matched.id);
+      }
+      clipboardHintRef.current = null;
+    }
+  }, [open, mode, platforms, platformId]);
 
   function getError(field: string): string | undefined {
     return errors.find((e) => e.field === field)?.message;

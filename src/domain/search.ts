@@ -1,3 +1,4 @@
+import { pinyin } from "pinyin-pro";
 import type { Command, CommandFilter } from "./types";
 
 interface ScoredCommand {
@@ -17,7 +18,52 @@ const WEIGHTS = {
   favoriteBonus: 20,
   recentBonus: 10,
   usageBonus: 10,
+  pinyinFullMatch: 60,
+  pinyinInitialMatch: 55,
 } as const;
+
+/**
+ * Score a Chinese text against an English query using pinyin matching.
+ * Returns 0 if no match; higher score for better match.
+ */
+function scorePinyin(text: string, query: string): number {
+  // Extract only Chinese characters from text
+  const chineseChars = text.match(/[一-鿿]/g);
+  if (!chineseChars || chineseChars.length === 0) return 0;
+
+  const chineseText = chineseChars.join("");
+
+  // Generate pinyin variants
+  const initials = pinyin(chineseText, { pattern: "first", type: "array" })
+    .join("")
+    .toLowerCase();
+  const fullPinyin = pinyin(chineseText, { toneType: "none", type: "array" })
+    .join("")
+    .toLowerCase();
+
+  // Initials prefix match (e.g., "ckrz" matches "查看日志")
+  if (initials.startsWith(query)) {
+    return WEIGHTS.pinyinInitialMatch;
+  }
+
+  // Full pinyin contains match (e.g., "chakan" matches "查看日志")
+  if (fullPinyin.includes(query)) {
+    return WEIGHTS.pinyinFullMatch;
+  }
+
+  return 0;
+}
+
+/**
+ * Score pinyin for a text, but only if the query is pure ASCII (English/numbers).
+ * Returns the pinyin bonus score, or 0.
+ */
+function maybePinyinScore(text: string | null | undefined, query: string): number {
+  if (!text) return 0;
+  // Only trigger on pure ASCII queries
+  if (!/^[a-z0-9]+$/.test(query)) return 0;
+  return scorePinyin(text, query);
+}
 
 function scoreCommand(cmd: Command, query: string): number {
   const q = query.toLowerCase().trim();
@@ -66,14 +112,25 @@ function scoreCommand(cmd: Command, query: string): number {
     score += WEIGHTS.parameterIncludes;
   }
 
-  // Bonus scoring
-  if (cmd.isFavorite) {
-    score += WEIGHTS.favoriteBonus;
+  // Pinyin enhancement (only when no direct match found yet and query is ASCII)
+  if (score === 0) {
+    score += maybePinyinScore(cmd.title, q);
+    score += Math.round(maybePinyinScore(cmd.description, q) * 0.8);
+    for (const tag of cmd.tags) {
+      score += Math.round(maybePinyinScore(tag, q) * 0.7);
+    }
   }
-  if (cmd.lastUsedAt) {
-    score += WEIGHTS.recentBonus;
+
+  // Bonus scoring (only when there's an actual match)
+  if (score > 0) {
+    if (cmd.isFavorite) {
+      score += WEIGHTS.favoriteBonus;
+    }
+    if (cmd.lastUsedAt) {
+      score += WEIGHTS.recentBonus;
+    }
+    score += Math.min(cmd.usageCount, WEIGHTS.usageBonus);
   }
-  score += Math.min(cmd.usageCount, WEIGHTS.usageBonus);
 
   return score;
 }

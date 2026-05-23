@@ -1,13 +1,16 @@
-import { useRef } from "react";
+import type { RefObject } from "react";
 import { useTranslation } from "react-i18next";
 import { Plus, Settings, Rows3, LayoutGrid } from "lucide-react";
 import { Button, IconButton } from "../common";
 import { SearchInput } from "../search/SearchInput";
 import { useUiStore } from "../../state/uiStore";
 
-export function TopBar() {
+interface TopBarProps {
+  searchInputRef: RefObject<HTMLInputElement | null>;
+}
+
+export function TopBar({ searchInputRef }: TopBarProps) {
   const { t } = useTranslation();
-  const searchInputRef = useRef<HTMLInputElement>(null);
   const openCreateCommandModal = useUiStore((s) => s.openCreateCommandModal);
   const densityMode = useUiStore((s) => s.densityMode);
   const toggleDensityMode = useUiStore((s) => s.toggleDensityMode);

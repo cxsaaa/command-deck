@@ -7,6 +7,7 @@ interface IconButtonProps {
   active?: boolean;
   danger?: boolean;
   className?: string;
+  "aria-label"?: string;
 }
 
 export function IconButton({
@@ -16,6 +17,7 @@ export function IconButton({
   active = false,
   danger = false,
   className = "",
+  "aria-label": ariaLabel,
 }: IconButtonProps) {
   const baseColor = danger
     ? "var(--color-state-danger)"
@@ -36,6 +38,7 @@ export function IconButton({
       type="button"
       onClick={onClick}
       title={tooltip}
+      aria-label={ariaLabel}
       className={`inline-flex items-center justify-center transition-colors select-none ${className}`}
       style={{
         width: "24px",

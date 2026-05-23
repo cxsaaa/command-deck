@@ -1,7 +1,6 @@
 import { type ReactNode } from "react";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import { MoreHorizontal } from "lucide-react";
-import { IconButton } from "./IconButton";
 
 interface MenuItem {
   id: string;
@@ -13,19 +12,32 @@ interface MenuItem {
 
 interface MoreMenuProps {
   items: MenuItem[];
-  trigger?: ReactNode;
 }
 
-export function MoreMenu({ items, trigger }: MoreMenuProps) {
+export function MoreMenu({ items }: MoreMenuProps) {
   return (
     <DropdownMenu.Root>
-      <DropdownMenu.Trigger asChild>
-        {trigger ?? (
-          <IconButton
-            icon={<MoreHorizontal size={16} />}
-            tooltip="More actions"
-          />
-        )}
+      <DropdownMenu.Trigger
+        className="inline-flex items-center justify-center transition-colors select-none"
+        style={{
+          width: "24px",
+          height: "24px",
+          borderRadius: "var(--radius-sm)",
+          backgroundColor: "transparent",
+          color: "var(--color-text-tertiary)",
+          border: "none",
+          cursor: "pointer",
+        }}
+        onMouseEnter={(e) => {
+          e.currentTarget.style.backgroundColor = "var(--color-bg-hover)";
+          e.currentTarget.style.color = "var(--color-text-primary)";
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.backgroundColor = "transparent";
+          e.currentTarget.style.color = "var(--color-text-tertiary)";
+        }}
+      >
+        <MoreHorizontal size={16} />
       </DropdownMenu.Trigger>
 
       <DropdownMenu.Portal>

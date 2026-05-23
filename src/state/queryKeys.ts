@@ -5,4 +5,6 @@ export const queryKeys = {
   search: (query: string, filter: Record<string, unknown>) =>
     ["search", query, filter] as const,
   command: (id: string) => ["command", id] as const,
+  variableHistories: (commandId: string) =>
+    ["variableHistories", commandId] as const,
 };

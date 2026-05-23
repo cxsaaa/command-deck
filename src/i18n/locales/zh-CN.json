@@ -23,6 +23,7 @@
     "delete": "删除",
     "favorite": "收藏",
     "unfavorite": "取消收藏",
+    "moreActions": "更多操作",
     "expand": "展开详情",
     "collapse": "收起详情",
     "examples": "示例",
@@ -130,6 +131,7 @@
   },
   "shortcuts": {
     "focusSearch": "聚焦搜索框",
+    "createCommand": "新建命令",
     "navigateResults": "导航搜索结果",
     "copySelected": "复制选中命令",
     "closeOrClear": "关闭弹窗 / 清除搜索"

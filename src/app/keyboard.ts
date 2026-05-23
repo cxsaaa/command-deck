@@ -46,6 +46,13 @@ export function useGlobalKeyboard(
         return;
       }
 
+      // ⌘N → new command
+      if ((e.metaKey || e.ctrlKey) && e.key === "n") {
+        e.preventDefault();
+        store.openCreateCommandModal();
+        return;
+      }
+
       // Arrow keys & Enter only when search is active and input is focused
       if (
         document.activeElement === searchInputRef.current &&

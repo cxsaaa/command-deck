@@ -44,6 +44,12 @@
   --color-highlight-bg: #FEF08A;
   --color-highlight-text: #101828;
 
+  /* Placeholder Input */
+  --placeholder-input-bg: #FFFFFF;
+  --placeholder-input-border: #D0D5DD;
+  --placeholder-input-border-focus: #2563EB;
+  --placeholder-input-text: #101828;
+
   /* Spacing */
   --space-1: 4px;
   --space-2: 8px;
@@ -116,4 +122,10 @@
   /* Colors - Highlight */
   --color-highlight-bg: #854D0E;
   --color-highlight-text: #F9FAFB;
+
+  /* Placeholder Input */
+  --placeholder-input-bg: #1F2937;
+  --placeholder-input-border: #475467;
+  --placeholder-input-border-focus: #60A5FA;
+  --placeholder-input-text: #F9FAFB;
 }

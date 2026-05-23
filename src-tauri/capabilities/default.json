@@ -9,6 +9,7 @@
     "sql:default",
     "sql:allow-execute",
     "clipboard-manager:allow-write-text",
+    "clipboard-manager:allow-read-text",
     "window-state:default",
     "autostart:allow-enable",
     "autostart:allow-disable",
