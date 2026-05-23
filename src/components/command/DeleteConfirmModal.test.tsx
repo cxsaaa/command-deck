@@ -28,9 +28,7 @@ function renderWithQueryClient(ui: React.ReactNode) {
   const queryClient = new QueryClient({
     defaultOptions: { queries: { retry: false } },
   });
-  return render(
-    <QueryClientProvider client={queryClient}>{ui}</QueryClientProvider>
-  );
+  return render(<QueryClientProvider client={queryClient}>{ui}</QueryClientProvider>);
 }
 
 describe("DeleteConfirmModal", () => {
@@ -39,39 +37,21 @@ describe("DeleteConfirmModal", () => {
   });
 
   it("shows confirmation text when open", () => {
-    renderWithQueryClient(
-      <DeleteConfirmModal
-        open={true}
-        commandId="cmd-1"
-        onClose={() => {}}
-      />
-    );
+    renderWithQueryClient(<DeleteConfirmModal open={true} commandId="cmd-1" onClose={() => {}} />);
     expect(screen.getByText("确定删除这条命令吗？")).toBeInTheDocument();
     expect(screen.getByText("删除后不可恢复。")).toBeInTheDocument();
   });
 
   it("does not show content when closed", () => {
-    renderWithQueryClient(
-      <DeleteConfirmModal
-        open={false}
-        commandId="cmd-1"
-        onClose={() => {}}
-      />
-    );
-    expect(
-      screen.queryByText("确定删除这条命令吗？")
-    ).not.toBeInTheDocument();
+    renderWithQueryClient(<DeleteConfirmModal open={false} commandId="cmd-1" onClose={() => {}} />);
+    expect(screen.queryByText("确定删除这条命令吗？")).not.toBeInTheDocument();
   });
 
   it("calls onClose when cancel button is clicked", async () => {
     const handleClose = vi.fn();
     const user = userEvent.setup();
     renderWithQueryClient(
-      <DeleteConfirmModal
-        open={true}
-        commandId="cmd-1"
-        onClose={handleClose}
-      />
+      <DeleteConfirmModal open={true} commandId="cmd-1" onClose={handleClose} />,
     );
     const cancelButton = screen.getByRole("button", { name: "取消" });
     await user.click(cancelButton);
@@ -80,13 +60,7 @@ describe("DeleteConfirmModal", () => {
 
   it("calls deleteCommand when delete button is clicked", async () => {
     const user = userEvent.setup();
-    renderWithQueryClient(
-      <DeleteConfirmModal
-        open={true}
-        commandId="cmd-1"
-        onClose={() => {}}
-      />
-    );
+    renderWithQueryClient(<DeleteConfirmModal open={true} commandId="cmd-1" onClose={() => {}} />);
     const deleteButton = screen.getByRole("button", { name: "删除" });
     await user.click(deleteButton);
     await waitFor(() => {
@@ -95,13 +69,7 @@ describe("DeleteConfirmModal", () => {
   });
 
   it("renders cancel and delete buttons", () => {
-    renderWithQueryClient(
-      <DeleteConfirmModal
-        open={true}
-        commandId="cmd-1"
-        onClose={() => {}}
-      />
-    );
+    renderWithQueryClient(<DeleteConfirmModal open={true} commandId="cmd-1" onClose={() => {}} />);
     expect(screen.getByRole("button", { name: "取消" })).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "删除" })).toBeInTheDocument();
   });

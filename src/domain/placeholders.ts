@@ -72,10 +72,7 @@ export function hasPlaceholders(command: string): boolean {
  * Replace placeholders in a command string with provided values.
  * Unmatched placeholders retain their original text.
  */
-export function replacePlaceholders(
-  command: string,
-  values: Record<string, string>
-): string {
+export function replacePlaceholders(command: string, values: Record<string, string>): string {
   return command.replace(PLACEHOLDER_REGEX, (match) => {
     const name = extractVariableName(match);
     // Empty placeholder names are treated as literal text

@@ -54,7 +54,7 @@ describe("parsePlaceholders", () => {
   });
 
   it("parses command with mixed placeholder formats", () => {
-    const result = parsePlaceholders("docker exec -it <id> sh -c \"{{cmd}}\"");
+    const result = parsePlaceholders('docker exec -it <id> sh -c "{{cmd}}"');
     expect(result).toHaveLength(5);
     expect(result.filter((s) => s.type === "placeholder")).toHaveLength(2);
   });
@@ -97,42 +97,32 @@ describe("hasPlaceholders", () => {
 
 describe("replacePlaceholders", () => {
   it("replaces placeholder with provided value", () => {
-    const result = replacePlaceholders(
-      "docker exec -it <container_id> /bin/bash",
-      { container_id: "web-nginx" }
-    );
+    const result = replacePlaceholders("docker exec -it <container_id> /bin/bash", {
+      container_id: "web-nginx",
+    });
     expect(result).toBe("docker exec -it web-nginx /bin/bash");
   });
 
   it("replaces multiple placeholders", () => {
-    const result = replacePlaceholders(
-      "kubectl get pod {{pod_name}} -n {{namespace}}",
-      { pod_name: "my-pod", namespace: "default" }
-    );
+    const result = replacePlaceholders("kubectl get pod {{pod_name}} -n {{namespace}}", {
+      pod_name: "my-pod",
+      namespace: "default",
+    });
     expect(result).toBe("kubectl get pod my-pod -n default");
   });
 
   it("keeps original placeholder when value is empty string", () => {
-    const result = replacePlaceholders(
-      "docker exec -it <container_id> sh",
-      { container_id: "" }
-    );
+    const result = replacePlaceholders("docker exec -it <container_id> sh", { container_id: "" });
     expect(result).toBe("docker exec -it <container_id> sh");
   });
 
   it("keeps original placeholder when value is not provided", () => {
-    const result = replacePlaceholders(
-      "docker exec -it <container_id> sh",
-      {}
-    );
+    const result = replacePlaceholders("docker exec -it <container_id> sh", {});
     expect(result).toBe("docker exec -it <container_id> sh");
   });
 
   it("handles mixed replaced and unreplaced placeholders", () => {
-    const result = replacePlaceholders(
-      "kubectl get pod {{pod}} -n {{ns}}",
-      { pod: "my-pod" }
-    );
+    const result = replacePlaceholders("kubectl get pod {{pod}} -n {{ns}}", { pod: "my-pod" });
     expect(result).toBe("kubectl get pod my-pod -n {{ns}}");
   });
 

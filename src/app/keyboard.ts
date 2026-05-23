@@ -16,8 +16,7 @@ export function useGlobalKeyboard(
       const store = useUiStore.getState();
 
       // Skip global shortcuts when a modal is open
-      const modalOpen =
-        store.commandModal !== null || store.deleteConfirmCommandId !== null;
+      const modalOpen = store.commandModal !== null || store.deleteConfirmCommandId !== null;
 
       // Esc → close modal first, then clear search
       if (e.key === "Escape") {
@@ -54,16 +53,11 @@ export function useGlobalKeyboard(
       }
 
       // Arrow keys & Enter only when search is active and input is focused
-      if (
-        document.activeElement === searchInputRef.current &&
-        store.searchQuery.trim()
-      ) {
+      if (document.activeElement === searchInputRef.current && store.searchQuery.trim()) {
         if (e.key === "ArrowDown") {
           e.preventDefault();
           const nextIndex =
-            store.selectedResultIndex < commands.length - 1
-              ? store.selectedResultIndex + 1
-              : 0;
+            store.selectedResultIndex < commands.length - 1 ? store.selectedResultIndex + 1 : 0;
           store.setSelectedResultIndex(nextIndex);
           return;
         }
@@ -71,19 +65,14 @@ export function useGlobalKeyboard(
         if (e.key === "ArrowUp") {
           e.preventDefault();
           const prevIndex =
-            store.selectedResultIndex > 0
-              ? store.selectedResultIndex - 1
-              : commands.length - 1;
+            store.selectedResultIndex > 0 ? store.selectedResultIndex - 1 : commands.length - 1;
           store.setSelectedResultIndex(prevIndex);
           return;
         }
 
         if (e.key === "Enter") {
           e.preventDefault();
-          if (
-            store.selectedResultIndex >= 0 &&
-            store.selectedResultIndex < commands.length
-          ) {
+          if (store.selectedResultIndex >= 0 && store.selectedResultIndex < commands.length) {
             handleCopyCommand(commands[store.selectedResultIndex]);
           }
           return;

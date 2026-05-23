@@ -36,7 +36,15 @@ vi.mock("../common/MoreMenu", () => ({
 
 // Mock IconButton to render a simple button
 vi.mock("../common/IconButton", () => ({
-  IconButton: ({ onClick, tooltip, icon }: { onClick: () => void; tooltip: string; icon: React.ReactNode }) => (
+  IconButton: ({
+    onClick,
+    tooltip,
+    icon,
+  }: {
+    onClick: () => void;
+    tooltip: string;
+    icon: React.ReactNode;
+  }) => (
     <button onClick={onClick} aria-label={tooltip}>
       {icon}
     </button>
@@ -45,9 +53,7 @@ vi.mock("../common/IconButton", () => ({
 
 // Mock CommandCodeBlock
 vi.mock("./CommandCodeBlock", () => ({
-  CommandCodeBlock: ({ code }: { code: string }) => (
-    <pre data-testid="code-block">{code}</pre>
-  ),
+  CommandCodeBlock: ({ code }: { code: string }) => <pre data-testid="code-block">{code}</pre>,
 }));
 
 function makeCommand(overrides: Partial<Command> = {}): Command {
@@ -77,9 +83,7 @@ function renderWithQueryClient(ui: React.ReactNode) {
   const queryClient = new QueryClient({
     defaultOptions: { queries: { retry: false } },
   });
-  return render(
-    <QueryClientProvider client={queryClient}>{ui}</QueryClientProvider>
-  );
+  return render(<QueryClientProvider client={queryClient}>{ui}</QueryClientProvider>);
 }
 
 describe("CommandCard", () => {
@@ -96,9 +100,7 @@ describe("CommandCard", () => {
   it("renders command code", () => {
     const command = makeCommand();
     renderWithQueryClient(<CommandCard command={command} />);
-    expect(screen.getByTestId("code-block")).toHaveTextContent(
-      "git push origin main"
-    );
+    expect(screen.getByTestId("code-block")).toHaveTextContent("git push origin main");
   });
 
   it("renders description", () => {
@@ -111,9 +113,7 @@ describe("CommandCard", () => {
     const command = makeCommand();
     renderWithQueryClient(<CommandCard command={command} />);
     // The meta span contains "Git · Version Control · remote · push"
-    expect(
-      screen.getByText(/Git · Version Control/)
-    ).toBeInTheDocument();
+    expect(screen.getByText(/Git · Version Control/)).toBeInTheDocument();
   });
 
   it("renders tags in meta", () => {
@@ -128,15 +128,11 @@ describe("CommandCard", () => {
   it("renders copy button", () => {
     const command = makeCommand();
     renderWithQueryClient(<CommandCard command={command} />);
-    expect(
-      screen.getByRole("button", { name: "复制" })
-    ).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "复制" })).toBeInTheDocument();
   });
 
   it("calls toggleFavorite when favorite button is clicked", async () => {
-    const { toggleFavorite } = await import(
-      "../../data/repositories/commandRepository"
-    );
+    const { toggleFavorite } = await import("../../data/repositories/commandRepository");
     const command = makeCommand();
     const user = userEvent.setup();
     renderWithQueryClient(<CommandCard command={command} />);
@@ -147,9 +143,7 @@ describe("CommandCard", () => {
 
   it("calls writeText and recordCommandCopied when copy button is clicked", async () => {
     const { writeText } = await import("@tauri-apps/plugin-clipboard-manager");
-    const { recordCommandCopied } = await import(
-      "../../data/repositories/commandRepository"
-    );
+    const { recordCommandCopied } = await import("../../data/repositories/commandRepository");
     const command = makeCommand();
     const user = userEvent.setup();
     renderWithQueryClient(<CommandCard command={command} />);

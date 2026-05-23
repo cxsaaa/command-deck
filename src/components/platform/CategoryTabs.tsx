@@ -67,9 +67,7 @@ export function CategoryTabs() {
   }
 
   // Filter out uncategorized for display, but keep it for operations
-  const displayCategories = categories.filter(
-    (c) => !c.id.startsWith("uncategorized_")
-  );
+  const displayCategories = categories.filter((c) => !c.id.startsWith("uncategorized_"));
 
   return (
     <div
@@ -161,9 +159,7 @@ function TabButton({ label, isActive, onClick }: TabButtonProps) {
       style={{
         backgroundColor: isActive ? "var(--color-accent-soft)" : "transparent",
         color: isActive ? "var(--color-accent)" : "var(--color-text-secondary)",
-        border: isActive
-          ? "1px solid var(--color-accent-border)"
-          : "1px solid transparent",
+        border: isActive ? "1px solid var(--color-accent-border)" : "1px solid transparent",
         fontWeight: isActive ? 500 : 400,
         cursor: "pointer",
       }}

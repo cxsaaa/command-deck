@@ -48,7 +48,7 @@ export function TagInput({ tags, onChange }: TagInputProps) {
         border: "1px solid var(--color-border)",
         borderRadius: "var(--radius-md)",
         padding: "6px 8px",
-        minHeight: "36px",
+        minHeight: "30px",
         backgroundColor: "var(--color-bg-surface)",
         cursor: "text",
       }}

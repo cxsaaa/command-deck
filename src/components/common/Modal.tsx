@@ -11,16 +11,14 @@ interface ModalProps {
   maxWidth?: string;
 }
 
-export function Modal({
-  open,
-  onClose,
-  title,
-  children,
-  footer,
-  maxWidth = "560px",
-}: ModalProps) {
+export function Modal({ open, onClose, title, children, footer, maxWidth = "560px" }: ModalProps) {
   return (
-    <Dialog.Root open={open} onOpenChange={(v) => { if (!v) onClose(); }}>
+    <Dialog.Root
+      open={open}
+      onOpenChange={(v) => {
+        if (!v) onClose();
+      }}
+    >
       <Dialog.Portal>
         {/* Overlay */}
         <Dialog.Overlay
@@ -53,10 +51,7 @@ export function Modal({
           }}
         >
           {/* Header */}
-          <div
-            className="flex items-center justify-between mb-4"
-            style={{ minHeight: "32px" }}
-          >
+          <div className="flex items-center justify-between mb-4" style={{ minHeight: "32px" }}>
             <Dialog.Title
               className="text-base font-semibold"
               style={{ color: "var(--color-text-primary)" }}
@@ -77,8 +72,7 @@ export function Modal({
                   cursor: "pointer",
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.backgroundColor =
-                    "var(--color-bg-hover)";
+                  e.currentTarget.style.backgroundColor = "var(--color-bg-hover)";
                   e.currentTarget.style.color = "var(--color-text-primary)";
                 }}
                 onMouseLeave={(e) => {
@@ -96,7 +90,8 @@ export function Modal({
 
           {/* Footer */}
           {footer && (
-            <div className="flex items-center justify-end gap-2 mt-6 pt-4 border-t"
+            <div
+              className="flex items-center justify-end gap-2 mt-6 pt-4 border-t"
               style={{ borderColor: "var(--color-border)" }}
             >
               {footer}

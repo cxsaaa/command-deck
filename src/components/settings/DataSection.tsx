@@ -1,18 +1,11 @@
 import { useState, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import {
-  Download,
-  Upload,
-  Sparkles,
-  Trash2,
-  RotateCcw,
-  Eye,
-  EyeOff,
-} from "lucide-react";
+import { Download, Upload, Sparkles, Trash2, RotateCcw, Eye, EyeOff, BookOpen } from "lucide-react";
 import { toast } from "../common/Toast";
 import { Button } from "../common/Button";
 import { ConflictDialog } from "./ConflictDialog";
+import { DeckBrowserModal } from "./DeckBrowserModal";
 import * as platformRepository from "../../data/repositories/platformRepository";
 import * as commandRepository from "../../data/repositories/commandRepository";
 import { exportToJSON } from "../../domain/exportData";
@@ -34,6 +27,7 @@ export function DataSection() {
   const [importData, setImportData] = useState<CommandDeckExport | null>(null);
   const [importAnalysis, setImportAnalysis] = useState<ImportAnalysis | null>(null);
   const [showConflict, setShowConflict] = useState(false);
+  const [showDeckBrowser, setShowDeckBrowser] = useState(false);
   const [confirmAction, setConfirmAction] = useState<"clearRecent" | "factoryReset" | null>(null);
 
   const { data: platforms } = useQuery({
@@ -82,7 +76,7 @@ export function DataSection() {
           imported: result.imported,
           skipped: result.skipped,
         }),
-        "success"
+        "success",
       );
     } catch {
       toast(t("settings.importError"), "error");
@@ -130,10 +124,7 @@ export function DataSection() {
         >
           {t("settings.platformVisibility")}
         </label>
-        <p
-          className="text-xs mb-3"
-          style={{ color: "var(--color-text-tertiary)" }}
-        >
+        <p className="text-xs mb-3" style={{ color: "var(--color-text-tertiary)" }}>
           {t("settings.platformVisibilityDesc")}
         </p>
         <div
@@ -149,9 +140,7 @@ export function DataSection() {
               key={platform.id}
               className="flex items-center justify-between px-2 py-1.5 rounded-md"
               style={{ cursor: "pointer" }}
-              onClick={() =>
-                handleToggleVisibility(platform.id, platform.isVisible)
-              }
+              onClick={() => handleToggleVisibility(platform.id, platform.isVisible)}
               onMouseEnter={(e) => {
                 e.currentTarget.style.backgroundColor = "var(--color-bg-hover)";
               }}
@@ -164,16 +153,10 @@ export function DataSection() {
                   className="inline-block w-2.5 h-2.5 rounded-full"
                   style={{ backgroundColor: platform.color }}
                 />
-                <span
-                  className="text-sm"
-                  style={{ color: "var(--color-text-primary)" }}
-                >
+                <span className="text-sm" style={{ color: "var(--color-text-primary)" }}>
                   {platform.name}
                 </span>
-                <span
-                  className="text-xs"
-                  style={{ color: "var(--color-text-tertiary)" }}
-                >
+                <span className="text-xs" style={{ color: "var(--color-text-tertiary)" }}>
                   {platform.commandCount} {t("contentHeader.commandsUnit")}
                 </span>
               </div>
@@ -204,6 +187,10 @@ export function DataSection() {
             <Download size={14} />
             <span>{t("settings.exportData")}</span>
           </Button>
+          <Button variant="secondary" size="sm" onClick={() => setShowDeckBrowser(true)}>
+            <BookOpen size={14} />
+            <span>{t("settings.deckBrowser.button")}</span>
+          </Button>
           <Button variant="secondary" size="sm" onClick={handleCopyAiPrompt}>
             <Sparkles size={14} />
             <span>{t("settings.copyAiPrompt")}</span>
@@ -227,19 +214,11 @@ export function DataSection() {
           {t("settings.dangerZone")}
         </label>
         <div className="flex gap-2 flex-wrap mt-2">
-          <Button
-            variant="secondary"
-            size="sm"
-            onClick={() => setConfirmAction("clearRecent")}
-          >
+          <Button variant="secondary" size="sm" onClick={() => setConfirmAction("clearRecent")}>
             <Trash2 size={14} />
             <span>{t("settings.clearRecent")}</span>
           </Button>
-          <Button
-            variant="danger"
-            size="sm"
-            onClick={() => setConfirmAction("factoryReset")}
-          >
+          <Button variant="danger" size="sm" onClick={() => setConfirmAction("factoryReset")}>
             <RotateCcw size={14} />
             <span>{t("settings.factoryReset")}</span>
           </Button>
@@ -272,30 +251,19 @@ export function DataSection() {
               boxShadow: "0 20px 60px rgba(0,0,0,0.15)",
             }}
           >
-            <p
-              className="text-sm mb-4"
-              style={{ color: "var(--color-text-primary)" }}
-            >
+            <p className="text-sm mb-4" style={{ color: "var(--color-text-primary)" }}>
               {confirmAction === "clearRecent"
                 ? t("settings.confirmClearRecent")
                 : t("settings.confirmFactoryReset")}
             </p>
             <div className="flex justify-end gap-2">
-              <Button
-                variant="secondary"
-                size="sm"
-                onClick={() => setConfirmAction(null)}
-              >
+              <Button variant="secondary" size="sm" onClick={() => setConfirmAction(null)}>
                 {t("deleteConfirm.cancel")}
               </Button>
               <Button
                 variant="danger"
                 size="sm"
-                onClick={
-                  confirmAction === "clearRecent"
-                    ? handleClearRecent
-                    : handleFactoryReset
-                }
+                onClick={confirmAction === "clearRecent" ? handleClearRecent : handleFactoryReset}
               >
                 {t("deleteConfirm.confirm")}
               </Button>
@@ -303,6 +271,9 @@ export function DataSection() {
           </div>
         </div>
       )}
+
+      {/* Deck Browser Modal */}
+      <DeckBrowserModal open={showDeckBrowser} onClose={() => setShowDeckBrowser(false)} />
     </div>
   );
 }

@@ -8,12 +8,7 @@ interface EmptyStateProps {
   icon?: ReactNode;
 }
 
-export function EmptyState({
-  title,
-  description,
-  action,
-  icon,
-}: EmptyStateProps) {
+export function EmptyState({ title, description, action, icon }: EmptyStateProps) {
   return (
     <div
       className="flex flex-col items-center justify-center text-center"
@@ -24,26 +19,17 @@ export function EmptyState({
       }}
     >
       {icon && (
-        <div
-          className="mb-4"
-          style={{ color: "var(--color-text-placeholder)" }}
-        >
+        <div className="mb-4" style={{ color: "var(--color-text-placeholder)" }}>
           {icon}
         </div>
       )}
 
-      <h3
-        className="text-base font-medium mb-1"
-        style={{ color: "var(--color-text-primary)" }}
-      >
+      <h3 className="text-base font-medium mb-1" style={{ color: "var(--color-text-primary)" }}>
         {title}
       </h3>
 
       {description && (
-        <p
-          className="text-sm mb-4"
-          style={{ color: "var(--color-text-tertiary)" }}
-        >
+        <p className="text-sm mb-4" style={{ color: "var(--color-text-tertiary)" }}>
           {description}
         </p>
       )}

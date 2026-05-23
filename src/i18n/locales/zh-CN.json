@@ -152,6 +152,11 @@
     "windowBehavior": "窗口行为",
     "hideOnBlur": "失去焦点时自动隐藏窗口",
     "dockToggle": "点击 Dock 图标时切换窗口可见状态",
+    "trayMode": "菜单栏模式",
+    "trayModeDesc": "隐藏 Dock 图标，常驻菜单栏",
+    "globalHotkey": "全局快捷键",
+    "globalHotkeyDesc": "设置全局快捷键唤出搜索面板",
+    "globalHotkeyPlaceholder": "按下快捷键组合",
     "themeMode": "主题模式",
     "themeSystem": "跟随系统",
     "themeLight": "浅色",
@@ -183,5 +188,22 @@
     "confirmFactoryReset": "确定恢复出厂设置？所有数据将被清空并重新注入默认内容，此操作不可撤销。",
     "clearRecentDone": "最近使用记录已清空",
     "factoryResetDone": "已恢复出厂设置"
+  },
+  "overlay": {
+    "fillVariables": "填写变量",
+    "copy": "复制",
+    "cancel": "取消"
+  },
+  "settings.deckBrowser": {
+    "button": "浏览精选命令库",
+    "title": "精选命令库",
+    "import": "下载",
+    "importing": "导入中...",
+    "installed": "已安装",
+    "update": "更新",
+    "commands": "{{count}} 条命令",
+    "importSuccess": "成功导入 {{imported}} 条命令，跳过 {{skipped}} 条重复命令",
+    "networkError": "网络错误，请检查网络连接后重试",
+    "noDecks": "暂无可用的命令库"
   }
 }

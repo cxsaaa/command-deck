@@ -15,8 +15,7 @@ const variantClasses: Record<string, string> = {
     "bg-[var(--color-accent)] text-[var(--color-text-inverse)] hover:bg-[var(--color-accent-hover)] border-none",
   secondary:
     "bg-[var(--color-bg-surface)] text-[var(--color-text-secondary)] border border-[var(--color-border)] hover:bg-[var(--color-bg-hover)]",
-  danger:
-    "bg-[var(--color-state-danger)] text-white hover:bg-[#B91C1C] border-none",
+  danger: "bg-[var(--color-state-danger)] text-white hover:bg-[#B91C1C] border-none",
 };
 
 const sizeClasses: Record<string, string> = {

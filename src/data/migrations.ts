@@ -135,7 +135,7 @@ export async function runMigrations(db: Database): Promise<void> {
   `);
 
   const rows = await db.select<{ version: number }[]>(
-    "SELECT version FROM schema_migrations ORDER BY version"
+    "SELECT version FROM schema_migrations ORDER BY version",
   );
   const applied = new Set(rows.map((r) => r.version));
 
@@ -150,10 +150,10 @@ export async function runMigrations(db: Database): Promise<void> {
         await db.execute(stmt);
       }
 
-      await db.execute(
-        "INSERT INTO schema_migrations (version, applied_at) VALUES ($1, $2)",
-        [migration.version, new Date().toISOString()]
-      );
+      await db.execute("INSERT INTO schema_migrations (version, applied_at) VALUES ($1, $2)", [
+        migration.version,
+        new Date().toISOString(),
+      ]);
     }
   }
 }

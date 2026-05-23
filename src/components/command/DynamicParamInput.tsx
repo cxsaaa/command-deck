@@ -9,11 +9,7 @@ interface DynamicParamInputProps {
 
 export function DynamicParamInput({ items, onChange }: DynamicParamInputProps) {
   const { t } = useTranslation();
-  function updateItem(
-    index: number,
-    field: keyof CommandParameter,
-    value: string,
-  ) {
+  function updateItem(index: number, field: keyof CommandParameter, value: string) {
     const next = [...items];
     next[index] = { ...next[index], [field]: value };
     onChange(next);
@@ -50,8 +46,8 @@ export function DynamicParamInput({ items, onChange }: DynamicParamInputProps) {
             className="text-sm outline-none"
             style={{
               width: "120px",
-              height: "36px",
-              padding: "0 10px",
+              height: "30px",
+              padding: "0 8px",
               border: "1px solid var(--color-border)",
               borderRadius: "var(--radius-md)",
               backgroundColor: "var(--color-bg-surface)",
@@ -67,8 +63,8 @@ export function DynamicParamInput({ items, onChange }: DynamicParamInputProps) {
             placeholder={t("commandForm.parameterDesc")}
             className="flex-1 text-sm outline-none"
             style={{
-              height: "36px",
-              padding: "0 10px",
+              height: "30px",
+              padding: "0 8px",
               border: "1px solid var(--color-border)",
               borderRadius: "var(--radius-md)",
               backgroundColor: "var(--color-bg-surface)",
@@ -90,8 +86,7 @@ export function DynamicParamInput({ items, onChange }: DynamicParamInputProps) {
               color: "var(--color-text-tertiary)",
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.backgroundColor =
-                "var(--color-state-danger-soft)";
+              e.currentTarget.style.backgroundColor = "var(--color-state-danger-soft)";
               e.currentTarget.style.color = "var(--color-state-danger)";
             }}
             onMouseLeave={(e) => {

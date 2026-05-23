@@ -3,10 +3,7 @@ import { useTranslation } from "react-i18next";
 import { Search, X } from "lucide-react";
 import { useUiStore } from "../../state/uiStore";
 
-export const SearchInput = forwardRef<HTMLInputElement>(function SearchInput(
-  _props,
-  ref,
-) {
+export const SearchInput = forwardRef<HTMLInputElement>(function SearchInput(_props, ref) {
   const { t } = useTranslation();
   const searchQuery = useUiStore((s) => s.searchQuery);
   const setSearchQuery = useUiStore((s) => s.setSearchQuery);
@@ -19,10 +16,7 @@ export const SearchInput = forwardRef<HTMLInputElement>(function SearchInput(
         border: "1px solid var(--color-border)",
       }}
     >
-      <Search
-        size={14}
-        style={{ color: "var(--color-text-placeholder)", flexShrink: 0 }}
-      />
+      <Search size={14} style={{ color: "var(--color-text-placeholder)", flexShrink: 0 }} />
       <input
         ref={ref}
         type="text"
@@ -35,14 +29,11 @@ export const SearchInput = forwardRef<HTMLInputElement>(function SearchInput(
           border: "none",
         }}
         onFocus={(e) => {
-          e.currentTarget.parentElement!.style.borderColor =
-            "var(--color-accent)";
-          e.currentTarget.parentElement!.style.boxShadow =
-            "0 0 0 2px var(--color-accent-soft)";
+          e.currentTarget.parentElement!.style.borderColor = "var(--color-accent)";
+          e.currentTarget.parentElement!.style.boxShadow = "0 0 0 2px var(--color-accent-soft)";
         }}
         onBlur={(e) => {
-          e.currentTarget.parentElement!.style.borderColor =
-            "var(--color-border)";
+          e.currentTarget.parentElement!.style.borderColor = "var(--color-border)";
           e.currentTarget.parentElement!.style.boxShadow = "none";
         }}
       />
@@ -54,7 +45,13 @@ export const SearchInput = forwardRef<HTMLInputElement>(function SearchInput(
             if (ref && "current" in ref && ref.current) ref.current.focus();
           }}
           className="shrink-0 cursor-pointer"
-          style={{ color: "var(--color-text-placeholder)", background: "none", border: "none", padding: 0, display: "flex" }}
+          style={{
+            color: "var(--color-text-placeholder)",
+            background: "none",
+            border: "none",
+            padding: 0,
+            display: "flex",
+          }}
           aria-label={t("search.clear")}
         >
           <X size={14} />

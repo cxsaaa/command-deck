@@ -34,9 +34,7 @@ function scorePinyin(text: string, query: string): number {
   const chineseText = chineseChars.join("");
 
   // Generate pinyin variants
-  const initials = pinyin(chineseText, { pattern: "first", type: "array" })
-    .join("")
-    .toLowerCase();
+  const initials = pinyin(chineseText, { pattern: "first", type: "array" }).join("").toLowerCase();
   const fullPinyin = pinyin(chineseText, { toneType: "none", type: "array" })
     .join("")
     .toLowerCase();
@@ -104,9 +102,7 @@ function scoreCommand(cmd: Command, query: string): number {
   // Parameter matching
   if (
     cmd.parameters.some(
-      (p) =>
-        p.name.toLowerCase().includes(q) ||
-        p.description.toLowerCase().includes(q)
+      (p) => p.name.toLowerCase().includes(q) || p.description.toLowerCase().includes(q),
     )
   ) {
     score += WEIGHTS.parameterIncludes;
@@ -138,7 +134,7 @@ function scoreCommand(cmd: Command, query: string): number {
 export function searchCommands(
   commands: Command[],
   query: string,
-  _filter: CommandFilter
+  _filter: CommandFilter,
 ): Command[] {
   if (!query.trim()) return commands;
 
@@ -150,8 +146,7 @@ export function searchCommands(
     // Score descending
     if (b.score !== a.score) return b.score - a.score;
     // Favorite first
-    if (a.command.isFavorite !== b.command.isFavorite)
-      return a.command.isFavorite ? -1 : 1;
+    if (a.command.isFavorite !== b.command.isFavorite) return a.command.isFavorite ? -1 : 1;
     // Last used descending
     const aDate = a.command.lastUsedAt ?? "";
     const bDate = b.command.lastUsedAt ?? "";

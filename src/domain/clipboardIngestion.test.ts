@@ -66,7 +66,7 @@ describe("analyzeClipboard", () => {
 
     it("rejects plain prose", () => {
       const result = analyzeClipboard(
-        "This is a paragraph of normal text that describes something."
+        "This is a paragraph of normal text that describes something.",
       );
       expect(result.isCliCommand).toBe(false);
     });

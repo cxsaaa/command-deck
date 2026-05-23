@@ -8,7 +8,7 @@ describe("Modal", () => {
     render(
       <Modal open={true} onClose={() => {}} title="Test Modal">
         <p>Modal content</p>
-      </Modal>
+      </Modal>,
     );
     expect(screen.getByText("Modal content")).toBeInTheDocument();
   });
@@ -17,7 +17,7 @@ describe("Modal", () => {
     render(
       <Modal open={false} onClose={() => {}} title="Test Modal">
         <p>Modal content</p>
-      </Modal>
+      </Modal>,
     );
     expect(screen.queryByText("Modal content")).not.toBeInTheDocument();
   });
@@ -26,7 +26,7 @@ describe("Modal", () => {
     render(
       <Modal open={true} onClose={() => {}} title="My Title">
         <p>Content</p>
-      </Modal>
+      </Modal>,
     );
     expect(screen.getByText("My Title")).toBeInTheDocument();
   });
@@ -37,7 +37,7 @@ describe("Modal", () => {
     render(
       <Modal open={true} onClose={handleClose} title="Test">
         <p>Content</p>
-      </Modal>
+      </Modal>,
     );
     // The close button is the X icon button inside the modal header
     const closeButton = screen.getByRole("button", { name: "" });
@@ -47,14 +47,9 @@ describe("Modal", () => {
 
   it("renders footer when provided", () => {
     render(
-      <Modal
-        open={true}
-        onClose={() => {}}
-        title="Test"
-        footer={<button>Save</button>}
-      >
+      <Modal open={true} onClose={() => {}} title="Test" footer={<button>Save</button>}>
         <p>Content</p>
-      </Modal>
+      </Modal>,
     );
     expect(screen.getByRole("button", { name: "Save" })).toBeInTheDocument();
   });

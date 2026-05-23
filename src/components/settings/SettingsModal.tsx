@@ -30,18 +30,10 @@ export function SettingsModal({ open, onClose }: SettingsModalProps) {
   const contentRef = useRef<HTMLDivElement>(null);
 
   return (
-    <Modal
-      open={open}
-      onClose={onClose}
-      title={t("settings.title")}
-      maxWidth="720px"
-    >
+    <Modal open={open} onClose={onClose} title={t("settings.title")} maxWidth="720px">
       <div className="flex gap-6" style={{ height: "400px", overflow: "hidden" }}>
         {/* Left navigation */}
-        <nav
-          className="flex flex-col gap-1 shrink-0"
-          style={{ width: "160px" }}
-        >
+        <nav className="flex flex-col gap-1 shrink-0" style={{ width: "160px" }}>
           {navItems.map((item) => (
             <button
               key={item.id}
@@ -74,10 +66,7 @@ export function SettingsModal({ open, onClose }: SettingsModalProps) {
         </nav>
 
         {/* Divider */}
-        <div
-          className="border-l shrink-0"
-          style={{ borderColor: "var(--color-border)" }}
-        />
+        <div className="border-l shrink-0" style={{ borderColor: "var(--color-border)" }} />
 
         {/* Right content */}
         <div ref={contentRef} className="flex-1 overflow-auto pr-1">
@@ -88,19 +77,13 @@ export function SettingsModal({ open, onClose }: SettingsModalProps) {
             >
               {t("settings.general")}
             </h3>
-            <p
-              className="text-xs mb-4"
-              style={{ color: "var(--color-text-tertiary)" }}
-            >
+            <p className="text-xs mb-4" style={{ color: "var(--color-text-tertiary)" }}>
               {t("settings.generalDesc")}
             </p>
             <GeneralSection />
           </div>
 
-          <div
-            className="border-t mb-8"
-            style={{ borderColor: "var(--color-border)" }}
-          />
+          <div className="border-t mb-8" style={{ borderColor: "var(--color-border)" }} />
 
           <div id="settings-appearance" className="mb-8">
             <h3
@@ -109,19 +92,13 @@ export function SettingsModal({ open, onClose }: SettingsModalProps) {
             >
               {t("settings.appearance")}
             </h3>
-            <p
-              className="text-xs mb-4"
-              style={{ color: "var(--color-text-tertiary)" }}
-            >
+            <p className="text-xs mb-4" style={{ color: "var(--color-text-tertiary)" }}>
               {t("settings.appearanceDesc")}
             </p>
             <AppearanceSection />
           </div>
 
-          <div
-            className="border-t mb-8"
-            style={{ borderColor: "var(--color-border)" }}
-          />
+          <div className="border-t mb-8" style={{ borderColor: "var(--color-border)" }} />
 
           <div id="settings-data" className="mb-8">
             <h3
@@ -130,19 +107,13 @@ export function SettingsModal({ open, onClose }: SettingsModalProps) {
             >
               {t("settings.data")}
             </h3>
-            <p
-              className="text-xs mb-4"
-              style={{ color: "var(--color-text-tertiary)" }}
-            >
+            <p className="text-xs mb-4" style={{ color: "var(--color-text-tertiary)" }}>
               {t("settings.dataDesc")}
             </p>
             <DataSection />
           </div>
 
-          <div
-            className="border-t mb-8"
-            style={{ borderColor: "var(--color-border)" }}
-          />
+          <div className="border-t mb-8" style={{ borderColor: "var(--color-border)" }} />
 
           <div id="settings-shortcuts">
             <h3
@@ -151,10 +122,7 @@ export function SettingsModal({ open, onClose }: SettingsModalProps) {
             >
               {t("settings.shortcuts")}
             </h3>
-            <p
-              className="text-xs mb-4"
-              style={{ color: "var(--color-text-tertiary)" }}
-            >
+            <p className="text-xs mb-4" style={{ color: "var(--color-text-tertiary)" }}>
               {t("settings.shortcutsDesc")}
             </p>
             <ShortcutsSection />

@@ -1,138 +1,39 @@
 import { create } from "zustand";
+import { createNavigationSlice } from "./slices/navigationSlice";
+import { createSearchSlice } from "./slices/searchSlice";
+import { createDisplaySlice } from "./slices/displaySlice";
+import { createSettingsSlice } from "./slices/settingsSlice";
+import { createWindowSlice } from "./slices/windowSlice";
+import { createEditingSlice } from "./slices/editingSlice";
+import { createModalSlice } from "./slices/modalSlice";
+import type { NavigationState } from "./slices/navigationSlice";
+import type { SearchState } from "./slices/searchSlice";
+import type { DisplayState } from "./slices/displaySlice";
+import type { SettingsState } from "./slices/settingsSlice";
+import type { WindowState } from "./slices/windowSlice";
+import type { EditingState } from "./slices/editingSlice";
+import type { ModalState } from "./slices/modalSlice";
 
-export type NavType = "all" | "favorites" | "recent" | "platform";
-export type SearchScope = "current" | "global";
-export type DensityMode = "comfortable" | "compact";
-export type SortMode = "createdAt" | "usageCount" | "favoritedAt";
-export type ThemeMode = "system" | "light" | "dark";
-export type Locale = "zh-CN" | "en-US";
+// Re-export all types for backward compatibility
+export type { NavType } from "./slices/navigationSlice";
+export type { SearchScope } from "./slices/searchSlice";
+export type { DensityMode, SortMode, ThemeMode, Locale } from "./slices/displaySlice";
+export type { CommandModalState } from "./slices/modalSlice";
 
-interface CommandModalState {
-  type: "create" | "edit";
-  commandId?: string;
-  initialTitle?: string;
-}
+type UiState = NavigationState &
+  SearchState &
+  DisplayState &
+  SettingsState &
+  WindowState &
+  EditingState &
+  ModalState;
 
-interface UiState {
-  // Navigation
-  navType: NavType;
-  currentPlatformId: string | null;
-  currentCategoryId: string | null;
-
-  // Search
-  searchQuery: string;
-  searchScope: SearchScope;
-  selectedResultIndex: number;
-
-  // Density
-  densityMode: DensityMode;
-
-  // Sort
-  sortMode: SortMode;
-
-  // Theme
-  themeMode: ThemeMode;
-
-  // Locale
-  locale: Locale;
-
-  // Settings
-  settingsOpen: boolean;
-
-  // Window behavior
-  hideOnBlur: boolean;
-  dockToggle: boolean;
-
-  // Autostart
-  autostartEnabled: boolean;
-
-  // Inline editing
-  platformRenameId: string | null;
-  categoryRenameId: string | null;
-
-  // Modals
-  commandModal: CommandModalState | null;
-  deleteConfirmCommandId: string | null;
-
-  // Actions
-  setNavType: (navType: NavType) => void;
-  setCurrentPlatform: (platformId: string | null) => void;
-  setCurrentCategory: (categoryId: string | null) => void;
-  setSearchQuery: (query: string) => void;
-  setSearchScope: (scope: SearchScope) => void;
-  setSelectedResultIndex: (index: number) => void;
-  openCreateCommandModal: (initialTitle?: string) => void;
-  openEditCommandModal: (commandId: string) => void;
-  closeCommandModal: () => void;
-  openDeleteConfirm: (commandId: string) => void;
-  closeDeleteConfirm: () => void;
-  toggleDensityMode: () => void;
-  setSortMode: (mode: SortMode) => void;
-  setThemeMode: (mode: ThemeMode) => void;
-  setLocale: (locale: Locale) => void;
-  openSettings: () => void;
-  closeSettings: () => void;
-  setPlatformRenameId: (id: string | null) => void;
-  setCategoryRenameId: (id: string | null) => void;
-  setHideOnBlur: (enabled: boolean) => void;
-  setDockToggle: (enabled: boolean) => void;
-  setAutostartEnabled: (enabled: boolean) => void;
-}
-
-export const useUiStore = create<UiState>((set, get) => ({
-  navType: "platform",
-  currentPlatformId: null,
-  currentCategoryId: null,
-  searchQuery: "",
-  searchScope: "current",
-  selectedResultIndex: -1,
-  densityMode: "comfortable",
-  sortMode: "createdAt",
-  themeMode: "system",
-  locale: "zh-CN",
-  settingsOpen: false,
-  hideOnBlur: false,
-  dockToggle: false,
-  autostartEnabled: false,
-  platformRenameId: null,
-  categoryRenameId: null,
-  commandModal: null,
-  deleteConfirmCommandId: null,
-
-  setNavType: (navType) =>
-    set({
-      navType,
-      currentCategoryId: null,
-      currentPlatformId: navType === "platform" ? get().currentPlatformId : null,
-      sortMode: "createdAt",
-    }),
-  setCurrentPlatform: (platformId) =>
-    set({
-      currentPlatformId: platformId,
-      currentCategoryId: null,
-      navType: "platform",
-    }),
-  setCurrentCategory: (categoryId) => set({ currentCategoryId: categoryId }),
-  setSearchQuery: (query) => set({ searchQuery: query, selectedResultIndex: -1 }),
-  setSearchScope: (scope) => set({ searchScope: scope }),
-  setSelectedResultIndex: (index) => set({ selectedResultIndex: index }),
-  openCreateCommandModal: (initialTitle) =>
-    set({ commandModal: { type: "create", initialTitle } }),
-  openEditCommandModal: (commandId) =>
-    set({ commandModal: { type: "edit", commandId } }),
-  closeCommandModal: () => set({ commandModal: null }),
-  openDeleteConfirm: (commandId) => set({ deleteConfirmCommandId: commandId }),
-  closeDeleteConfirm: () => set({ deleteConfirmCommandId: null }),
-  toggleDensityMode: () =>
-    set({ densityMode: get().densityMode === "comfortable" ? "compact" : "comfortable" }),
-  setSortMode: (mode) => set({ sortMode: mode }),
-  setThemeMode: (mode) => set({ themeMode: mode }),
-  setLocale: (locale) => set({ locale }),
-  openSettings: () => set({ settingsOpen: true }),
-  closeSettings: () => set({ settingsOpen: false }),
-  setPlatformRenameId: (id) => set({ platformRenameId: id }),
-  setCategoryRenameId: (id) => set({ categoryRenameId: id }),
-  setHideOnBlur: (enabled) => set({ hideOnBlur: enabled }),
-  setDockToggle: (enabled) => set({ dockToggle: enabled }),
-  setAutostartEnabled: (enabled) => set({ autostartEnabled: enabled }),
+export const useUiStore = create<UiState>()((...args) => ({
+  ...createNavigationSlice(...args),
+  ...createSearchSlice(...args),
+  ...createDisplaySlice(...args),
+  ...createSettingsSlice(...args),
+  ...createWindowSlice(...args),
+  ...createEditingSlice(...args),
+  ...createModalSlice(...args),
 }));

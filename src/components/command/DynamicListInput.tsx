@@ -51,8 +51,8 @@ export function DynamicListInput({
             placeholder={resolvedPlaceholder}
             className="flex-1 text-sm outline-none"
             style={{
-              height: "36px",
-              padding: "0 10px",
+              height: "30px",
+              padding: "0 8px",
               border: "1px solid var(--color-border)",
               borderRadius: "var(--radius-md)",
               backgroundColor: "var(--color-bg-surface)",
@@ -73,8 +73,7 @@ export function DynamicListInput({
               color: "var(--color-text-tertiary)",
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.backgroundColor =
-                "var(--color-state-danger-soft)";
+              e.currentTarget.style.backgroundColor = "var(--color-state-danger-soft)";
               e.currentTarget.style.color = "var(--color-state-danger)";
             }}
             onMouseLeave={(e) => {

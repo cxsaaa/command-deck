@@ -1,7 +1,8 @@
 import type { RefObject } from "react";
+import { useCallback } from "react";
 import { useTranslation } from "react-i18next";
-import { Plus, Settings, Rows3, LayoutGrid } from "lucide-react";
-import { Button, IconButton } from "../common";
+import { Plus, Settings } from "lucide-react";
+import { IconButton } from "../common";
 import { SearchInput } from "../search/SearchInput";
 import { useUiStore } from "../../state/uiStore";
 
@@ -12,40 +13,47 @@ interface TopBarProps {
 export function TopBar({ searchInputRef }: TopBarProps) {
   const { t } = useTranslation();
   const openCreateCommandModal = useUiStore((s) => s.openCreateCommandModal);
-  const densityMode = useUiStore((s) => s.densityMode);
-  const toggleDensityMode = useUiStore((s) => s.toggleDensityMode);
   const openSettings = useUiStore((s) => s.openSettings);
+
+  const handleDrag = useCallback(async (e: React.MouseEvent) => {
+    if ((e.target as HTMLElement).closest("button, input, a")) return;
+    const { getCurrentWebviewWindow } = await import("@tauri-apps/api/webviewWindow");
+    const win = getCurrentWebviewWindow();
+    await win.startDragging();
+  }, []);
 
   return (
     <header
-      className="flex items-center justify-between gap-4 px-6 border-b shrink-0"
+      data-tauri-drag-region
+      onMouseDown={handleDrag}
+      className="flex items-center border-b shrink-0"
       style={{
-        height: "44px",
+        height: "40px",
+        paddingLeft: "78px",
+        paddingRight: "16px",
         backgroundColor: "var(--color-bg-surface)",
         borderColor: "var(--color-border)",
       }}
     >
-      {/* Search Box */}
-      <div className="flex-1 max-w-xs">
-        <SearchInput ref={searchInputRef} />
+      {/* Center: Search Box */}
+      <div className="flex-1 flex justify-center">
+        <div className="w-full max-w-sm">
+          <SearchInput ref={searchInputRef} />
+        </div>
       </div>
 
-      {/* Action Buttons */}
+      {/* Right: Actions */}
       <div className="flex items-center gap-2 shrink-0">
-        <Button
-          variant="primary"
-          size="md"
-          onClick={() => openCreateCommandModal()}
-        >
-          <Plus size={16} />
-          <span>{t("topBar.create")}</span>
-        </Button>
         <IconButton
-          icon={densityMode === "compact" ? <Rows3 size={18} /> : <LayoutGrid size={18} />}
-          tooltip={densityMode === "compact" ? t("topBar.switchToComfortable") : t("topBar.switchToCompact")}
-          onClick={toggleDensityMode}
+          icon={<Plus size={18} />}
+          tooltip={t("topBar.create")}
+          onClick={() => openCreateCommandModal()}
         />
-        <IconButton icon={<Settings size={18} />} tooltip={t("topBar.settings")} onClick={openSettings} />
+        <IconButton
+          icon={<Settings size={18} />}
+          tooltip={t("topBar.settings")}
+          onClick={openSettings}
+        />
       </div>
     </header>
   );

@@ -26,9 +26,7 @@ function renderWithQueryClient(ui: React.ReactNode) {
   const queryClient = new QueryClient({
     defaultOptions: { queries: { retry: false } },
   });
-  return render(
-    <QueryClientProvider client={queryClient}>{ui}</QueryClientProvider>
-  );
+  return render(<QueryClientProvider client={queryClient}>{ui}</QueryClientProvider>);
 }
 
 describe("ContentHeader", () => {
@@ -62,9 +60,7 @@ describe("ContentHeader", () => {
   it("shows search query in title", () => {
     useUiStore.setState({ searchQuery: "git push" });
     renderWithQueryClient(<ContentHeader count={3} />);
-    expect(
-      screen.getByText("搜索结果：git push")
-    ).toBeInTheDocument();
+    expect(screen.getByText("搜索结果：git push")).toBeInTheDocument();
     expect(screen.getByText(/3 条结果/)).toBeInTheDocument();
   });
 

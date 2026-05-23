@@ -7,11 +7,7 @@ interface CommandListProps {
   searchQuery?: string;
 }
 
-export function CommandList({
-  commands,
-  selectedResultIndex = -1,
-  searchQuery,
-}: CommandListProps) {
+export function CommandList({ commands, selectedResultIndex = -1, searchQuery }: CommandListProps) {
   return (
     <div className="flex flex-col px-4 pb-4" style={{ gap: "var(--density-list-gap)" }}>
       {commands.map((command, index) => (

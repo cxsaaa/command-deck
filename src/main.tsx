@@ -2,6 +2,8 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import i18n from "./i18n";
 import App from "./App";
+import { OverlayApp } from "./components/overlay/OverlayApp";
+import { PopoverSearch } from "./components/overlay/PopoverSearch";
 import { Providers } from "./app/providers";
 import { ToastProvider } from "./components/common";
 import { initDatabase } from "./data/db";
@@ -22,15 +24,35 @@ async function bootstrap() {
     return;
   }
 
+  // 根据窗口标签渲染不同的内容
+  const windowLabel = await getCurrentWindowLabel();
+
+  let AppComponent = App;
+  if (windowLabel === "overlay") {
+    AppComponent = OverlayApp;
+  } else if (windowLabel === "popover") {
+    AppComponent = PopoverSearch;
+  }
+
   ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
     <React.StrictMode>
       <Providers>
         <ToastProvider>
-          <App />
+          <AppComponent />
         </ToastProvider>
       </Providers>
     </React.StrictMode>,
   );
+}
+
+async function getCurrentWindowLabel(): Promise<string> {
+  try {
+    const { getCurrentWebviewWindow } = await import("@tauri-apps/api/webviewWindow");
+    const window = getCurrentWebviewWindow();
+    return window.label;
+  } catch {
+    return "main";
+  }
 }
 
 bootstrap();

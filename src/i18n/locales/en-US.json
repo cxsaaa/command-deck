@@ -152,6 +152,11 @@
     "windowBehavior": "Window Behavior",
     "hideOnBlur": "Hide window when it loses focus",
     "dockToggle": "Toggle window visibility when clicking Dock icon",
+    "trayMode": "Menu Bar Mode",
+    "trayModeDesc": "Hide Dock icon, stay in menu bar",
+    "globalHotkey": "Global Hotkey",
+    "globalHotkeyDesc": "Set global hotkey to summon search panel",
+    "globalHotkeyPlaceholder": "Press hotkey combination",
     "themeMode": "Theme",
     "themeSystem": "System",
     "themeLight": "Light",
@@ -183,5 +188,22 @@
     "confirmFactoryReset": "Factory reset? All data will be erased and defaults restored. This cannot be undone.",
     "clearRecentDone": "Recent history cleared",
     "factoryResetDone": "Factory reset complete"
+  },
+  "overlay": {
+    "fillVariables": "Fill Variables",
+    "copy": "Copy",
+    "cancel": "Cancel"
+  },
+  "settings.deckBrowser": {
+    "button": "Browse Snippets",
+    "title": "Community Snippets",
+    "import": "Download",
+    "importing": "Importing...",
+    "installed": "Installed",
+    "update": "Update",
+    "commands": "{{count}} commands",
+    "importSuccess": "Successfully imported {{imported}} commands, skipped {{skipped}} duplicates",
+    "networkError": "Network error. Please check your connection and try again.",
+    "noDecks": "No decks available"
   }
 }

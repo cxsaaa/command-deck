@@ -62,9 +62,7 @@ export function MoreMenu({ items }: MoreMenuProps) {
               style={{
                 padding: "6px 8px",
                 borderRadius: "var(--radius-sm)",
-                color: item.danger
-                  ? "var(--color-state-danger)"
-                  : "var(--color-text-primary)",
+                color: item.danger ? "var(--color-state-danger)" : "var(--color-text-primary)",
                 cursor: "pointer",
               }}
               onMouseEnter={(e) => {
@@ -80,9 +78,7 @@ export function MoreMenu({ items }: MoreMenuProps) {
                 <span
                   className="flex-shrink-0"
                   style={{
-                    color: item.danger
-                      ? "var(--color-state-danger)"
-                      : "var(--color-text-tertiary)",
+                    color: item.danger ? "var(--color-state-danger)" : "var(--color-text-tertiary)",
                   }}
                 >
                   {item.icon}

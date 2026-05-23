@@ -1,9 +1,6 @@
 import { useMemo, useRef, useCallback, type KeyboardEvent } from "react";
 import { highlightText } from "../../domain/highlight";
-import {
-  parsePlaceholders,
-  hasPlaceholders,
-} from "../../domain/placeholders";
+import { parsePlaceholders, hasPlaceholders } from "../../domain/placeholders";
 
 interface CommandCodeBlockProps {
   code: string;
@@ -27,13 +24,11 @@ export function CommandCodeBlock({
 }: CommandCodeBlockProps) {
   const lines = code.split("\n");
   const displayCode =
-    lines.length > maxLines
-      ? lines.slice(0, maxLines).join("\n") + "\n..."
-      : code;
+    lines.length > maxLines ? lines.slice(0, maxLines).join("\n") + "\n..." : code;
 
   const segments = useMemo(
     () => (interactive ? parsePlaceholders(displayCode) : null),
-    [interactive, displayCode]
+    [interactive, displayCode],
   );
 
   const hasVars = interactive && segments && hasPlaceholders(displayCode);
@@ -59,16 +54,14 @@ export function CommandCodeBlock({
         }
       }
     },
-    [segments]
+    [segments],
   );
 
   // Pure text mode (no interactive placeholders or interactive=false)
   if (!hasVars) {
     return (
       <div style={codeBlockStyle}>
-        {searchQuery
-          ? highlightText(displayCode, searchQuery)
-          : displayCode}
+        {searchQuery ? highlightText(displayCode, searchQuery) : displayCode}
       </div>
     );
   }

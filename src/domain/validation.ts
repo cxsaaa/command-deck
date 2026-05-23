@@ -8,7 +8,7 @@ export interface ValidationError {
 export function validateCommandInput(
   input: CommandInput,
   existingPlatformIds: string[],
-  existingCategoryPlatformMap: Map<string, string>
+  existingCategoryPlatformMap: Map<string, string>,
 ): ValidationError[] {
   const errors: ValidationError[] = [];
 
@@ -38,10 +38,7 @@ export function validateCommandInput(
         field: "categoryId",
         message: "Selected category does not exist",
       });
-    } else if (
-      input.platformId &&
-      categoryPlatform !== input.platformId
-    ) {
+    } else if (input.platformId && categoryPlatform !== input.platformId) {
       errors.push({
         field: "categoryId",
         message: "Category does not belong to the selected platform",
@@ -51,9 +48,7 @@ export function validateCommandInput(
 
   // Tags validation
   if (input.tags) {
-    const uniqueTags = [
-      ...new Set(input.tags.map((t) => t.trim()).filter((t) => t.length > 0)),
-    ];
+    const uniqueTags = [...new Set(input.tags.map((t) => t.trim()).filter((t) => t.length > 0))];
     if (uniqueTags.length !== input.tags.filter((t) => t.trim().length > 0).length) {
       errors.push({ field: "tags", message: "Tags must be unique" });
     }

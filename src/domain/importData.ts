@@ -54,13 +54,11 @@ export async function analyzeImport(data: CommandDeckExport): Promise<ImportAnal
 
 export async function applyImport(
   data: CommandDeckExport,
-  strategy: ConflictStrategy
+  strategy: ConflictStrategy,
 ): Promise<{ imported: number; skipped: number }> {
   const db = await getDb();
   const existingPlatforms = await platformRepository.listAllPlatforms();
-  const existingPlatformMap = new Map(
-    existingPlatforms.map((p) => [p.name.toLowerCase(), p])
-  );
+  const existingPlatformMap = new Map(existingPlatforms.map((p) => [p.name.toLowerCase(), p]));
 
   let imported = 0;
   let skipped = 0;
@@ -84,9 +82,7 @@ export async function applyImport(
     for (const catData of platformData.categories) {
       // Find or create category
       const categories = await categoryRepository.listCategories(platformId);
-      let category = categories.find(
-        (c) => c.name.toLowerCase() === catData.name.toLowerCase()
-      );
+      let category = categories.find((c) => c.name.toLowerCase() === catData.name.toLowerCase());
 
       if (!category) {
         category = await categoryRepository.createCategory(catData.name, platformId);
@@ -96,7 +92,7 @@ export async function applyImport(
         // Check for existing command with same title in same platform
         const existingCommands = await db.select<{ id: string }[]>(
           "SELECT id FROM commands WHERE platform_id = $1 AND title = $2",
-          [platformId, cmdData.title]
+          [platformId, cmdData.title],
         );
 
         if (existingCommands.length > 0) {
@@ -108,12 +104,24 @@ export async function applyImport(
             // Update existing
             await db.execute(
               `UPDATE commands SET command = $1, description = $2, notes = $3, updated_at = $4 WHERE id = $5`,
-              [cmdData.command, cmdData.description ?? null, cmdData.notes ?? null, new Date().toISOString(), existingCommands[0].id]
+              [
+                cmdData.command,
+                cmdData.description ?? null,
+                cmdData.notes ?? null,
+                new Date().toISOString(),
+                existingCommands[0].id,
+              ],
             );
             // Clear and re-insert related data
-            await db.execute("DELETE FROM command_tags WHERE command_id = $1", [existingCommands[0].id]);
-            await db.execute("DELETE FROM command_examples WHERE command_id = $1", [existingCommands[0].id]);
-            await db.execute("DELETE FROM command_parameters WHERE command_id = $1", [existingCommands[0].id]);
+            await db.execute("DELETE FROM command_tags WHERE command_id = $1", [
+              existingCommands[0].id,
+            ]);
+            await db.execute("DELETE FROM command_examples WHERE command_id = $1", [
+              existingCommands[0].id,
+            ]);
+            await db.execute("DELETE FROM command_parameters WHERE command_id = $1", [
+              existingCommands[0].id,
+            ]);
             await saveImportRelatedData(db, existingCommands[0].id, cmdData);
             imported++;
             continue;
@@ -128,7 +136,16 @@ export async function applyImport(
         await db.execute(
           `INSERT INTO commands (id, title, command, description, platform_id, category_id, notes, is_favorite, usage_count, last_used_at, created_at, updated_at)
            VALUES ($1, $2, $3, $4, $5, $6, $7, 0, 0, NULL, $8, $8)`,
-          [cmdId, cmdData.title, cmdData.command, cmdData.description ?? null, platformId, category.id, cmdData.notes ?? null, now]
+          [
+            cmdId,
+            cmdData.title,
+            cmdData.command,
+            cmdData.description ?? null,
+            platformId,
+            category.id,
+            cmdData.notes ?? null,
+            now,
+          ],
         );
         await saveImportRelatedData(db, cmdId, cmdData);
         imported++;
@@ -142,13 +159,20 @@ export async function applyImport(
 async function saveImportRelatedData(
   db: Awaited<ReturnType<typeof getDb>>,
   commandId: string,
-  cmdData: { tags?: string[]; examples?: string[]; parameters?: { name: string; description: string }[] }
+  cmdData: {
+    tags?: string[];
+    examples?: string[];
+    parameters?: { name: string; description: string }[];
+  },
 ): Promise<void> {
   if (cmdData.tags && cmdData.tags.length > 0) {
     for (const tagName of cmdData.tags) {
       const tagId = `tag_${tagName}`;
       await db.execute("INSERT OR IGNORE INTO tags (id, name) VALUES ($1, $2)", [tagId, tagName]);
-      await db.execute("INSERT OR IGNORE INTO command_tags (command_id, tag_id) VALUES ($1, $2)", [commandId, tagId]);
+      await db.execute("INSERT OR IGNORE INTO command_tags (command_id, tag_id) VALUES ($1, $2)", [
+        commandId,
+        tagId,
+      ]);
     }
   }
 
@@ -156,7 +180,7 @@ async function saveImportRelatedData(
     for (let i = 0; i < cmdData.examples.length; i++) {
       await db.execute(
         "INSERT INTO command_examples (id, command_id, example, sort_order) VALUES ($1, $2, $3, $4)",
-        [`${commandId}_ex_${i}`, commandId, cmdData.examples[i], i]
+        [`${commandId}_ex_${i}`, commandId, cmdData.examples[i], i],
       );
     }
   }
@@ -166,7 +190,7 @@ async function saveImportRelatedData(
       const p = cmdData.parameters[i];
       await db.execute(
         "INSERT INTO command_parameters (id, command_id, name, description, sort_order) VALUES ($1, $2, $3, $4, $5)",
-        [`${commandId}_param_${i}`, commandId, p.name, p.description, i]
+        [`${commandId}_param_${i}`, commandId, p.name, p.description, i],
       );
     }
   }

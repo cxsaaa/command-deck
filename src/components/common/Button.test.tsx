@@ -29,7 +29,7 @@ describe("Button", () => {
     render(
       <Button onClick={handleClick} disabled>
         Disabled
-      </Button>
+      </Button>,
     );
     await user.click(screen.getByRole("button"));
     expect(handleClick).not.toHaveBeenCalled();

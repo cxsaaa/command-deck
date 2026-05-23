@@ -39,15 +39,14 @@ export function AppearanceSection() {
               className="flex flex-col items-center gap-1.5 px-4 py-3 rounded-lg text-sm transition-colors cursor-pointer"
               style={{
                 flex: 1,
-                border: themeMode === opt.mode
-                  ? "2px solid var(--color-accent)"
-                  : "1px solid var(--color-border)",
-                backgroundColor: themeMode === opt.mode
-                  ? "var(--color-accent-soft)"
-                  : "var(--color-bg-surface)",
-                color: themeMode === opt.mode
-                  ? "var(--color-accent)"
-                  : "var(--color-text-secondary)",
+                border:
+                  themeMode === opt.mode
+                    ? "2px solid var(--color-accent)"
+                    : "1px solid var(--color-border)",
+                backgroundColor:
+                  themeMode === opt.mode ? "var(--color-accent-soft)" : "var(--color-bg-surface)",
+                color:
+                  themeMode === opt.mode ? "var(--color-accent)" : "var(--color-text-secondary)",
               }}
             >
               {opt.icon}
@@ -76,15 +75,14 @@ export function AppearanceSection() {
               className="flex items-center justify-center px-4 py-2.5 rounded-lg text-sm transition-colors cursor-pointer"
               style={{
                 flex: 1,
-                border: densityMode === opt.mode
-                  ? "2px solid var(--color-accent)"
-                  : "1px solid var(--color-border)",
-                backgroundColor: densityMode === opt.mode
-                  ? "var(--color-accent-soft)"
-                  : "var(--color-bg-surface)",
-                color: densityMode === opt.mode
-                  ? "var(--color-accent)"
-                  : "var(--color-text-secondary)",
+                border:
+                  densityMode === opt.mode
+                    ? "2px solid var(--color-accent)"
+                    : "1px solid var(--color-border)",
+                backgroundColor:
+                  densityMode === opt.mode ? "var(--color-accent-soft)" : "var(--color-bg-surface)",
+                color:
+                  densityMode === opt.mode ? "var(--color-accent)" : "var(--color-text-secondary)",
               }}
             >
               {t(opt.labelKey)}

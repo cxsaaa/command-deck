@@ -78,9 +78,7 @@ export function PlatformContextMenu({
           <ContextMenu.Item
             style={{
               ...menuItemStyle,
-              color: canDelete
-                ? "var(--color-state-danger)"
-                : "var(--color-text-placeholder)",
+              color: canDelete ? "var(--color-state-danger)" : "var(--color-text-placeholder)",
             }}
             onSelect={canDelete ? onDelete : undefined}
             disabled={!canDelete}

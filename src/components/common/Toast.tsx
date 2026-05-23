@@ -1,10 +1,4 @@
-import {
-  createContext,
-  type ReactNode,
-  useCallback,
-  useContext,
-  useState,
-} from "react";
+import { createContext, type ReactNode, useCallback, useContext, useState } from "react";
 import * as RadixToast from "@radix-ui/react-toast";
 import { CheckCircle, XCircle } from "lucide-react";
 
@@ -39,13 +33,10 @@ export function toast(message: string, variant: "success" | "error" = "success")
 export function ToastProvider({ children }: { children: ReactNode }) {
   const [toasts, setToasts] = useState<ToastItem[]>([]);
 
-  const addToast = useCallback(
-    (message: string, variant: "success" | "error" = "success") => {
-      const id = ++_nextId;
-      setToasts((prev) => [...prev, { id, message, variant }]);
-    },
-    [],
-  );
+  const addToast = useCallback((message: string, variant: "success" | "error" = "success") => {
+    const id = ++_nextId;
+    setToasts((prev) => [...prev, { id, message, variant }]);
+  }, []);
 
   // Expose to imperative `toast()` helper
   _externalAdd = addToast;
@@ -88,13 +79,7 @@ export function ToastProvider({ children }: { children: ReactNode }) {
 /*  Single toast                                                       */
 /* ------------------------------------------------------------------ */
 
-function ToastItemView({
-  item,
-  onRemove,
-}: {
-  item: ToastItem;
-  onRemove: () => void;
-}) {
+function ToastItemView({ item, onRemove }: { item: ToastItem; onRemove: () => void }) {
   const isSuccess = item.variant === "success";
 
   return (
@@ -115,20 +100,11 @@ function ToastItemView({
       }}
     >
       {isSuccess ? (
-        <CheckCircle
-          size={16}
-          style={{ color: "var(--color-state-success)", flexShrink: 0 }}
-        />
+        <CheckCircle size={16} style={{ color: "var(--color-state-success)", flexShrink: 0 }} />
       ) : (
-        <XCircle
-          size={16}
-          style={{ color: "var(--color-state-danger)", flexShrink: 0 }}
-        />
+        <XCircle size={16} style={{ color: "var(--color-state-danger)", flexShrink: 0 }} />
       )}
-      <RadixToast.Description
-        className="text-sm"
-        style={{ color: "var(--color-text-primary)" }}
-      >
+      <RadixToast.Description className="text-sm" style={{ color: "var(--color-text-primary)" }}>
         {item.message}
       </RadixToast.Description>
     </RadixToast.Root>

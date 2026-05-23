@@ -11,10 +11,7 @@ import * as commandRepository from "../../data/repositories/commandRepository";
 import { useUiStore } from "../../state/uiStore";
 import { queryKeys } from "../../state/queryKeys";
 import { highlightText } from "../../domain/highlight";
-import {
-  hasPlaceholders,
-  replacePlaceholders,
-} from "../../domain/placeholders";
+import { hasPlaceholders, replacePlaceholders } from "../../domain/placeholders";
 import type { Command } from "../../domain/types";
 
 interface CommandCardProps {
@@ -94,15 +91,10 @@ export function CommandCard({ command, isSelected = false, searchQuery }: Comman
     }
   }
 
-  const metaParts = [
-    command.platformName,
-    command.categoryName,
-    ...command.tags,
-  ].filter(Boolean);
+  const metaParts = [command.platformName, command.categoryName, ...command.tags].filter(Boolean);
 
-  const hasDetails = (command.examples?.length ?? 0) > 0
-    || (command.parameters?.length ?? 0) > 0
-    || !!command.notes;
+  const hasDetails =
+    (command.examples?.length ?? 0) > 0 || (command.parameters?.length ?? 0) > 0 || !!command.notes;
 
   return (
     <div
@@ -110,9 +102,7 @@ export function CommandCard({ command, isSelected = false, searchQuery }: Comman
       className="rounded-lg transition-colors"
       style={{
         backgroundColor: "var(--color-bg-surface)",
-        border: isSelected
-          ? "1px solid var(--color-accent)"
-          : "1px solid var(--color-border)",
+        border: isSelected ? "1px solid var(--color-accent)" : "1px solid var(--color-border)",
         borderRadius: "var(--radius-lg)",
         padding: "var(--density-card-padding-y) var(--density-card-padding-x)",
         boxShadow: isSelected ? "0 0 0 2px var(--color-accent-soft)" : "none",
@@ -147,13 +137,7 @@ export function CommandCard({ command, isSelected = false, searchQuery }: Comman
             />
           )}
           <IconButton
-            icon={
-              command.isFavorite ? (
-                <Star size={16} fill="currentColor" />
-              ) : (
-                <Star size={16} />
-              )
-            }
+            icon={command.isFavorite ? <Star size={16} fill="currentColor" /> : <Star size={16} />}
             tooltip={command.isFavorite ? t("command.unfavorite") : t("command.favorite")}
             active={command.isFavorite}
             onClick={handleToggleFavorite}
@@ -205,13 +189,13 @@ export function CommandCard({ command, isSelected = false, searchQuery }: Comman
 
       {/* Expanded details */}
       {isExpanded && hasDetails && (
-        <div
-          className="mb-1.5 pt-1.5"
-          style={{ borderTop: "1px solid var(--color-border)" }}
-        >
+        <div className="mb-1.5 pt-1.5" style={{ borderTop: "1px solid var(--color-border)" }}>
           {command.examples && command.examples.length > 0 && (
             <div className="mb-2">
-              <span className="text-xs font-medium mb-1 block" style={{ color: "var(--color-text-secondary)" }}>
+              <span
+                className="text-xs font-medium mb-1 block"
+                style={{ color: "var(--color-text-secondary)" }}
+              >
                 {t("command.examples")}
               </span>
               {command.examples.map((ex, i) => (
@@ -223,12 +207,17 @@ export function CommandCard({ command, isSelected = false, searchQuery }: Comman
           )}
           {command.parameters && command.parameters.length > 0 && (
             <div className="mb-2">
-              <span className="text-xs font-medium mb-1 block" style={{ color: "var(--color-text-secondary)" }}>
+              <span
+                className="text-xs font-medium mb-1 block"
+                style={{ color: "var(--color-text-secondary)" }}
+              >
                 {t("command.parameters")}
               </span>
               {command.parameters.map((p, i) => (
                 <div key={i} className="flex gap-2 text-xs mb-0.5">
-                  <code className="font-mono shrink-0" style={{ color: "var(--color-accent)" }}>{p.name}</code>
+                  <code className="font-mono shrink-0" style={{ color: "var(--color-accent)" }}>
+                    {p.name}
+                  </code>
                   <span style={{ color: "var(--color-text-tertiary)" }}>{p.description}</span>
                 </div>
               ))}
@@ -236,10 +225,15 @@ export function CommandCard({ command, isSelected = false, searchQuery }: Comman
           )}
           {command.notes && (
             <div>
-              <span className="text-xs font-medium mb-1 block" style={{ color: "var(--color-text-secondary)" }}>
+              <span
+                className="text-xs font-medium mb-1 block"
+                style={{ color: "var(--color-text-secondary)" }}
+              >
                 {t("command.notes")}
               </span>
-              <p className="text-xs" style={{ color: "var(--color-text-tertiary)" }}>{command.notes}</p>
+              <p className="text-xs" style={{ color: "var(--color-text-tertiary)" }}>
+                {command.notes}
+              </p>
             </div>
           )}
         </div>
@@ -247,24 +241,31 @@ export function CommandCard({ command, isSelected = false, searchQuery }: Comman
 
       {/* Footer: meta + copy */}
       <div className="flex items-center justify-between gap-2">
-        <span
-          className="text-xs truncate"
-          style={{ color: "var(--color-text-tertiary)" }}
-        >
+        <span className="text-xs truncate" style={{ color: "var(--color-text-tertiary)" }}>
           {metaParts.join(" · ")}
         </span>
         <Button
           variant={copied ? "secondary" : "primary"}
           size="sm"
           onClick={handleCopy}
-          style={copied ? {
-            backgroundColor: "var(--color-state-success-soft)",
-            color: "var(--color-state-success)",
-            borderColor: "var(--color-state-success)",
-            minWidth: 56,
-          } : { minWidth: 56 }}
+          style={
+            copied
+              ? {
+                  backgroundColor: "var(--color-state-success-soft)",
+                  color: "var(--color-state-success)",
+                  borderColor: "var(--color-state-success)",
+                  minWidth: 56,
+                }
+              : { minWidth: 56 }
+          }
         >
-          {copied ? <><Check size={14} /> {t("command.copied")}</> : t("command.copy")}
+          {copied ? (
+            <>
+              <Check size={14} /> {t("command.copied")}
+            </>
+          ) : (
+            t("command.copy")
+          )}
         </Button>
       </div>
     </div>

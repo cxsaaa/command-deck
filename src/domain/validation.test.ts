@@ -19,11 +19,7 @@ const categoryPlatformMap = new Map<string, string>([
 
 describe("validateCommandInput", () => {
   it("returns error when title is empty", () => {
-    const errors = validateCommandInput(
-      makeInput({ title: "" }),
-      platformIds,
-      categoryPlatformMap
-    );
+    const errors = validateCommandInput(makeInput({ title: "" }), platformIds, categoryPlatformMap);
     expect(errors).toContainEqual({
       field: "title",
       message: "Title is required",
@@ -34,7 +30,7 @@ describe("validateCommandInput", () => {
     const errors = validateCommandInput(
       makeInput({ title: "   " }),
       platformIds,
-      categoryPlatformMap
+      categoryPlatformMap,
     );
     expect(errors).toContainEqual({
       field: "title",
@@ -46,7 +42,7 @@ describe("validateCommandInput", () => {
     const errors = validateCommandInput(
       makeInput({ command: "" }),
       platformIds,
-      categoryPlatformMap
+      categoryPlatformMap,
     );
     expect(errors).toContainEqual({
       field: "command",
@@ -58,7 +54,7 @@ describe("validateCommandInput", () => {
     const errors = validateCommandInput(
       makeInput({ platformId: "nonexistent" }),
       platformIds,
-      categoryPlatformMap
+      categoryPlatformMap,
     );
     expect(errors).toContainEqual({
       field: "platformId",
@@ -70,7 +66,7 @@ describe("validateCommandInput", () => {
     const errors = validateCommandInput(
       makeInput({ platformId: "" }),
       platformIds,
-      categoryPlatformMap
+      categoryPlatformMap,
     );
     expect(errors).toContainEqual({
       field: "platformId",
@@ -82,7 +78,7 @@ describe("validateCommandInput", () => {
     const errors = validateCommandInput(
       makeInput({ categoryId: "cat_2" }),
       platformIds,
-      categoryPlatformMap
+      categoryPlatformMap,
     );
     expect(errors).toContainEqual({
       field: "categoryId",
@@ -94,7 +90,7 @@ describe("validateCommandInput", () => {
     const errors = validateCommandInput(
       makeInput({ categoryId: "nonexistent_cat" }),
       platformIds,
-      categoryPlatformMap
+      categoryPlatformMap,
     );
     expect(errors).toContainEqual({
       field: "categoryId",
@@ -106,7 +102,7 @@ describe("validateCommandInput", () => {
     const errors = validateCommandInput(
       makeInput({ tags: ["tag1", "tag2", "tag1"] }),
       platformIds,
-      categoryPlatformMap
+      categoryPlatformMap,
     );
     expect(errors).toContainEqual({
       field: "tags",
@@ -118,7 +114,7 @@ describe("validateCommandInput", () => {
     const errors = validateCommandInput(
       makeInput({ parameters: [{ name: "", description: "desc" }] }),
       platformIds,
-      categoryPlatformMap
+      categoryPlatformMap,
     );
     expect(errors).toContainEqual({
       field: "parameters[0]",
@@ -130,7 +126,7 @@ describe("validateCommandInput", () => {
     const errors = validateCommandInput(
       makeInput({ parameters: [{ name: "arg", description: "" }] }),
       platformIds,
-      categoryPlatformMap
+      categoryPlatformMap,
     );
     expect(errors).toContainEqual({
       field: "parameters[0]",
@@ -139,11 +135,7 @@ describe("validateCommandInput", () => {
   });
 
   it("returns empty errors for valid input", () => {
-    const errors = validateCommandInput(
-      makeInput(),
-      platformIds,
-      categoryPlatformMap
-    );
+    const errors = validateCommandInput(makeInput(), platformIds, categoryPlatformMap);
     expect(errors).toHaveLength(0);
   });
 
@@ -151,7 +143,7 @@ describe("validateCommandInput", () => {
     const errors = validateCommandInput(
       makeInput({ categoryId: "cat_1" }),
       platformIds,
-      categoryPlatformMap
+      categoryPlatformMap,
     );
     expect(errors).toHaveLength(0);
   });
@@ -163,7 +155,7 @@ describe("validateCommandInput", () => {
         parameters: [{ name: "--verbose", description: "Enable verbose output" }],
       }),
       platformIds,
-      categoryPlatformMap
+      categoryPlatformMap,
     );
     expect(errors).toHaveLength(0);
   });
@@ -172,7 +164,7 @@ describe("validateCommandInput", () => {
     const errors = validateCommandInput(
       makeInput({ title: "", command: "", platformId: "" }),
       platformIds,
-      categoryPlatformMap
+      categoryPlatformMap,
     );
     expect(errors.length).toBeGreaterThanOrEqual(3);
   });

@@ -58,11 +58,7 @@ describe("searchCommands", () => {
       id: "2",
       title: "Git Status Extended",
     });
-    const result = searchCommands(
-      [includesMatch, exactMatch],
-      "Git Status",
-      defaultFilter
-    );
+    const result = searchCommands([includesMatch, exactMatch], "Git Status", defaultFilter);
     expect(result[0].id).toBe("1");
   });
 
@@ -73,11 +69,7 @@ describe("searchCommands", () => {
       title: "Other",
       command: "git status",
     });
-    const result = searchCommands(
-      [commandMatch, titleMatch],
-      "git status",
-      defaultFilter
-    );
+    const result = searchCommands([commandMatch, titleMatch], "git status", defaultFilter);
     expect(result[0].id).toBe("1");
   });
 
@@ -98,11 +90,7 @@ describe("searchCommands", () => {
       title: "Other",
       description: "deployment tool",
     });
-    const result = searchCommands(
-      [descMatch, tagMatch],
-      "deployment",
-      defaultFilter
-    );
+    const result = searchCommands([descMatch, tagMatch], "deployment", defaultFilter);
     expect(result[0].id).toBe("1");
   });
 
@@ -117,11 +105,7 @@ describe("searchCommands", () => {
       title: "Other",
       description: "version control helper",
     });
-    const result = searchCommands(
-      [descMatch, catMatch],
-      "version control",
-      defaultFilter
-    );
+    const result = searchCommands([descMatch, catMatch], "version control", defaultFilter);
     expect(result[0].id).toBe("1");
   });
 
@@ -136,11 +120,7 @@ describe("searchCommands", () => {
       title: "Other",
       examples: ["testing --verbose"],
     });
-    const result = searchCommands(
-      [exampleMatch, descMatch],
-      "testing",
-      defaultFilter
-    );
+    const result = searchCommands([exampleMatch, descMatch], "testing", defaultFilter);
     expect(result[0].id).toBe("1");
   });
 
@@ -151,11 +131,7 @@ describe("searchCommands", () => {
       examples: ["npm run build"],
     });
     const noMatch = makeCommand({ id: "2", title: "Other" });
-    const result = searchCommands(
-      [noMatch, exampleMatch],
-      "npm run build",
-      defaultFilter
-    );
+    const result = searchCommands([noMatch, exampleMatch], "npm run build", defaultFilter);
     expect(result[0].id).toBe("1");
   });
 
@@ -184,11 +160,7 @@ describe("searchCommands", () => {
       usageCount: 15,
     });
     const lowUsage = makeCommand({ id: "2", title: "Git Push", usageCount: 2 });
-    const result = searchCommands(
-      [lowUsage, highUsage],
-      "git push",
-      defaultFilter
-    );
+    const result = searchCommands([lowUsage, highUsage], "git push", defaultFilter);
     expect(result[0].id).toBe("1");
   });
 

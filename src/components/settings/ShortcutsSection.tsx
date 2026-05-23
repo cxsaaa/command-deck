@@ -19,14 +19,8 @@ export function ShortcutsSection() {
   return (
     <div className="flex flex-col gap-3">
       {shortcuts.map((item) => (
-        <div
-          key={item.labelKey}
-          className="flex items-center justify-between"
-        >
-          <span
-            className="text-sm"
-            style={{ color: "var(--color-text-primary)" }}
-          >
+        <div key={item.labelKey} className="flex items-center justify-between">
+          <span className="text-sm" style={{ color: "var(--color-text-primary)" }}>
             {t(item.labelKey)}
           </span>
           <div className="flex items-center gap-1">
@@ -47,10 +41,7 @@ export function ShortcutsSection() {
                   {key}
                 </kbd>
                 {i < item.keys.length - 1 && (
-                  <span
-                    className="text-xs mx-0.5"
-                    style={{ color: "var(--color-text-tertiary)" }}
-                  >
+                  <span className="text-xs mx-0.5" style={{ color: "var(--color-text-tertiary)" }}>
                     +
                   </span>
                 )}

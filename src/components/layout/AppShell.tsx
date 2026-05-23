@@ -9,7 +9,13 @@ interface AppShellProps {
   density?: "comfortable" | "compact";
 }
 
-export function AppShell({ topBar, sidebar, header, children, density = "comfortable" }: AppShellProps) {
+export function AppShell({
+  topBar,
+  sidebar,
+  header,
+  children,
+  density = "comfortable",
+}: AppShellProps) {
   const mainRef = useRef<HTMLElement>(null);
 
   return (

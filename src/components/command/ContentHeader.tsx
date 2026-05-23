@@ -19,9 +19,24 @@ interface SortOption {
 }
 
 const sortOptions: SortOption[] = [
-  { mode: "createdAt", labelKey: "contentHeader.sortByCreatedAt", icon: <Calendar size={14} />, showIn: ["platform", "all", "favorites", "recent"] },
-  { mode: "usageCount", labelKey: "contentHeader.sortByUsageCount", icon: <BarChart3 size={14} />, showIn: ["platform", "all", "favorites", "recent"] },
-  { mode: "favoritedAt", labelKey: "contentHeader.sortByFavoritedAt", icon: <Star size={14} />, showIn: ["favorites"] },
+  {
+    mode: "createdAt",
+    labelKey: "contentHeader.sortByCreatedAt",
+    icon: <Calendar size={14} />,
+    showIn: ["platform", "all", "favorites", "recent"],
+  },
+  {
+    mode: "usageCount",
+    labelKey: "contentHeader.sortByUsageCount",
+    icon: <BarChart3 size={14} />,
+    showIn: ["platform", "all", "favorites", "recent"],
+  },
+  {
+    mode: "favoritedAt",
+    labelKey: "contentHeader.sortByFavoritedAt",
+    icon: <Star size={14} />,
+    showIn: ["favorites"],
+  },
 ];
 
 export function ContentHeader({ count }: ContentHeaderProps) {
@@ -56,20 +71,15 @@ export function ContentHeader({ count }: ContentHeaderProps) {
   }
 
   const availableOptions = sortOptions.filter((o) => o.showIn.includes(navType));
-  const currentLabel = availableOptions.find((o) => o.mode === sortMode)?.labelKey ?? "contentHeader.sort";
+  const currentLabel =
+    availableOptions.find((o) => o.mode === sortMode)?.labelKey ?? "contentHeader.sort";
 
   return (
     <div className="flex items-center gap-2 px-4 pt-3 pb-1">
-      <h2
-        className="text-lg font-semibold"
-        style={{ color: "var(--color-text-primary)" }}
-      >
+      <h2 className="text-lg font-semibold" style={{ color: "var(--color-text-primary)" }}>
         {title}
       </h2>
-      <span
-        className="text-sm"
-        style={{ color: "var(--color-text-tertiary)" }}
-      >
+      <span className="text-sm" style={{ color: "var(--color-text-tertiary)" }}>
         {count} {unit}
       </span>
       <div className="flex-1" />
@@ -102,8 +112,12 @@ export function ContentHeader({ count }: ContentHeaderProps) {
                 key={option.mode}
                 className="flex items-center gap-2 px-2 py-1.5 rounded-md text-sm cursor-pointer outline-none transition-colors"
                 style={{
-                  color: sortMode === option.mode ? "var(--color-accent)" : "var(--color-text-secondary)",
-                  backgroundColor: sortMode === option.mode ? "var(--color-accent-soft)" : "transparent",
+                  color:
+                    sortMode === option.mode
+                      ? "var(--color-accent)"
+                      : "var(--color-text-secondary)",
+                  backgroundColor:
+                    sortMode === option.mode ? "var(--color-accent-soft)" : "transparent",
                 }}
                 onSelect={() => setSortMode(option.mode)}
               >

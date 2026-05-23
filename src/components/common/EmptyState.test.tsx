@@ -10,21 +10,14 @@ describe("EmptyState", () => {
   });
 
   it("renders description when provided", () => {
-    render(
-      <EmptyState title="No items" description="Try adding a new item" />
-    );
+    render(<EmptyState title="No items" description="Try adding a new item" />);
     expect(screen.getByText("Try adding a new item")).toBeInTheDocument();
   });
 
   it("renders action button and handles click", async () => {
     const handleClick = vi.fn();
     const user = userEvent.setup();
-    render(
-      <EmptyState
-        title="No items"
-        action={{ label: "Add Item", onClick: handleClick }}
-      />
-    );
+    render(<EmptyState title="No items" action={{ label: "Add Item", onClick: handleClick }} />);
     const button = screen.getByRole("button", { name: "Add Item" });
     expect(button).toBeInTheDocument();
     await user.click(button);

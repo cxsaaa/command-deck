@@ -25,13 +25,9 @@ export function IconButton({
       ? "var(--color-accent)"
       : "var(--color-text-tertiary)";
 
-  const hoverBg = danger
-    ? "var(--color-state-danger-soft)"
-    : "var(--color-bg-hover)";
+  const hoverBg = danger ? "var(--color-state-danger-soft)" : "var(--color-bg-hover)";
 
-  const hoverColor = danger
-    ? "var(--color-state-danger)"
-    : "var(--color-text-primary)";
+  const hoverColor = danger ? "var(--color-state-danger)" : "var(--color-text-primary)";
 
   return (
     <button

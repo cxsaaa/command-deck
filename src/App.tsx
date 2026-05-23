@@ -1,7 +1,8 @@
 import { useRef, useCallback, useMemo, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import i18n from "./i18n";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery, useQueryClient, keepPreviousData } from "@tanstack/react-query";
+import { invoke } from "@tauri-apps/api/core";
 import { AppShell } from "./components/layout/AppShell";
 import { TopBar } from "./components/layout/TopBar";
 import { Sidebar } from "./components/layout/Sidebar";
@@ -44,6 +45,20 @@ function App() {
 
   const queryClient = useQueryClient();
   const searchInputRef = useRef<HTMLInputElement>(null);
+  const globalHotkey = useUiStore((s) => s.globalHotkey);
+
+  // Register global hotkey on app start
+  useEffect(() => {
+    const registerHotkey = async () => {
+      try {
+        await invoke("register_global_shortcut", { shortcut: globalHotkey });
+        console.log("Global hotkey registered:", globalHotkey);
+      } catch (err) {
+        console.error("Failed to register global hotkey:", err);
+      }
+    };
+    registerHotkey();
+  }, [globalHotkey]);
 
   // Theme effect: apply data-theme to <html>
   useEffect(() => {
@@ -78,11 +93,13 @@ function App() {
     let unlisten: (() => void) | undefined;
     import("@tauri-apps/api/window").then(({ getCurrentWindow }) => {
       const win = getCurrentWindow();
-      win.onFocusChanged(({ payload: focused }) => {
-        if (!focused) win.hide();
-      }).then((fn) => {
-        unlisten = fn;
-      });
+      win
+        .onFocusChanged(({ payload: focused }) => {
+          if (!focused) win.hide();
+        })
+        .then((fn) => {
+          unlisten = fn;
+        });
     });
     return () => {
       unlisten?.();
@@ -96,8 +113,7 @@ function App() {
       platformId: currentPlatformId,
       categoryId: currentCategoryId,
       searchQuery: searchQuery.trim() || undefined,
-      searchScope:
-        navType === "platform" && currentPlatformId ? "current" : "global",
+      searchScope: navType === "platform" && currentPlatformId ? "current" : "global",
     }),
     [navType, currentPlatformId, currentCategoryId, searchQuery],
   );
@@ -106,6 +122,7 @@ function App() {
   const { data: rawCommands } = useQuery({
     queryKey: queryKeys.commands(filter as unknown as Record<string, unknown>),
     queryFn: () => commandRepository.listCommands(filter),
+    placeholderData: keepPreviousData,
   });
 
   // Apply client-side search/sorting
@@ -122,9 +139,7 @@ function App() {
   const handleCopyCommand = useCallback(
     async (command: Command) => {
       try {
-        const { writeText } = await import(
-          "@tauri-apps/plugin-clipboard-manager"
-        );
+        const { writeText } = await import("@tauri-apps/plugin-clipboard-manager");
         await writeText(command.command);
         await commandRepository.recordCommandCopied(command.id);
         toast(t("command.copied"), "success");
@@ -222,10 +237,7 @@ function App() {
       />
 
       {/* Settings modal */}
-      <SettingsModal
-        open={settingsOpen}
-        onClose={closeSettings}
-      />
+      <SettingsModal open={settingsOpen} onClose={closeSettings} />
     </>
   );
 }

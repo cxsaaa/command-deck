@@ -3,7 +3,7 @@ import type { Command, NavType, SortMode } from "./types";
 export function sortCommands(
   commands: Command[],
   _navType: NavType,
-  sortMode: SortMode = "createdAt"
+  sortMode: SortMode = "createdAt",
 ): Command[] {
   const sorted = [...commands];
 

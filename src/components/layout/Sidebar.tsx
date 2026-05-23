@@ -2,11 +2,7 @@ import { useState, useRef, useEffect, useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { LayoutGrid, Star, Clock, GripVertical, Plus } from "lucide-react";
-import {
-  DndContext,
-  closestCenter,
-  type DragEndEvent,
-} from "@dnd-kit/core";
+import { DndContext, closestCenter, type DragEndEvent } from "@dnd-kit/core";
 import {
   SortableContext,
   useSortable,
@@ -59,14 +55,9 @@ function SortablePlatformItem({
   const queryClient = useQueryClient();
   const setPlatformRenameId = useUiStore((s) => s.setPlatformRenameId);
 
-  const {
-    attributes,
-    listeners,
-    setNodeRef,
-    transform,
-    transition,
-    isDragging,
-  } = useSortable({ id: platform.id });
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
+    id: platform.id,
+  });
 
   useEffect(() => {
     if (isRenaming && inputRef.current) {
@@ -88,12 +79,8 @@ function SortablePlatformItem({
     transform: CSS.Transform.toString(transform),
     transition,
     opacity: isDragging ? 0.5 : 1,
-    backgroundColor: isActive
-      ? "var(--color-accent-soft)"
-      : "transparent",
-    color: isActive
-      ? "var(--color-accent)"
-      : "var(--color-text-secondary)",
+    backgroundColor: isActive ? "var(--color-accent-soft)" : "transparent",
+    color: isActive ? "var(--color-accent)" : "var(--color-text-secondary)",
     fontWeight: isActive ? 500 : 400,
     border: "none",
     cursor: "pointer",
@@ -156,10 +143,7 @@ function SortablePlatformItem({
         ) : (
           <span className="flex-1 truncate">{platform.name}</span>
         )}
-        <span
-          className="text-xs shrink-0"
-          style={{ color: "var(--color-text-tertiary)" }}
-        >
+        <span className="text-xs shrink-0" style={{ color: "var(--color-text-tertiary)" }}>
           {platform.commandCount}
         </span>
       </div>
@@ -195,9 +179,7 @@ export function Sidebar() {
     const reordered = arrayMove(platforms, oldIndex, newIndex);
 
     queryClient.setQueryData(queryKeys.platforms, reordered);
-    await platformRepository.updatePlatformSortOrder(
-      reordered.map((p) => p.id)
-    );
+    await platformRepository.updatePlatformSortOrder(reordered.map((p) => p.id));
     await queryClient.invalidateQueries({ queryKey: queryKeys.platforms });
   }
 
@@ -258,12 +240,8 @@ export function Sidebar() {
                 onClick={() => setNavType(entry.navType)}
                 className="flex items-center gap-2 px-2 py-1.5 rounded-md text-sm w-full text-left transition-colors"
                 style={{
-                  backgroundColor: isActive
-                    ? "var(--color-accent-soft)"
-                    : "transparent",
-                  color: isActive
-                    ? "var(--color-accent)"
-                    : "var(--color-text-secondary)",
+                  backgroundColor: isActive ? "var(--color-accent-soft)" : "transparent",
+                  color: isActive ? "var(--color-accent)" : "var(--color-text-secondary)",
                   fontWeight: isActive ? 500 : 400,
                   border: "none",
                   cursor: "pointer",
@@ -278,10 +256,7 @@ export function Sidebar() {
       </div>
 
       {/* Divider */}
-      <div
-        className="mx-3 border-t"
-        style={{ borderColor: "var(--color-border)" }}
-      />
+      <div className="mx-3 border-t" style={{ borderColor: "var(--color-border)" }} />
 
       {/* Platform List */}
       <div className="p-3 flex-1">
@@ -291,23 +266,14 @@ export function Sidebar() {
         >
           {t("nav.platforms")}
         </h2>
-        <DndContext
-          collisionDetection={closestCenter}
-          onDragEnd={handleDragEnd}
-        >
-          <SortableContext
-            items={platformIds}
-            strategy={verticalListSortingStrategy}
-          >
+        <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+          <SortableContext items={platformIds} strategy={verticalListSortingStrategy}>
             <nav className="flex flex-col gap-0.5">
               {platforms?.map((platform) => (
                 <SortablePlatformItem
                   key={platform.id}
                   platform={platform}
-                  isActive={
-                    navType === "platform" &&
-                    currentPlatformId === platform.id
-                  }
+                  isActive={navType === "platform" && currentPlatformId === platform.id}
                   isRenaming={platformRenameId === platform.id}
                   onSelect={() => setCurrentPlatform(platform.id)}
                   onStartRename={() => setPlatformRenameId(platform.id)}

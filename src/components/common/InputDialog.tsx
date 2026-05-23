@@ -10,13 +10,7 @@ interface InputDialogProps {
   onCancel: () => void;
 }
 
-export function InputDialog({
-  open,
-  title,
-  placeholder,
-  onConfirm,
-  onCancel,
-}: InputDialogProps) {
+export function InputDialog({ open, title, placeholder, onConfirm, onCancel }: InputDialogProps) {
   const { t } = useTranslation();
   const [value, setValue] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
@@ -49,10 +43,7 @@ export function InputDialog({
         }}
         onClick={(e) => e.stopPropagation()}
       >
-        <h3
-          className="text-sm font-semibold mb-3"
-          style={{ color: "var(--color-text-primary)" }}
-        >
+        <h3 className="text-sm font-semibold mb-3" style={{ color: "var(--color-text-primary)" }}>
           {title}
         </h3>
         <input

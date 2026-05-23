@@ -12,10 +12,7 @@ import { useUiStore } from "../../state/uiStore";
 import * as platformRepository from "../../data/repositories/platformRepository";
 import * as categoryRepository from "../../data/repositories/categoryRepository";
 import * as commandRepository from "../../data/repositories/commandRepository";
-import {
-  validateCommandInput,
-  type ValidationError,
-} from "../../domain/validation";
+import { validateCommandInput, type ValidationError } from "../../domain/validation";
 import { analyzeClipboard } from "../../domain/clipboardIngestion";
 import type { CommandInput, CommandParameter } from "../../domain/types";
 
@@ -90,10 +87,8 @@ export function CommandFormModal({
   useEffect(() => {
     if (open && mode === "create") {
       const store = useUiStore.getState();
-      const defaultPlatformId =
-        store.navType === "platform" ? store.currentPlatformId ?? "" : "";
-      const defaultCategoryId =
-        store.navType === "platform" ? store.currentCategoryId ?? "" : "";
+      const defaultPlatformId = store.navType === "platform" ? (store.currentPlatformId ?? "") : "";
+      const defaultCategoryId = store.navType === "platform" ? (store.currentCategoryId ?? "") : "";
       setTitle(initialTitle ?? "");
       setPlatformId(defaultPlatformId);
       setCategoryId(defaultCategoryId);
@@ -119,12 +114,8 @@ export function CommandFormModal({
     }
   }, [open]);
 
-
   // Build validation maps
-  const platformIds = useMemo(
-    () => platforms?.map((p) => p.id) ?? [],
-    [platforms],
-  );
+  const platformIds = useMemo(() => platforms?.map((p) => p.id) ?? [], [platforms]);
 
   const categoryPlatformMap = useMemo(() => {
     const map = new Map<string, string>();
@@ -138,8 +129,7 @@ export function CommandFormModal({
 
   // Mutations
   const createMutation = useMutation({
-    mutationFn: (input: CommandInput) =>
-      commandRepository.createCommand(input),
+    mutationFn: (input: CommandInput) => commandRepository.createCommand(input),
     onSuccess: async () => {
       await queryClient.invalidateQueries();
       toast(t("commandForm.saved"), "success");
@@ -151,8 +141,7 @@ export function CommandFormModal({
   });
 
   const updateMutation = useMutation({
-    mutationFn: (input: CommandInput) =>
-      commandRepository.updateCommand(commandId!, input),
+    mutationFn: (input: CommandInput) => commandRepository.updateCommand(commandId!, input),
     onSuccess: async () => {
       await queryClient.invalidateQueries();
       toast(t("commandForm.saved"), "success");
@@ -183,9 +172,7 @@ export function CommandFormModal({
   // Auto-select platform when platforms load and clipboard hint exists
   useEffect(() => {
     if (open && mode === "create" && clipboardHintRef.current && platforms && !platformId) {
-      const matched = platforms.find(
-        (p) => p.name.toLowerCase() === clipboardHintRef.current
-      );
+      const matched = platforms.find((p) => p.name.toLowerCase() === clipboardHintRef.current);
       if (matched) {
         setPlatformId(matched.id);
       }
@@ -218,11 +205,7 @@ export function CommandFormModal({
       notes: notes.trim() || undefined,
     };
 
-    const validationErrors = validateCommandInput(
-      input,
-      platformIds,
-      categoryPlatformMap,
-    );
+    const validationErrors = validateCommandInput(input, platformIds, categoryPlatformMap);
 
     if (validationErrors.length > 0) {
       setErrors(validationErrors);
@@ -246,11 +229,7 @@ export function CommandFormModal({
       <Button variant="secondary" onClick={onClose} disabled={isSaving}>
         {t("commandForm.cancel")}
       </Button>
-      <Button
-        variant="primary"
-        onClick={doSubmit}
-        disabled={isSaving || isLoading}
-      >
+      <Button variant="primary" onClick={doSubmit} disabled={isSaving || isLoading}>
         {isSaving ? t("commandForm.saving") : t("commandForm.save")}
       </Button>
     </>
@@ -272,11 +251,7 @@ export function CommandFormModal({
           {t("commandForm.loading")}
         </div>
       ) : (
-        <form
-          onSubmit={handleFormSubmit}
-          className="flex flex-col"
-          style={{ gap: "16px" }}
-        >
+        <form onSubmit={handleFormSubmit} className="flex flex-col" style={{ gap: "16px" }}>
           {/* Title */}
           <FormField label={t("commandForm.title")} required error={getError("title")}>
             <input
@@ -393,10 +368,7 @@ export function CommandFormModal({
 
           {/* Submit error */}
           {submitError && (
-            <p
-              className="text-xs"
-              style={{ color: "var(--color-state-danger)" }}
-            >
+            <p className="text-xs" style={{ color: "var(--color-state-danger)" }}>
               {submitError}
             </p>
           )}
@@ -423,16 +395,9 @@ function FormField({
 }) {
   return (
     <div className="flex flex-col" style={{ gap: "6px" }}>
-      <label
-        className="text-sm font-medium"
-        style={{ color: "var(--color-text-primary)" }}
-      >
+      <label className="text-sm font-medium" style={{ color: "var(--color-text-primary)" }}>
         {label}
-        {required && (
-          <span style={{ color: "var(--color-state-danger)", marginLeft: 2 }}>
-            *
-          </span>
-        )}
+        {required && <span style={{ color: "var(--color-state-danger)", marginLeft: 2 }}>*</span>}
       </label>
       {children}
       {error && (
@@ -457,8 +422,8 @@ function HelperText({ children }: { children: React.ReactNode }) {
 /* ------------------------------------------------------------------ */
 
 const inputStyle: React.CSSProperties = {
-  height: "36px",
-  padding: "0 10px",
+  height: "30px",
+  padding: "0 8px",
   border: "1px solid var(--color-border)",
   borderRadius: "var(--radius-md)",
   backgroundColor: "var(--color-bg-surface)",
