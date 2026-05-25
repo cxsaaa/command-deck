@@ -1,0 +1,888 @@
+{
+  "platform": {
+    "id": "platform_docker",
+    "icon": null,
+    "color": "#2496ED",
+    "sortOrder": 2,
+    "name": { "zh-CN": "Docker", "en-US": "Docker" },
+    "description": { "zh-CN": "容器平台，用于构建、分享和运行应用", "en-US": "Container platform for building, sharing, and running applications" }
+  },
+  "categories": [
+    { "id": "cat_docker_container", "platformId": "platform_docker", "sortOrder": 1, "name": { "zh-CN": "容器管理", "en-US": "Container Management" } },
+    { "id": "cat_docker_image", "platformId": "platform_docker", "sortOrder": 2, "name": { "zh-CN": "镜像管理", "en-US": "Image Management" } },
+    { "id": "cat_docker_network", "platformId": "platform_docker", "sortOrder": 3, "name": { "zh-CN": "网络", "en-US": "Network" } },
+    { "id": "cat_docker_volume", "platformId": "platform_docker", "sortOrder": 4, "name": { "zh-CN": "数据卷", "en-US": "Volumes" } },
+    { "id": "cat_docker_compose", "platformId": "platform_docker", "sortOrder": 5, "name": { "zh-CN": "Docker Compose", "en-US": "Docker Compose" } },
+    { "id": "cat_docker_system", "platformId": "platform_docker", "sortOrder": 6, "name": { "zh-CN": "系统管理", "en-US": "System" } },
+    { "id": "cat_docker_cleanup", "platformId": "platform_docker", "sortOrder": 7, "name": { "zh-CN": "清理", "en-US": "Cleanup" } }
+  ],
+  "commands": [
+    {
+      "id": "cmd_docker_run",
+      "command": "docker run -d --name <container> <image>",
+      "platformId": "platform_docker",
+      "categoryId": "cat_docker_container",
+      "examples": ["docker run -d nginx", "docker run -it ubuntu bash", "docker run -p 8080:80 -d nginx"],
+      "parameters": [
+        { "name": "-d", "description": { "zh-CN": "后台运行", "en-US": "Run in detached mode" } },
+        { "name": "--name", "description": { "zh-CN": "指定容器名称", "en-US": "Assign a name to the container" } },
+        { "name": "-p", "description": { "zh-CN": "端口映射", "en-US": "Publish port (host:container)" } },
+        { "name": "-it", "description": { "zh-CN": "交互模式并分配终端", "en-US": "Interactive mode with TTY" } }
+      ],
+      "title": { "zh-CN": "运行容器", "en-US": "Run container" },
+      "description": { "zh-CN": "创建并启动一个新容器", "en-US": "Create and start a new container" },
+      "tags": { "zh-CN": ["容器", "运行", "创建"], "en-US": ["container", "run", "create"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_docker_ps",
+      "command": "docker ps",
+      "platformId": "platform_docker",
+      "categoryId": "cat_docker_container",
+      "examples": ["docker ps", "docker ps -a", "docker ps --format \"table {{.Names}}\t{{.Status}}\"", "docker ps -q"],
+      "parameters": [
+        { "name": "-a", "description": { "zh-CN": "显示所有容器（含已停止）", "en-US": "Show all containers (including stopped)" } },
+        { "name": "-q", "description": { "zh-CN": "仅显示容器 ID", "en-US": "Show only container IDs" } },
+        { "name": "--format", "description": { "zh-CN": "自定义输出格式", "en-US": "Custom output format" } }
+      ],
+      "title": { "zh-CN": "查看容器列表", "en-US": "List containers" },
+      "description": { "zh-CN": "列出运行中的容器", "en-US": "List running containers" },
+      "tags": { "zh-CN": ["容器", "列表", "查看"], "en-US": ["container", "list", "ps"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_docker_start",
+      "command": "docker start <container>",
+      "platformId": "platform_docker",
+      "categoryId": "cat_docker_container",
+      "examples": ["docker start my-container", "docker start abc123", "docker start -a my-container", "docker start -i my-container"],
+      "parameters": [
+        { "name": "-a", "description": { "zh-CN": "附加到容器输出", "en-US": "Attach to container output" } },
+        { "name": "-i", "description": { "zh-CN": "附加标准输入", "en-US": "Attach to container's STDIN" } }
+      ],
+      "title": { "zh-CN": "启动容器", "en-US": "Start container" },
+      "description": { "zh-CN": "启动一个或多个已停止的容器", "en-US": "Start one or more stopped containers" },
+      "tags": { "zh-CN": ["容器", "启动"], "en-US": ["container", "start"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_docker_stop",
+      "command": "docker stop <container>",
+      "platformId": "platform_docker",
+      "categoryId": "cat_docker_container",
+      "examples": ["docker stop my-container", "docker stop abc123 def456", "docker stop -t 30 my-container", "docker stop $(docker ps -q)"],
+      "parameters": [
+        { "name": "-t", "description": { "zh-CN": "优雅停止的超时秒数（默认 10）", "en-US": "Seconds to wait before killing (default 10)" } }
+      ],
+      "title": { "zh-CN": "停止容器", "en-US": "Stop container" },
+      "description": { "zh-CN": "优雅停止一个或多个运行中的容器", "en-US": "Gracefully stop one or more running containers" },
+      "tags": { "zh-CN": ["容器", "停止"], "en-US": ["container", "stop"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_docker_restart",
+      "command": "docker restart <container>",
+      "platformId": "platform_docker",
+      "categoryId": "cat_docker_container",
+      "examples": ["docker restart my-container", "docker restart -t 5 my-container", "docker restart $(docker ps -q)"],
+      "parameters": [
+        { "name": "-t", "description": { "zh-CN": "优雅停止的超时秒数", "en-US": "Seconds to wait before restarting" } }
+      ],
+      "title": { "zh-CN": "重启容器", "en-US": "Restart container" },
+      "description": { "zh-CN": "重启一个或多个容器", "en-US": "Restart one or more containers" },
+      "tags": { "zh-CN": ["容器", "重启"], "en-US": ["container", "restart"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_docker_rm",
+      "command": "docker rm <container>",
+      "platformId": "platform_docker",
+      "categoryId": "cat_docker_container",
+      "examples": ["docker rm my-container", "docker rm -f my-container", "docker rm $(docker ps -aq)", "docker rm -v my-container"],
+      "parameters": [
+        { "name": "-f", "description": { "zh-CN": "强制移除运行中的容器", "en-US": "Force remove a running container" } },
+        { "name": "-v", "description": { "zh-CN": "同时删除关联的匿名卷", "en-US": "Remove the associated anonymous volumes" } }
+      ],
+      "title": { "zh-CN": "移除容器", "en-US": "Remove container" },
+      "description": { "zh-CN": "删除一个或多个已停止的容器", "en-US": "Remove one or more stopped containers" },
+      "tags": { "zh-CN": ["容器", "删除", "移除"], "en-US": ["container", "delete", "remove"] },
+      "notes": "Warning: -f will forcefully remove a running container. Use with caution."
+    },
+    {
+      "id": "cmd_docker_exec",
+      "command": "docker exec -it <container> <command>",
+      "platformId": "platform_docker",
+      "categoryId": "cat_docker_container",
+      "examples": ["docker exec -it my-container bash", "docker exec my-container cat /etc/hosts", "docker exec -u root my-container whoami", "docker exec -w /app my-container npm test"],
+      "parameters": [
+        { "name": "-it", "description": { "zh-CN": "交互模式并分配终端", "en-US": "Interactive mode with TTY" } },
+        { "name": "-u", "description": { "zh-CN": "以指定用户运行", "en-US": "Run as the specified user" } },
+        { "name": "-w", "description": { "zh-CN": "指定工作目录", "en-US": "Set working directory inside container" } },
+        { "name": "-e", "description": { "zh-CN": "设置环境变量", "en-US": "Set environment variables" } }
+      ],
+      "title": { "zh-CN": "在容器中执行命令", "en-US": "Execute command in container" },
+      "description": { "zh-CN": "在运行中的容器内执行命令", "en-US": "Run a command in a running container" },
+      "tags": { "zh-CN": ["容器", "执行", "命令"], "en-US": ["container", "exec", "command"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_docker_attach",
+      "command": "docker attach <container>",
+      "platformId": "platform_docker",
+      "categoryId": "cat_docker_container",
+      "examples": ["docker attach my-container", "docker attach --sig-proxy=false my-container"],
+      "parameters": [
+        { "name": "--sig-proxy", "description": { "zh-CN": "是否代理信号到容器进程（默认 true）", "en-US": "Proxy signal to container process (default true)" } }
+      ],
+      "title": { "zh-CN": "附加到容器", "en-US": "Attach to container" },
+      "description": { "zh-CN": "附加到运行容器的主进程", "en-US": "Attach to a running container's main process" },
+      "tags": { "zh-CN": ["容器", "附加", "调试"], "en-US": ["container", "attach", "debug"] },
+      "notes": "Press Ctrl+P, Ctrl+Q to detach without stopping the container. Ctrl+C will stop the container."
+    },
+    {
+      "id": "cmd_docker_logs",
+      "command": "docker logs <container>",
+      "platformId": "platform_docker",
+      "categoryId": "cat_docker_container",
+      "examples": ["docker logs my-container", "docker logs -f my-container", "docker logs --tail 100 my-container", "docker logs -f --since 10m my-container"],
+      "parameters": [
+        { "name": "-f", "description": { "zh-CN": "持续输出日志（类似 tail -f）", "en-US": "Follow log output (like tail -f)" } },
+        { "name": "--tail", "description": { "zh-CN": "显示末尾指定行数的日志", "en-US": "Show the specified number of log lines" } },
+        { "name": "--since", "description": { "zh-CN": "显示指定时间之后的日志", "en-US": "Show logs since a given timestamp" } },
+        { "name": "-t", "description": { "zh-CN": "显示时间戳", "en-US": "Show timestamps" } }
+      ],
+      "title": { "zh-CN": "查看容器日志", "en-US": "View container logs" },
+      "description": { "zh-CN": "获取容器的日志输出", "en-US": "Fetch the logs of a container" },
+      "tags": { "zh-CN": ["容器", "日志", "调试"], "en-US": ["container", "logs", "debug"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_docker_inspect",
+      "command": "docker inspect <container>",
+      "platformId": "platform_docker",
+      "categoryId": "cat_docker_container",
+      "examples": ["docker inspect my-container", "docker inspect --format '{{.NetworkSettings.IPAddress}}' my-container", "docker inspect --format '{{.Config.Env}}' my-container", "docker inspect --type container my-container"],
+      "parameters": [
+        { "name": "--format", "description": { "zh-CN": "使用 Go 模板自定义输出", "en-US": "Customize output using a Go template" } },
+        { "name": "--type", "description": { "zh-CN": "返回指定类型的 JSON", "en-US": "Return JSON for a specific type" } }
+      ],
+      "title": { "zh-CN": "查看容器详情", "en-US": "Inspect container" },
+      "description": { "zh-CN": "返回容器的详细 JSON 信息", "en-US": "Return low-level information about a container" },
+      "tags": { "zh-CN": ["容器", "详情", "检查"], "en-US": ["container", "inspect", "detail"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_docker_cp",
+      "command": "docker cp <container>:<path> <local-path>",
+      "platformId": "platform_docker",
+      "categoryId": "cat_docker_container",
+      "examples": ["docker cp my-container:/app/logs ./logs", "docker cp ./config.yml my-container:/app/config.yml", "docker cp my-container:/var/log/nginx/ ./nginx-logs/"],
+      "parameters": [
+        { "name": "-a", "description": { "zh-CN": "归档模式，保留文件权限", "en-US": "Archive mode, preserve file permissions" } }
+      ],
+      "title": { "zh-CN": "在容器与主机间复制文件", "en-US": "Copy files between container and host" },
+      "description": { "zh-CN": "在容器与本地文件系统之间复制文件/文件夹", "en-US": "Copy files/folders between a container and the local filesystem" },
+      "tags": { "zh-CN": ["容器", "复制", "文件"], "en-US": ["container", "copy", "file"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_docker_pause",
+      "command": "docker pause <container>",
+      "platformId": "platform_docker",
+      "categoryId": "cat_docker_container",
+      "examples": ["docker pause my-container", "docker pause $(docker ps -q)", "docker unpause my-container"],
+      "parameters": [],
+      "title": { "zh-CN": "暂停/恢复容器", "en-US": "Pause/unpause container" },
+      "description": { "zh-CN": "暂停容器内所有进程（unpause 恢复）", "en-US": "Suspend all processes in a container (unpause to resume)" },
+      "tags": { "zh-CN": ["容器", "暂停", "恢复"], "en-US": ["container", "pause", "unpause"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_docker_kill",
+      "command": "docker kill <container>",
+      "platformId": "platform_docker",
+      "categoryId": "cat_docker_container",
+      "examples": ["docker kill my-container", "docker kill -s SIGTERM my-container", "docker kill $(docker ps -q)"],
+      "parameters": [
+        { "name": "-s", "description": { "zh-CN": "发送指定信号（默认 SIGKILL）", "en-US": "Send a specific signal (default SIGKILL)" } }
+      ],
+      "title": { "zh-CN": "强制终止容器", "en-US": "Kill container" },
+      "description": { "zh-CN": "通过发送信号强制终止一个容器", "en-US": "Kill a container by sending a signal" },
+      "tags": { "zh-CN": ["容器", "终止", "强制"], "en-US": ["container", "kill", "force"] },
+      "notes": "Default signal is SIGKILL which gives the container no chance to clean up. Prefer docker stop for graceful shutdown."
+    },
+    {
+      "id": "cmd_docker_top",
+      "command": "docker top <container>",
+      "platformId": "platform_docker",
+      "categoryId": "cat_docker_container",
+      "examples": ["docker top my-container", "docker top my-container aux", "docker top my-container -o pid,cpu,mem"],
+      "parameters": [
+        { "name": "aux", "description": { "zh-CN": "显示所有进程及详细信息", "en-US": "Show all processes with details" } }
+      ],
+      "title": { "zh-CN": "查看容器进程", "en-US": "Display container processes" },
+      "description": { "zh-CN": "列出容器内运行的进程", "en-US": "Display the running processes inside a container" },
+      "tags": { "zh-CN": ["容器", "进程", "监控"], "en-US": ["container", "process", "top"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_docker_diff",
+      "command": "docker diff <container>",
+      "platformId": "platform_docker",
+      "categoryId": "cat_docker_container",
+      "examples": ["docker diff my-container", "docker diff abc123 | head -20"],
+      "parameters": [],
+      "title": { "zh-CN": "查看容器文件变更", "en-US": "Inspect container filesystem changes" },
+      "description": { "zh-CN": "列出容器内相对于镜像的文件变更", "en-US": "List file changes in a container's filesystem" },
+      "tags": { "zh-CN": ["容器", "变更", "文件"], "en-US": ["container", "diff", "filesystem"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_docker_wait",
+      "command": "docker wait <container>",
+      "platformId": "platform_docker",
+      "categoryId": "cat_docker_container",
+      "examples": ["docker wait my-container", "echo \"Exit code: $(docker wait my-container)\"", "docker wait my-container my-container2"],
+      "parameters": [],
+      "title": { "zh-CN": "等待容器停止并返回退出码", "en-US": "Block until container stops" },
+      "description": { "zh-CN": "阻塞等待容器停止并返回退出状态码", "en-US": "Block until a container stops, then print its exit code" },
+      "tags": { "zh-CN": ["容器", "等待", "退出码"], "en-US": ["container", "wait", "exit code"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_docker_port",
+      "command": "docker port <container>",
+      "platformId": "platform_docker",
+      "categoryId": "cat_docker_container",
+      "examples": ["docker port my-container", "docker port my-container 80", "docker port my-container 443/tcp"],
+      "parameters": [],
+      "title": { "zh-CN": "查看端口映射", "en-US": "List port mappings" },
+      "description": { "zh-CN": "查看容器的端口映射信息", "en-US": "Display port mappings for a container" },
+      "tags": { "zh-CN": ["容器", "端口", "映射"], "en-US": ["container", "port", "mapping"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_docker_stats",
+      "command": "docker stats",
+      "platformId": "platform_docker",
+      "categoryId": "cat_docker_container",
+      "examples": ["docker stats", "docker stats my-container", "docker stats --no-stream", "docker stats --format \"table {{.Name}}\t{{.CPUPerc}}\t{{.MemUsage}}\""],
+      "parameters": [
+        { "name": "--no-stream", "description": { "zh-CN": "仅输出一次快照（不持续刷新）", "en-US": "Display a single stats snapshot without streaming" } },
+        { "name": "--format", "description": { "zh-CN": "自定义输出格式", "en-US": "Custom output format" } }
+      ],
+      "title": { "zh-CN": "查看容器资源占用", "en-US": "Display container resource usage" },
+      "description": { "zh-CN": "实时显示容器的 CPU、内存、网络等资源使用统计", "en-US": "Display a live stream of container resource usage statistics" },
+      "tags": { "zh-CN": ["容器", "监控", "资源", "CPU", "内存"], "en-US": ["container", "stats", "monitor", "CPU", "memory"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_docker_build",
+      "command": "docker build -t <tag> <path>",
+      "platformId": "platform_docker",
+      "categoryId": "cat_docker_image",
+      "examples": ["docker build -t my-app .", "docker build -f Dockerfile.prod -t my-app:prod .", "docker build --no-cache -t my-app .", "docker build --build-arg NODE_ENV=production -t my-app ."],
+      "parameters": [
+        { "name": "-t", "description": { "zh-CN": "指定镜像标签（名称:版本）", "en-US": "Set image tag (name:version)" } },
+        { "name": "-f", "description": { "zh-CN": "指定 Dockerfile 路径", "en-US": "Path to Dockerfile" } },
+        { "name": "--no-cache", "description": { "zh-CN": "不使用缓存构建", "en-US": "Do not use cache during build" } },
+        { "name": "--build-arg", "description": { "zh-CN": "传递构建参数", "en-US": "Pass build-time variables" } }
+      ],
+      "title": { "zh-CN": "构建镜像", "en-US": "Build image" },
+      "description": { "zh-CN": "从 Dockerfile 构建镜像", "en-US": "Build an image from a Dockerfile" },
+      "tags": { "zh-CN": ["镜像", "构建"], "en-US": ["image", "build"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_docker_pull",
+      "command": "docker pull <image>",
+      "platformId": "platform_docker",
+      "categoryId": "cat_docker_image",
+      "examples": ["docker pull nginx", "docker pull nginx:alpine", "docker pull ubuntu:22.04", "docker pull registry.example.com/my-app:latest"],
+      "parameters": [],
+      "title": { "zh-CN": "拉取镜像", "en-US": "Pull image" },
+      "description": { "zh-CN": "从仓库拉取镜像到本地", "en-US": "Pull an image from a registry" },
+      "tags": { "zh-CN": ["镜像", "拉取", "下载"], "en-US": ["image", "pull", "download"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_docker_push",
+      "command": "docker push <image>",
+      "platformId": "platform_docker",
+      "categoryId": "cat_docker_image",
+      "examples": ["docker push my-app:latest", "docker push registry.example.com/my-app:v1.0", "docker push -a my-app"],
+      "parameters": [],
+      "title": { "zh-CN": "推送镜像", "en-US": "Push image" },
+      "description": { "zh-CN": "推送本地镜像到远程仓库", "en-US": "Push an image to a remote registry" },
+      "tags": { "zh-CN": ["镜像", "推送", "上传"], "en-US": ["image", "push", "upload"] },
+      "notes": "You must be logged in to the target registry before pushing."
+    },
+    {
+      "id": "cmd_docker_images",
+      "command": "docker images",
+      "platformId": "platform_docker",
+      "categoryId": "cat_docker_image",
+      "examples": ["docker images", "docker images -a", "docker images --filter dangling=true", "docker images --format \"table {{.Repository}}\t{{.Tag}}\t{{.Size}}\""],
+      "parameters": [
+        { "name": "-a", "description": { "zh-CN": "显示所有镜像（含中间层）", "en-US": "Show all images (including intermediate)" } },
+        { "name": "--filter", "description": { "zh-CN": "根据条件过滤", "en-US": "Filter output based on conditions" } },
+        { "name": "--format", "description": { "zh-CN": "自定义输出格式", "en-US": "Custom output format" } }
+      ],
+      "title": { "zh-CN": "查看本地镜像", "en-US": "List images" },
+      "description": { "zh-CN": "列出本地所有镜像", "en-US": "List local Docker images" },
+      "tags": { "zh-CN": ["镜像", "列表", "查看"], "en-US": ["image", "list", "ls"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_docker_rmi",
+      "command": "docker rmi <image>",
+      "platformId": "platform_docker",
+      "categoryId": "cat_docker_image",
+      "examples": ["docker rmi my-app:v1", "docker rmi -f my-app:v1", "docker rmi $(docker images -q --filter dangling=true)", "docker rmi my-app:latest my-app:v1"],
+      "parameters": [
+        { "name": "-f", "description": { "zh-CN": "强制删除镜像", "en-US": "Force removal of image" } }
+      ],
+      "title": { "zh-CN": "删除镜像", "en-US": "Remove image" },
+      "description": { "zh-CN": "删除一个或多个本地镜像", "en-US": "Remove one or more local images" },
+      "tags": { "zh-CN": ["镜像", "删除", "移除"], "en-US": ["image", "delete", "remove"] },
+      "notes": "Warning: -f will force remove the image even if it is referenced by running containers."
+    },
+    {
+      "id": "cmd_docker_tag",
+      "command": "docker tag <source> <target>",
+      "platformId": "platform_docker",
+      "categoryId": "cat_docker_image",
+      "examples": ["docker tag my-app:latest my-app:prod", "docker tag my-app:latest registry.example.com/my-app:latest"],
+      "parameters": [],
+      "title": { "zh-CN": "创建镜像标签", "en-US": "Tag image" },
+      "description": { "zh-CN": "为本地镜像创建新标签", "en-US": "Create a new tag for a local image" },
+      "tags": { "zh-CN": ["镜像", "标签", "重命名"], "en-US": ["image", "tag", "rename"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_docker_history",
+      "command": "docker history <image>",
+      "platformId": "platform_docker",
+      "categoryId": "cat_docker_image",
+      "examples": ["docker history nginx", "docker history --no-trunc nginx", "docker history --format \"table {{.CreatedBy}}\t{{.Size}}\" nginx"],
+      "parameters": [
+        { "name": "--no-trunc", "description": { "zh-CN": "输出完整内容（不截断）", "en-US": "Don't truncate output" } },
+        { "name": "--format", "description": { "zh-CN": "自定义输出格式", "en-US": "Custom output format" } }
+      ],
+      "title": { "zh-CN": "查看镜像构建历史", "en-US": "Show image build history" },
+      "description": { "zh-CN": "查看镜像的构建历史和每层大小", "en-US": "Show the history of an image's build layers" },
+      "tags": { "zh-CN": ["镜像", "历史", "层"], "en-US": ["image", "history", "layers"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_docker_save",
+      "command": "docker save -o <file> <image>",
+      "platformId": "platform_docker",
+      "categoryId": "cat_docker_image",
+      "examples": ["docker save -o my-app.tar my-app:latest", "docker save my-app:latest | gzip > my-app.tar.gz", "docker save -o backup.tar my-app:v1 my-app:v2"],
+      "parameters": [
+        { "name": "-o", "description": { "zh-CN": "输出文件路径", "en-US": "Write to a file instead of stdout" } }
+      ],
+      "title": { "zh-CN": "导出镜像到文件", "en-US": "Save image to file" },
+      "description": { "zh-CN": "将镜像导出为 tar 归档文件", "en-US": "Export an image to a tar archive" },
+      "tags": { "zh-CN": ["镜像", "导出", "备份"], "en-US": ["image", "export", "backup"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_docker_load",
+      "command": "docker load -i <file>",
+      "platformId": "platform_docker",
+      "categoryId": "cat_docker_image",
+      "examples": ["docker load -i my-app.tar", "docker load < my-app.tar.gz", "gunzip -c my-app.tar.gz | docker load"],
+      "parameters": [
+        { "name": "-i", "description": { "zh-CN": "指定输入文件", "en-US": "Read from a tar archive file" } }
+      ],
+      "title": { "zh-CN": "从文件加载镜像", "en-US": "Load image from file" },
+      "description": { "zh-CN": "从 tar 归档文件加载镜像", "en-US": "Load an image from a tar archive" },
+      "tags": { "zh-CN": ["镜像", "导入", "恢复"], "en-US": ["image", "import", "restore"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_docker_image_prune",
+      "command": "docker image prune",
+      "platformId": "platform_docker",
+      "categoryId": "cat_docker_image",
+      "examples": ["docker image prune", "docker image prune -a", "docker image prune --filter 'until=24h'"],
+      "parameters": [
+        { "name": "-a", "description": { "zh-CN": "删除所有未被使用的镜像（不仅限悬空）", "en-US": "Remove all unused images (not just dangling)" } },
+        { "name": "--filter", "description": { "zh-CN": "根据条件过滤", "en-US": "Filter based on conditions" } }
+      ],
+      "title": { "zh-CN": "清理未使用的镜像", "en-US": "Prune unused images" },
+      "description": { "zh-CN": "删除所有未被容器引用的悬空镜像", "en-US": "Remove all dangling images not referenced by any container" },
+      "tags": { "zh-CN": ["镜像", "清理", "悬空"], "en-US": ["image", "prune", "dangling"] },
+      "notes": "Use -a to remove ALL unused images, not just dangling ones. This can free significant disk space."
+    },
+    {
+      "id": "cmd_docker_network_create",
+      "command": "docker network create <name>",
+      "platformId": "platform_docker",
+      "categoryId": "cat_docker_network",
+      "examples": ["docker network create my-network", "docker network create --driver bridge my-network", "docker network create --subnet 172.20.0.0/16 my-network", "docker network create --driver overlay --attachable my-network"],
+      "parameters": [
+        { "name": "--driver", "description": { "zh-CN": "指定网络驱动（bridge/host/overlay）", "en-US": "Specify network driver (bridge/host/overlay)" } },
+        { "name": "--subnet", "description": { "zh-CN": "指定子网 CIDR", "en-US": "Subnet CIDR" } },
+        { "name": "--attachable", "description": { "zh-CN": "允许独立容器连接", "en-US": "Allow standalone containers to connect" } }
+      ],
+      "title": { "zh-CN": "创建网络", "en-US": "Create network" },
+      "description": { "zh-CN": "创建自定义 Docker 网络", "en-US": "Create a custom Docker network" },
+      "tags": { "zh-CN": ["网络", "创建"], "en-US": ["network", "create"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_docker_network_ls",
+      "command": "docker network ls",
+      "platformId": "platform_docker",
+      "categoryId": "cat_docker_network",
+      "examples": ["docker network ls", "docker network ls --filter driver=bridge", "docker network ls --format \"table {{.Name}}\t{{.Driver}}\"", "docker network ls -q"],
+      "parameters": [
+        { "name": "--filter", "description": { "zh-CN": "根据条件过滤", "en-US": "Filter based on conditions" } },
+        { "name": "--format", "description": { "zh-CN": "自定义输出格式", "en-US": "Custom output format" } }
+      ],
+      "title": { "zh-CN": "查看网络列表", "en-US": "List networks" },
+      "description": { "zh-CN": "列出所有 Docker 网络", "en-US": "List all Docker networks" },
+      "tags": { "zh-CN": ["网络", "列表", "查看"], "en-US": ["network", "list", "ls"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_docker_network_inspect",
+      "command": "docker network inspect <network>",
+      "platformId": "platform_docker",
+      "categoryId": "cat_docker_network",
+      "examples": ["docker network inspect bridge", "docker network inspect --format '{{.IPAM.Config}}' my-network"],
+      "parameters": [
+        { "name": "--format", "description": { "zh-CN": "使用 Go 模板自定义输出", "en-US": "Customize output using a Go template" } }
+      ],
+      "title": { "zh-CN": "查看网络详情", "en-US": "Inspect network" },
+      "description": { "zh-CN": "返回网络的详细 JSON 信息", "en-US": "Return low-level information about a network" },
+      "tags": { "zh-CN": ["网络", "详情", "检查"], "en-US": ["network", "inspect", "detail"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_docker_network_connect",
+      "command": "docker network connect <network> <container>",
+      "platformId": "platform_docker",
+      "categoryId": "cat_docker_network",
+      "examples": ["docker network connect my-network my-container", "docker network connect --ip 172.20.0.100 my-network my-container"],
+      "parameters": [
+        { "name": "--ip", "description": { "zh-CN": "指定容器在该网络上的 IP", "en-US": "IP address to assign on the network" } },
+        { "name": "--alias", "description": { "zh-CN": "指定网络别名", "en-US": "Add network alias" } }
+      ],
+      "title": { "zh-CN": "连接容器到网络", "en-US": "Connect container to network" },
+      "description": { "zh-CN": "将容器连接到指定的 Docker 网络", "en-US": "Connect a container to a Docker network" },
+      "tags": { "zh-CN": ["网络", "连接", "容器"], "en-US": ["network", "connect", "container"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_docker_network_disconnect",
+      "command": "docker network disconnect <network> <container>",
+      "platformId": "platform_docker",
+      "categoryId": "cat_docker_network",
+      "examples": ["docker network disconnect my-network my-container", "docker network disconnect -f my-network my-container"],
+      "parameters": [
+        { "name": "-f", "description": { "zh-CN": "强制断开连接", "en-US": "Force disconnect" } }
+      ],
+      "title": { "zh-CN": "断开容器网络连接", "en-US": "Disconnect container from network" },
+      "description": { "zh-CN": "将容器从指定网络断开", "en-US": "Disconnect a container from a network" },
+      "tags": { "zh-CN": ["网络", "断开", "容器"], "en-US": ["network", "disconnect", "container"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_docker_network_rm",
+      "command": "docker network rm <network>",
+      "platformId": "platform_docker",
+      "categoryId": "cat_docker_network",
+      "examples": ["docker network rm my-network", "docker network prune", "docker network prune --filter 'until=24h'", "docker network prune --force"],
+      "parameters": [
+        { "name": "--force", "description": { "zh-CN": "不提示确认", "en-US": "Do not prompt for confirmation" } }
+      ],
+      "title": { "zh-CN": "删除/清理网络", "en-US": "Remove/prune networks" },
+      "description": { "zh-CN": "删除指定网络或清理所有未使用网络", "en-US": "Remove a network or prune all unused networks" },
+      "tags": { "zh-CN": ["网络", "删除", "清理"], "en-US": ["network", "delete", "prune"] },
+      "notes": "Cannot remove networks that are still in use by containers."
+    },
+    {
+      "id": "cmd_docker_volume_create",
+      "command": "docker volume create <name>",
+      "platformId": "platform_docker",
+      "categoryId": "cat_docker_volume",
+      "examples": ["docker volume create my-vol", "docker volume create --driver local --opt type=nfs --opt o=addr=192.168.1.100,rw nfs-vol", "docker volume create --driver local --opt device=/data/vol local-vol"],
+      "parameters": [
+        { "name": "--driver", "description": { "zh-CN": "指定卷驱动", "en-US": "Specify volume driver" } },
+        { "name": "--opt", "description": { "zh-CN": "传递驱动特定选项", "en-US": "Pass driver-specific options" } }
+      ],
+      "title": { "zh-CN": "创建数据卷", "en-US": "Create volume" },
+      "description": { "zh-CN": "创建一个命名数据卷", "en-US": "Create a named volume" },
+      "tags": { "zh-CN": ["数据卷", "创建"], "en-US": ["volume", "create"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_docker_volume_ls",
+      "command": "docker volume ls",
+      "platformId": "platform_docker",
+      "categoryId": "cat_docker_volume",
+      "examples": ["docker volume ls", "docker volume ls --filter dangling=true", "docker volume ls --format \"table {{.Name}}\t{{.Driver}}\"", "docker volume ls -q"],
+      "parameters": [
+        { "name": "--filter", "description": { "zh-CN": "根据条件过滤", "en-US": "Filter based on conditions" } },
+        { "name": "-q", "description": { "zh-CN": "仅显示卷名", "en-US": "Show only volume names" } }
+      ],
+      "title": { "zh-CN": "查看数据卷列表", "en-US": "List volumes" },
+      "description": { "zh-CN": "列出所有 Docker 数据卷", "en-US": "List all Docker volumes" },
+      "tags": { "zh-CN": ["数据卷", "列表", "查看"], "en-US": ["volume", "list", "ls"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_docker_volume_inspect",
+      "command": "docker volume inspect <volume>",
+      "platformId": "platform_docker",
+      "categoryId": "cat_docker_volume",
+      "examples": ["docker volume inspect my-vol", "docker volume inspect --format '{{.Mountpoint}}' my-vol"],
+      "parameters": [
+        { "name": "--format", "description": { "zh-CN": "使用 Go 模板自定义输出", "en-US": "Customize output using a Go template" } }
+      ],
+      "title": { "zh-CN": "查看数据卷详情", "en-US": "Inspect volume" },
+      "description": { "zh-CN": "返回数据卷的详细 JSON 信息", "en-US": "Return low-level information about a volume" },
+      "tags": { "zh-CN": ["数据卷", "详情", "检查"], "en-US": ["volume", "inspect", "detail"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_docker_volume_rm",
+      "command": "docker volume rm <volume>",
+      "platformId": "platform_docker",
+      "categoryId": "cat_docker_volume",
+      "examples": ["docker volume rm my-vol", "docker volume prune", "docker volume prune --force", "docker volume prune --filter 'label!=keep'"],
+      "parameters": [
+        { "name": "--force", "description": { "zh-CN": "不提示确认", "en-US": "Do not prompt for confirmation" } }
+      ],
+      "title": { "zh-CN": "删除/清理数据卷", "en-US": "Remove/prune volumes" },
+      "description": { "zh-CN": "删除指定数据卷或清理所有未使用数据卷", "en-US": "Remove a volume or prune all unused volumes" },
+      "tags": { "zh-CN": ["数据卷", "删除", "清理"], "en-US": ["volume", "delete", "prune"] },
+      "notes": "Warning: This will permanently delete data in the volume. Always ensure backups before pruning volumes."
+    },
+    {
+      "id": "cmd_docker_compose_up",
+      "command": "docker compose up",
+      "platformId": "platform_docker",
+      "categoryId": "cat_docker_compose",
+      "examples": ["docker compose up -d", "docker compose up --build", "docker compose up -d --remove-orphans", "docker compose up -d service1 service2"],
+      "parameters": [
+        { "name": "-d", "description": { "zh-CN": "后台运行（分离模式）", "en-US": "Run in detached mode" } },
+        { "name": "--build", "description": { "zh-CN": "构建前先重新构建镜像", "en-US": "Build images before starting" } },
+        { "name": "--remove-orphans", "description": { "zh-CN": "移除旧版 Compose 产生的孤儿容器", "en-US": "Remove containers for services not in the Compose file" } },
+        { "name": "--force-recreate", "description": { "zh-CN": "强制重新创建容器", "en-US": "Force recreate containers" } }
+      ],
+      "title": { "zh-CN": "启动 Compose 服务", "en-US": "Start Compose services" },
+      "description": { "zh-CN": "根据 compose.yml 构建并启动所有服务", "en-US": "Build and start all services defined in compose.yml" },
+      "tags": { "zh-CN": ["compose", "启动", "服务"], "en-US": ["compose", "up", "start"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_docker_compose_down",
+      "command": "docker compose down",
+      "platformId": "platform_docker",
+      "categoryId": "cat_docker_compose",
+      "examples": ["docker compose down", "docker compose down -v", "docker compose down --rmi all", "docker compose down --remove-orphans --volumes"],
+      "parameters": [
+        { "name": "-v", "description": { "zh-CN": "同时删除关联的命名卷", "en-US": "Remove named volumes declared in the volumes section" } },
+        { "name": "--rmi", "description": { "zh-CN": "删除镜像（all 或 local）", "en-US": "Remove images (all or local)" } },
+        { "name": "--remove-orphans", "description": { "zh-CN": "移除孤儿容器", "en-US": "Remove containers for services not in the Compose file" } }
+      ],
+      "title": { "zh-CN": "停止并移除 Compose 服务", "en-US": "Stop and remove Compose services" },
+      "description": { "zh-CN": "停止服务并移除容器、网络", "en-US": "Stop services and remove containers, networks" },
+      "tags": { "zh-CN": ["compose", "停止", "删除"], "en-US": ["compose", "down", "stop"] },
+      "notes": "Use -v to also remove data volumes. This will destroy persistent data."
+    },
+    {
+      "id": "cmd_docker_compose_ps",
+      "command": "docker compose ps",
+      "platformId": "platform_docker",
+      "categoryId": "cat_docker_compose",
+      "examples": ["docker compose ps", "docker compose ps -a", "docker compose ps --format json", "docker compose ps --services"],
+      "parameters": [
+        { "name": "-a", "description": { "zh-CN": "显示所有容器（含已停止）", "en-US": "Show all containers (including stopped)" } },
+        { "name": "--format", "description": { "zh-CN": "自定义输出格式", "en-US": "Custom output format" } },
+        { "name": "--services", "description": { "zh-CN": "仅显示服务名", "en-US": "Display only service names" } }
+      ],
+      "title": { "zh-CN": "查看 Compose 服务状态", "en-US": "List Compose services" },
+      "description": { "zh-CN": "列出 Compose 项目中所有服务的状态", "en-US": "List services defined in the Compose project" },
+      "tags": { "zh-CN": ["compose", "服务", "状态"], "en-US": ["compose", "ps", "status"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_docker_compose_logs",
+      "command": "docker compose logs",
+      "platformId": "platform_docker",
+      "categoryId": "cat_docker_compose",
+      "examples": ["docker compose logs", "docker compose logs -f", "docker compose logs -f web", "docker compose logs --tail 50 --since 1h"],
+      "parameters": [
+        { "name": "-f", "description": { "zh-CN": "持续输出日志", "en-US": "Follow log output" } },
+        { "name": "--tail", "description": { "zh-CN": "显示末尾指定行数", "en-US": "Number of lines to show from the end" } },
+        { "name": "--since", "description": { "zh-CN": "显示指定时间之后的日志", "en-US": "Show logs since a given timestamp" } }
+      ],
+      "title": { "zh-CN": "查看 Compose 日志", "en-US": "View Compose logs" },
+      "description": { "zh-CN": "查看 Compose 服务的日志输出", "en-US": "View log output from Compose services" },
+      "tags": { "zh-CN": ["compose", "日志"], "en-US": ["compose", "logs"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_docker_compose_build",
+      "command": "docker compose build",
+      "platformId": "platform_docker",
+      "categoryId": "cat_docker_compose",
+      "examples": ["docker compose build", "docker compose build --no-cache", "docker compose build --parallel", "docker compose build web"],
+      "parameters": [
+        { "name": "--no-cache", "description": { "zh-CN": "不使用缓存构建", "en-US": "Do not use cache during build" } },
+        { "name": "--parallel", "description": { "zh-CN": "并行构建所有镜像", "en-US": "Build all images in parallel" } },
+        { "name": "--pull", "description": { "zh-CN": "构建前先拉取基础镜像新版本", "en-US": "Always pull a newer version of the base image" } }
+      ],
+      "title": { "zh-CN": "构建 Compose 服务镜像", "en-US": "Build Compose services" },
+      "description": { "zh-CN": "构建或重新构建 Compose 服务的镜像", "en-US": "Build or rebuild images for services" },
+      "tags": { "zh-CN": ["compose", "构建", "镜像"], "en-US": ["compose", "build", "image"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_docker_compose_exec",
+      "command": "docker compose exec <service> <command>",
+      "platformId": "platform_docker",
+      "categoryId": "cat_docker_compose",
+      "examples": ["docker compose exec web bash", "docker compose exec -u root db mysql -u root -p", "docker compose exec -w /app api npm test", "docker compose exec web cat /etc/nginx/nginx.conf"],
+      "parameters": [
+        { "name": "-u", "description": { "zh-CN": "以指定用户运行", "en-US": "Run as the specified user" } },
+        { "name": "-w", "description": { "zh-CN": "指定工作目录", "en-US": "Set working directory" } },
+        { "name": "-e", "description": { "zh-CN": "设置环境变量", "en-US": "Set environment variables" } }
+      ],
+      "title": { "zh-CN": "在 Compose 服务中执行命令", "en-US": "Execute command in Compose service" },
+      "description": { "zh-CN": "在运行中的 Compose 服务容器内执行命令", "en-US": "Run a command in a running Compose service container" },
+      "tags": { "zh-CN": ["compose", "执行", "命令"], "en-US": ["compose", "exec", "command"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_docker_compose_run",
+      "command": "docker compose run <service> <command>",
+      "platformId": "platform_docker",
+      "categoryId": "cat_docker_compose",
+      "examples": ["docker compose run web python manage.py migrate", "docker compose run --rm web npm test", "docker compose run -e DEBUG=1 web python app.py"],
+      "parameters": [
+        { "name": "--rm", "description": { "zh-CN": "命令执行后自动移除容器", "en-US": "Automatically remove container after run" } },
+        { "name": "-e", "description": { "zh-CN": "设置环境变量", "en-US": "Set environment variables" } },
+        { "name": "--service-ports", "description": { "zh-CN": "映射服务配置的端口", "en-US": "Use service configured ports" } }
+      ],
+      "title": { "zh-CN": "运行一次性 Compose 命令", "en-US": "Run one-off Compose command" },
+      "description": { "zh-CN": "在 Compose 服务中运行一次性命令（创建新容器）", "en-US": "Run a one-off command on a Compose service (creates a new container)" },
+      "tags": { "zh-CN": ["compose", "运行", "一次性"], "en-US": ["compose", "run", "one-off"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_docker_compose_stop_start",
+      "command": "docker compose stop/start",
+      "platformId": "platform_docker",
+      "categoryId": "cat_docker_compose",
+      "examples": ["docker compose stop", "docker compose start", "docker compose stop web", "docker compose start -t 30 web"],
+      "parameters": [
+        { "name": "-t", "description": { "zh-CN": "优雅停止的超时秒数", "en-US": "Seconds to wait before stopping" } }
+      ],
+      "title": { "zh-CN": "停止/启动 Compose 服务", "en-US": "Stop/start Compose services" },
+      "description": { "zh-CN": "停止或启动 Compose 服务（保留容器和状态）", "en-US": "Stop or start Compose services (preserves containers and state)" },
+      "tags": { "zh-CN": ["compose", "停止", "启动"], "en-US": ["compose", "stop", "start"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_docker_compose_restart",
+      "command": "docker compose restart",
+      "platformId": "platform_docker",
+      "categoryId": "cat_docker_compose",
+      "examples": ["docker compose restart", "docker compose restart web", "docker compose restart -t 10 web db"],
+      "parameters": [
+        { "name": "-t", "description": { "zh-CN": "优雅停止的超时秒数", "en-US": "Seconds to wait before restarting" } }
+      ],
+      "title": { "zh-CN": "重启 Compose 服务", "en-US": "Restart Compose services" },
+      "description": { "zh-CN": "重启 Compose 服务（不重新创建容器）", "en-US": "Restart Compose services without recreating containers" },
+      "tags": { "zh-CN": ["compose", "重启"], "en-US": ["compose", "restart"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_docker_compose_pull",
+      "command": "docker compose pull",
+      "platformId": "platform_docker",
+      "categoryId": "cat_docker_compose",
+      "examples": ["docker compose pull", "docker compose pull --ignore-buildable", "docker compose pull web"],
+      "parameters": [
+        { "name": "--ignore-buildable", "description": { "zh-CN": "跳过可构建的镜像", "en-US": "Skip images that can be built" } },
+        { "name": "--policy", "description": { "zh-CN": "拉取策略（missing 或 always）", "en-US": "Pull policy (missing or always)" } }
+      ],
+      "title": { "zh-CN": "拉取 Compose 服务镜像", "en-US": "Pull Compose service images" },
+      "description": { "zh-CN": "拉取 Compose 服务使用的镜像", "en-US": "Pull images used by Compose services" },
+      "tags": { "zh-CN": ["compose", "拉取", "镜像"], "en-US": ["compose", "pull", "image"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_docker_compose_config",
+      "command": "docker compose config",
+      "platformId": "platform_docker",
+      "categoryId": "cat_docker_compose",
+      "examples": ["docker compose config", "docker compose config --services", "docker compose config --format json", "docker compose config --volumes"],
+      "parameters": [
+        { "name": "--services", "description": { "zh-CN": "仅列出服务名", "en-US": "List service names only" } },
+        { "name": "--format", "description": { "zh-CN": "自定义输出格式（json/yaml）", "en-US": "Output format (json/yaml)" } },
+        { "name": "--volumes", "description": { "zh-CN": "仅列出卷名", "en-US": "List volume names only" } }
+      ],
+      "title": { "zh-CN": "验证并查看 Compose 配置", "en-US": "Validate and view Compose config" },
+      "description": { "zh-CN": "验证 compose.yml 并显示解析后的配置", "en-US": "Validate and display the resolved Compose configuration" },
+      "tags": { "zh-CN": ["compose", "配置", "验证"], "en-US": ["compose", "config", "validate"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_docker_compose_watch",
+      "command": "docker compose watch",
+      "platformId": "platform_docker",
+      "categoryId": "cat_docker_compose",
+      "examples": ["docker compose watch", "docker compose watch web"],
+      "parameters": [],
+      "title": { "zh-CN": "监听文件变化并同步/重建", "en-US": "Watch for file changes and sync/rebuild" },
+      "description": { "zh-CN": "监听源代码变化，自动同步或重建服务", "en-US": "Watch source code changes and automatically sync or rebuild services" },
+      "tags": { "zh-CN": ["compose", "监听", "开发"], "en-US": ["compose", "watch", "dev"] },
+      "notes": "Requires 'develop.watch' configuration in compose.yml for each service."
+    },
+    {
+      "id": "cmd_docker_system_df",
+      "command": "docker system df",
+      "platformId": "platform_docker",
+      "categoryId": "cat_docker_system",
+      "examples": ["docker system df", "docker system df -v", "docker system df --format json"],
+      "parameters": [
+        { "name": "-v", "description": { "zh-CN": "显示详细信息", "en-US": "Show detailed information" } },
+        { "name": "--format", "description": { "zh-CN": "自定义输出格式", "en-US": "Custom output format" } }
+      ],
+      "title": { "zh-CN": "查看 Docker 磁盘使用", "en-US": "Show Docker disk usage" },
+      "description": { "zh-CN": "显示 Docker 各类资源占用的磁盘空间", "en-US": "Display disk usage by Docker resources" },
+      "tags": { "zh-CN": ["磁盘", "使用", "空间"], "en-US": ["disk", "usage", "space"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_docker_login",
+      "command": "docker login <registry>",
+      "platformId": "platform_docker",
+      "categoryId": "cat_docker_system",
+      "examples": ["docker login", "docker login registry.example.com", "docker login -u myuser registry.example.com", "echo $DOCKER_PASSWORD | docker login -u --password-stdin"],
+      "parameters": [
+        { "name": "-u", "description": { "zh-CN": "指定用户名", "en-US": "Username" } },
+        { "name": "--password-stdin", "description": { "zh-CN": "从标准输入读取密码", "en-US": "Read password from stdin" } }
+      ],
+      "title": { "zh-CN": "登录/登出 Docker 仓库", "en-US": "Log in/out Docker registry" },
+      "description": { "zh-CN": "登录到 Docker 镜像仓库（logout 登出）", "en-US": "Log in to a Docker registry (logout to sign out)" },
+      "tags": { "zh-CN": ["登录", "仓库", "认证"], "en-US": ["login", "registry", "auth"] },
+      "notes": "Use --password-stdin for CI/CD pipelines to avoid exposing passwords in command history."
+    },
+    {
+      "id": "cmd_docker_version",
+      "command": "docker version",
+      "platformId": "platform_docker",
+      "categoryId": "cat_docker_system",
+      "examples": ["docker version", "docker version --format '{{.Server.Version}}'", "docker info", "docker info --format '{{.Driver}}'"],
+      "parameters": [
+        { "name": "--format", "description": { "zh-CN": "使用 Go 模板自定义输出", "en-US": "Customize output using a Go template" } }
+      ],
+      "title": { "zh-CN": "查看 Docker 版本与信息", "en-US": "Show Docker version and info" },
+      "description": { "zh-CN": "显示 Docker 版本信息或系统级详细信息", "en-US": "Display Docker version or system-wide information" },
+      "tags": { "zh-CN": ["版本", "信息", "系统"], "en-US": ["version", "info", "system"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_docker_search",
+      "command": "docker search <query>",
+      "platformId": "platform_docker",
+      "categoryId": "cat_docker_system",
+      "examples": ["docker search nginx", "docker search --filter stars=100 nginx", "docker search --limit 5 --format \"table {{.Name}}\t{{.StarCount}}\" redis"],
+      "parameters": [
+        { "name": "--filter", "description": { "zh-CN": "根据条件过滤（如 stars=100）", "en-US": "Filter based on conditions (e.g., stars=100)" } },
+        { "name": "--limit", "description": { "zh-CN": "限制返回结果数量", "en-US": "Limit the number of results" } },
+        { "name": "--format", "description": { "zh-CN": "自定义输出格式", "en-US": "Custom output format" } }
+      ],
+      "title": { "zh-CN": "搜索 Docker Hub 镜像", "en-US": "Search Docker Hub" },
+      "description": { "zh-CN": "在 Docker Hub 上搜索镜像", "en-US": "Search Docker Hub for images" },
+      "tags": { "zh-CN": ["搜索", "镜像", "Hub"], "en-US": ["search", "image", "hub"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_docker_system_prune",
+      "command": "docker system prune",
+      "platformId": "platform_docker",
+      "categoryId": "cat_docker_cleanup",
+      "examples": ["docker system prune", "docker system prune -a", "docker system prune --volumes", "docker system prune --filter 'until=24h'"],
+      "parameters": [
+        { "name": "-a", "description": { "zh-CN": "移除所有未使用的镜像（不仅是悬空）", "en-US": "Remove all unused images (not just dangling)" } },
+        { "name": "--volumes", "description": { "zh-CN": "同时移除未使用的数据卷", "en-US": "Also remove unused volumes" } },
+        { "name": "--filter", "description": { "zh-CN": "根据条件过滤", "en-US": "Filter based on conditions" } }
+      ],
+      "title": { "zh-CN": "清理所有未使用资源", "en-US": "Prune all unused resources" },
+      "description": { "zh-CN": "移除所有未使用的容器、网络、悬空镜像和构建缓存", "en-US": "Remove all unused containers, networks, dangling images, and build cache" },
+      "tags": { "zh-CN": ["清理", "系统", "空间"], "en-US": ["cleanup", "system", "prune"] },
+      "notes": "Use -a to also remove unused (non-dangling) images. Add --volumes to reclaim volume storage as well."
+    },
+    {
+      "id": "cmd_docker_container_prune",
+      "command": "docker container prune",
+      "platformId": "platform_docker",
+      "categoryId": "cat_docker_cleanup",
+      "examples": ["docker container prune", "docker container prune --filter 'until=12h'", "docker container prune -f"],
+      "parameters": [
+        { "name": "-f", "description": { "zh-CN": "不提示确认", "en-US": "Do not prompt for confirmation" } },
+        { "name": "--filter", "description": { "zh-CN": "根据条件过滤", "en-US": "Filter based on conditions" } }
+      ],
+      "title": { "zh-CN": "清理已停止的容器", "en-US": "Prune stopped containers" },
+      "description": { "zh-CN": "删除所有已停止的容器", "en-US": "Remove all stopped containers" },
+      "tags": { "zh-CN": ["清理", "容器", "已停止"], "en-US": ["cleanup", "container", "prune"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_docker_image_prune_all",
+      "command": "docker image prune -a",
+      "platformId": "platform_docker",
+      "categoryId": "cat_docker_cleanup",
+      "examples": ["docker image prune -a", "docker image prune -a --filter 'until=48h'", "docker image prune -a -f"],
+      "parameters": [
+        { "name": "-a", "description": { "zh-CN": "删除所有未被使用的镜像", "en-US": "Remove all unused images (not just dangling)" } },
+        { "name": "-f", "description": { "zh-CN": "不提示确认", "en-US": "Do not prompt for confirmation" } },
+        { "name": "--filter", "description": { "zh-CN": "根据条件过滤", "en-US": "Filter based on conditions" } }
+      ],
+      "title": { "zh-CN": "清理所有未使用的镜像", "en-US": "Prune all unused images" },
+      "description": { "zh-CN": "删除所有未被容器引用的镜像（含悬空和完整镜像）", "en-US": "Remove all unused images (dangling and non-dangling)" },
+      "tags": { "zh-CN": ["清理", "镜像", "未使用"], "en-US": ["cleanup", "image", "unused"] },
+      "notes": "Warning: -a removes all unused images, including those that can be pulled again. This can free significant disk space but may slow down future builds."
+    },
+    {
+      "id": "cmd_docker_volume_prune",
+      "command": "docker volume prune",
+      "platformId": "platform_docker",
+      "categoryId": "cat_docker_cleanup",
+      "examples": ["docker volume prune", "docker volume prune -f", "docker volume prune --filter 'label!=keep'"],
+      "parameters": [
+        { "name": "-f", "description": { "zh-CN": "不提示确认", "en-US": "Do not prompt for confirmation" } },
+        { "name": "--filter", "description": { "zh-CN": "根据条件过滤", "en-US": "Filter based on conditions" } }
+      ],
+      "title": { "zh-CN": "清理未使用的数据卷", "en-US": "Prune unused volumes" },
+      "description": { "zh-CN": "删除所有未被容器引用的数据卷", "en-US": "Remove all volumes not used by at least one container" },
+      "tags": { "zh-CN": ["清理", "数据卷", "未使用"], "en-US": ["cleanup", "volume", "unused"] },
+      "notes": "Warning: This will permanently delete data stored in dangling volumes. Ensure you have backups before running."
+    },
+    {
+      "id": "cmd_docker_network_prune",
+      "command": "docker network prune",
+      "platformId": "platform_docker",
+      "categoryId": "cat_docker_cleanup",
+      "examples": ["docker network prune", "docker network prune -f", "docker network prune --filter 'until=48h'"],
+      "parameters": [
+        { "name": "-f", "description": { "zh-CN": "不提示确认", "en-US": "Do not prompt for confirmation" } },
+        { "name": "--filter", "description": { "zh-CN": "根据条件过滤", "en-US": "Filter based on conditions" } }
+      ],
+      "title": { "zh-CN": "清理未使用的网络", "en-US": "Prune unused networks" },
+      "description": { "zh-CN": "删除所有未被容器引用的网络", "en-US": "Remove all networks not used by at least one container" },
+      "tags": { "zh-CN": ["清理", "网络", "未使用"], "en-US": ["cleanup", "network", "unused"] },
+      "notes": null
+    }
+  ]
+}

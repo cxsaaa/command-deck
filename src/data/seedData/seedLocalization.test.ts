@@ -5,6 +5,10 @@ describe("seed data localization", () => {
   const zhData = getSeedData("zh-CN");
   const enData = getSeedData("en-US");
 
+  it("has 4 default platforms", () => {
+    expect(zhData.platforms).toHaveLength(4);
+  });
+
   it("zh-CN and en-US have the same number of platforms", () => {
     expect(zhData.platforms).toHaveLength(enData.platforms.length);
   });
@@ -15,6 +19,10 @@ describe("seed data localization", () => {
 
   it("zh-CN and en-US have the same number of commands", () => {
     expect(zhData.commands).toHaveLength(enData.commands.length);
+  });
+
+  it("has reasonable command count (>100)", () => {
+    expect(zhData.commands.length).toBeGreaterThan(100);
   });
 
   it("zh-CN and en-US platforms have matching IDs", () => {
@@ -43,14 +51,14 @@ describe("seed data localization", () => {
     }
   });
 
-  it("zh-CN platforms have Chinese descriptions", () => {
-    const desc = zhData.platforms[0].description;
-    expect(/[一-鿿]/.test(desc)).toBe(true);
+  it("zh-CN platforms have Chinese names", () => {
+    const name = zhData.platforms[0].name;
+    expect(/[一-鿿]/.test(name)).toBe(true);
   });
 
-  it("en-US platforms have English descriptions", () => {
-    const desc = enData.platforms[0].description;
-    expect(/[一-鿿]/.test(desc)).toBe(false);
+  it("en-US platforms have English names", () => {
+    const name = enData.platforms[0].name;
+    expect(/[一-鿿]/.test(name)).toBe(false);
   });
 
   it("zh-CN commands have Chinese tags", () => {
@@ -76,6 +84,27 @@ describe("seed data localization", () => {
       const enCmd = enData.commands.find((c) => c.id === zhCmd.id);
       expect(enCmd).toBeDefined();
       expect(enCmd!.tags).toHaveLength(zhCmd.tags.length);
+    }
+  });
+
+  it("all command categoryIds reference valid categories", () => {
+    const categoryIds = new Set(zhData.categories.map((c) => c.id));
+    for (const cmd of zhData.commands) {
+      expect(categoryIds.has(cmd.categoryId)).toBe(true);
+    }
+  });
+
+  it("all command platformIds reference valid platforms", () => {
+    const platformIds = new Set(zhData.platforms.map((p) => p.id));
+    for (const cmd of zhData.commands) {
+      expect(platformIds.has(cmd.platformId)).toBe(true);
+    }
+  });
+
+  it("categories reference valid platforms", () => {
+    const platformIds = new Set(zhData.platforms.map((p) => p.id));
+    for (const cat of zhData.categories) {
+      expect(platformIds.has(cat.platformId)).toBe(true);
     }
   });
 });

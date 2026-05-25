@@ -1,6 +1,11 @@
 // Learn more about Tauri commands at https://tauri.app/develop/calling-rust/
-use tauri::{Manager, LogicalSize, RunEvent};
+use tauri::{Manager, LogicalSize, RunEvent, WindowEvent};
 use tauri::tray::TrayIconBuilder;
+use tauri::image::Image;
+
+mod tray_icon {
+    include!("../icons/tray_icon_bytes.rs");
+}
 use tauri_plugin_global_shortcut::{GlobalShortcutExt, Shortcut, ShortcutState};
 
 #[tauri::command]
@@ -127,9 +132,30 @@ pub fn run() {
                 let _ = overlay.set_size(LogicalSize::new(560.0, 400.0));
             }
 
+            // Intercept close button — hide window instead of destroying it
+            let app_handle_ref = app.handle().clone();
+            app.manage(app_handle_ref.clone());
+            if let Some(main) = app.get_webview_window("main") {
+                main.on_window_event(move |event| {
+                    if let WindowEvent::CloseRequested { api, .. } = event {
+                        api.prevent_close();
+                        if let Some(handle) = app_handle_ref.try_state::<tauri::AppHandle>() {
+                            if let Some(main) = handle.get_webview_window("main") {
+                                let _ = main.hide();
+                            }
+                        }
+                    }
+                });
+            }
+
             // Create tray icon
+            let tray_icon = Image::new_owned(
+                tray_icon::TRAY_ICON_RGBA.to_vec(),
+                tray_icon::TRAY_ICON_WIDTH,
+                tray_icon::TRAY_ICON_HEIGHT,
+            );
             let _tray = TrayIconBuilder::new()
-                .icon(app.default_window_icon().unwrap().clone())
+                .icon(tray_icon)
                 .tooltip("CommandDeck")
                 .on_tray_icon_event(|tray_icon, event| {
                     match event {

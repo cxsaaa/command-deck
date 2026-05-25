@@ -1,0 +1,1061 @@
+{
+  "platform": {
+    "id": "platform_claude_code",
+    "icon": null,
+    "color": "#7C3AED",
+    "sortOrder": 4,
+    "name": { "zh-CN": "Claude Code", "en-US": "Claude Code" },
+    "description": { "zh-CN": "Anthropic 推出的 AI 编程助手", "en-US": "AI coding assistant by Anthropic" }
+  },
+  "categories": [
+    {
+      "id": "cat_claude_slash",
+      "platformId": "platform_claude_code",
+      "sortOrder": 1,
+      "name": { "zh-CN": "斜杠命令", "en-US": "Slash Commands" }
+    },
+    {
+      "id": "cat_claude_cli",
+      "platformId": "platform_claude_code",
+      "sortOrder": 2,
+      "name": { "zh-CN": "CLI 启动参数", "en-US": "CLI Arguments" }
+    },
+    {
+      "id": "cat_claude_keyboard",
+      "platformId": "platform_claude_code",
+      "sortOrder": 3,
+      "name": { "zh-CN": "键盘快捷键", "en-US": "Keyboard Shortcuts" }
+    },
+    {
+      "id": "cat_claude_workflow",
+      "platformId": "platform_claude_code",
+      "sortOrder": 4,
+      "name": { "zh-CN": "工作流", "en-US": "Workflows" }
+    }
+  ],
+  "commands": [
+    {
+      "id": "cmd_claude_help",
+      "command": "/help",
+      "platformId": "platform_claude_code",
+      "categoryId": "cat_claude_slash",
+      "examples": [],
+      "parameters": [],
+      "title": { "zh-CN": "查看帮助", "en-US": "Show help" },
+      "description": { "zh-CN": "显示所有可用的斜杠命令和使用说明", "en-US": "Display all available slash commands and usage info" },
+      "tags": { "zh-CN": ["帮助", "命令"], "en-US": ["help", "commands"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_claude_clear",
+      "command": "/clear",
+      "platformId": "platform_claude_code",
+      "categoryId": "cat_claude_slash",
+      "examples": [],
+      "parameters": [],
+      "title": { "zh-CN": "清除对话", "en-US": "Clear conversation" },
+      "description": { "zh-CN": "清除当前对话历史，重新开始新会话", "en-US": "Clear the current conversation history and start a new session" },
+      "tags": { "zh-CN": ["清除", "重置", "对话"], "en-US": ["clear", "reset", "conversation"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_claude_compact",
+      "command": "/compact",
+      "platformId": "platform_claude_code",
+      "categoryId": "cat_claude_slash",
+      "examples": [
+        "/compact",
+        "/compact 请保留关键上下文"
+      ],
+      "parameters": [],
+      "title": { "zh-CN": "压缩对话", "en-US": "Compact conversation" },
+      "description": { "zh-CN": "压缩当前对话上下文以节省 token，可附带保留指令", "en-US": "Compress current conversation context to save tokens, with optional retention instructions" },
+      "tags": { "zh-CN": ["压缩", "token", "上下文"], "en-US": ["compact", "token", "context"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_claude_config",
+      "command": "/config",
+      "platformId": "platform_claude_code",
+      "categoryId": "cat_claude_slash",
+      "examples": [],
+      "parameters": [],
+      "title": { "zh-CN": "打开配置", "en-US": "Open config" },
+      "description": { "zh-CN": "打开 Claude Code 配置界面，可修改模型、API 密钥等设置", "en-US": "Open the Claude Code config UI to modify model, API key, and other settings" },
+      "tags": { "zh-CN": ["配置", "设置"], "en-US": ["config", "settings"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_claude_cost",
+      "command": "/cost",
+      "platformId": "platform_claude_code",
+      "categoryId": "cat_claude_slash",
+      "examples": [],
+      "parameters": [],
+      "title": { "zh-CN": "查看费用", "en-US": "Show cost" },
+      "description": { "zh-CN": "显示当前会话的 token 用量和费用统计", "en-US": "Display token usage and cost stats for the current session" },
+      "tags": { "zh-CN": ["费用", "用量", "token"], "en-US": ["cost", "usage", "token"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_claude_doctor",
+      "command": "/doctor",
+      "platformId": "platform_claude_code",
+      "categoryId": "cat_claude_slash",
+      "examples": [],
+      "parameters": [],
+      "title": { "zh-CN": "诊断检查", "en-US": "Run diagnostics" },
+      "description": { "zh-CN": "运行环境诊断，检查配置、权限、网络等问题", "en-US": "Run environment diagnostics to check config, permissions, network issues" },
+      "tags": { "zh-CN": ["诊断", "检查", "排错"], "en-US": ["diagnostics", "check", "troubleshoot"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_claude_init",
+      "command": "/init",
+      "platformId": "platform_claude_code",
+      "categoryId": "cat_claude_slash",
+      "examples": [],
+      "parameters": [],
+      "title": { "zh-CN": "初始化项目", "en-US": "Initialize project" },
+      "description": { "zh-CN": "为当前项目生成 CLAUDE.md 配置文件", "en-US": "Generate a CLAUDE.md configuration file for the current project" },
+      "tags": { "zh-CN": ["初始化", "CLAUDE.md"], "en-US": ["init", "CLAUDE.md"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_claude_login",
+      "command": "/login",
+      "platformId": "platform_claude_code",
+      "categoryId": "cat_claude_slash",
+      "examples": [],
+      "parameters": [],
+      "title": { "zh-CN": "登录", "en-US": "Log in" },
+      "description": { "zh-CN": "登录 Anthropic 账号或配置 API 密钥", "en-US": "Log in to Anthropic account or configure API key" },
+      "tags": { "zh-CN": ["登录", "认证", "API"], "en-US": ["login", "auth", "API"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_claude_logout",
+      "command": "/logout",
+      "platformId": "platform_claude_code",
+      "categoryId": "cat_claude_slash",
+      "examples": [],
+      "parameters": [],
+      "title": { "zh-CN": "退出登录", "en-US": "Log out" },
+      "description": { "zh-CN": "退出当前 Anthropic 账号登录", "en-US": "Log out of the current Anthropic account" },
+      "tags": { "zh-CN": ["退出", "登出"], "en-US": ["logout", "sign-out"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_claude_memory",
+      "command": "/memory",
+      "platformId": "platform_claude_code",
+      "categoryId": "cat_claude_slash",
+      "examples": [],
+      "parameters": [],
+      "title": { "zh-CN": "查看记忆", "en-US": "Show memory" },
+      "description": { "zh-CN": "查看和编辑 Claude 的持久化记忆内容", "en-US": "View and edit Claude's persistent memory contents" },
+      "tags": { "zh-CN": ["记忆", "持久化"], "en-US": ["memory", "persistent"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_claude_model",
+      "command": "/model",
+      "platformId": "platform_claude_code",
+      "categoryId": "cat_claude_slash",
+      "examples": [
+        "/model",
+        "/model claude-sonnet-4-20250514"
+      ],
+      "parameters": [],
+      "title": { "zh-CN": "切换模型", "en-US": "Switch model" },
+      "description": { "zh-CN": "查看或切换当前使用的 Claude 模型", "en-US": "View or switch the current Claude model" },
+      "tags": { "zh-CN": ["模型", "切换"], "en-US": ["model", "switch"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_claude_permissions",
+      "command": "/permissions",
+      "platformId": "platform_claude_code",
+      "categoryId": "cat_claude_slash",
+      "examples": [],
+      "parameters": [],
+      "title": { "zh-CN": "管理权限", "en-US": "Manage permissions" },
+      "description": { "zh-CN": "查看和管理工具调用权限规则", "en-US": "View and manage tool invocation permission rules" },
+      "tags": { "zh-CN": ["权限", "安全"], "en-US": ["permissions", "security"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_claude_pr_review",
+      "command": "/pr-review",
+      "platformId": "platform_claude_code",
+      "categoryId": "cat_claude_slash",
+      "examples": [
+        "/pr-review",
+        "/pr-review 123"
+      ],
+      "parameters": [],
+      "title": { "zh-CN": "PR 审查", "en-US": "Review PR" },
+      "description": { "zh-CN": "审查指定 Pull Request 的代码变更", "en-US": "Review code changes in a specified Pull Request" },
+      "tags": { "zh-CN": ["PR", "审查", "代码审查"], "en-US": ["PR", "review", "code review"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_claude_review",
+      "command": "/review",
+      "platformId": "platform_claude_code",
+      "categoryId": "cat_claude_slash",
+      "examples": [
+        "/review",
+        "/review src/components/App.tsx"
+      ],
+      "parameters": [],
+      "title": { "zh-CN": "审查代码", "en-US": "Review code" },
+      "description": { "zh-CN": "审查当前变更或指定文件的代码质量", "en-US": "Review code quality of current changes or specified files" },
+      "tags": { "zh-CN": ["审查", "代码质量"], "en-US": ["review", "code quality"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_claude_terminal_setup",
+      "command": "/terminal-setup",
+      "platformId": "platform_claude_code",
+      "categoryId": "cat_claude_slash",
+      "examples": [],
+      "parameters": [],
+      "title": { "zh-CN": "终端设置", "en-US": "Terminal setup" },
+      "description": { "zh-CN": "配置终端集成，设置 shell profile 和快捷键", "en-US": "Configure terminal integration, shell profile, and keybindings" },
+      "tags": { "zh-CN": ["终端", "设置", "集成"], "en-US": ["terminal", "setup", "integration"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_claude_vim",
+      "command": "/vim",
+      "platformId": "platform_claude_code",
+      "categoryId": "cat_claude_slash",
+      "examples": [],
+      "parameters": [],
+      "title": { "zh-CN": "切换 Vim 模式", "en-US": "Toggle Vim mode" },
+      "description": { "zh-CN": "在输入框中启用或禁用 Vim 键绑定", "en-US": "Enable or disable Vim keybindings in the input area" },
+      "tags": { "zh-CN": ["Vim", "编辑器", "模式"], "en-US": ["Vim", "editor", "mode"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_claude_mcp",
+      "command": "/mcp",
+      "platformId": "platform_claude_code",
+      "categoryId": "cat_claude_slash",
+      "examples": [
+        "/mcp",
+        "/mcp list",
+        "/mcp add my-server"
+      ],
+      "parameters": [],
+      "title": { "zh-CN": "MCP 服务器管理", "en-US": "MCP server management" },
+      "description": { "zh-CN": "管理 Model Context Protocol (MCP) 服务器连接", "en-US": "Manage Model Context Protocol (MCP) server connections" },
+      "tags": { "zh-CN": ["MCP", "服务器", "协议"], "en-US": ["MCP", "server", "protocol"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_claude_status",
+      "command": "/status",
+      "platformId": "platform_claude_code",
+      "categoryId": "cat_claude_slash",
+      "examples": [],
+      "parameters": [],
+      "title": { "zh-CN": "查看状态", "en-US": "Show status" },
+      "description": { "zh-CN": "显示 Claude Code 当前运行状态和版本信息", "en-US": "Display Claude Code current runtime status and version info" },
+      "tags": { "zh-CN": ["状态", "版本"], "en-US": ["status", "version"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_claude_bug",
+      "command": "/bug",
+      "platformId": "platform_claude_code",
+      "categoryId": "cat_claude_slash",
+      "examples": [],
+      "parameters": [],
+      "title": { "zh-CN": "报告问题", "en-US": "Report bug" },
+      "description": { "zh-CN": "向 Anthropic 提交 Claude Code 的 bug 报告", "en-US": "Submit a bug report for Claude Code to Anthropic" },
+      "tags": { "zh-CN": ["bug", "报告", "问题"], "en-US": ["bug", "report", "issue"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_claude_marketplace",
+      "command": "/marketplace",
+      "platformId": "platform_claude_code",
+      "categoryId": "cat_claude_slash",
+      "examples": [],
+      "parameters": [],
+      "title": { "zh-CN": "扩展市场", "en-US": "Marketplace" },
+      "description": { "zh-CN": "浏览和安装 Claude Code 扩展、MCP 服务器和工具", "en-US": "Browse and install Claude Code extensions, MCP servers, and tools" },
+      "tags": { "zh-CN": ["市场", "扩展", "插件"], "en-US": ["marketplace", "extensions", "plugins"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_claude_ide",
+      "command": "/ide",
+      "platformId": "platform_claude_code",
+      "categoryId": "cat_claude_slash",
+      "examples": [],
+      "parameters": [],
+      "title": { "zh-CN": "IDE 集成", "en-US": "IDE integration" },
+      "description": { "zh-CN": "配置 VS Code 或 JetBrains 等 IDE 的集成连接", "en-US": "Configure IDE integration for VS Code, JetBrains, etc." },
+      "tags": { "zh-CN": ["IDE", "VS Code", "JetBrains", "集成"], "en-US": ["IDE", "VS Code", "JetBrains", "integration"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_claude_keybindings",
+      "command": "/keybindings",
+      "platformId": "platform_claude_code",
+      "categoryId": "cat_claude_slash",
+      "examples": [],
+      "parameters": [],
+      "title": { "zh-CN": "快捷键设置", "en-US": "Keybindings" },
+      "description": { "zh-CN": "查看和自定义键盘快捷键绑定", "en-US": "View and customize keyboard shortcut bindings" },
+      "tags": { "zh-CN": ["快捷键", "键盘", "自定义"], "en-US": ["keybindings", "keyboard", "customize"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_claude_hooks",
+      "command": "/hooks",
+      "platformId": "platform_claude_code",
+      "categoryId": "cat_claude_slash",
+      "examples": [],
+      "parameters": [],
+      "title": { "zh-CN": "生命周期钩子", "en-US": "Lifecycle hooks" },
+      "description": { "zh-CN": "管理事件驱动的自动化钩子（如工具调用前后执行脚本）", "en-US": "Manage event-driven automation hooks (e.g., run scripts before/after tool calls)" },
+      "tags": { "zh-CN": ["钩子", "自动化", "事件"], "en-US": ["hooks", "automation", "events"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_claude_start",
+      "command": "claude",
+      "platformId": "platform_claude_code",
+      "categoryId": "cat_claude_cli",
+      "examples": [
+        "claude"
+      ],
+      "parameters": [],
+      "title": { "zh-CN": "启动交互式会话", "en-US": "Start interactive session" },
+      "description": { "zh-CN": "启动 Claude Code 交互式 REPL 会话", "en-US": "Start a Claude Code interactive REPL session" },
+      "tags": { "zh-CN": ["启动", "交互", "REPL"], "en-US": ["start", "interactive", "REPL"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_claude_prompt",
+      "command": "claude \"prompt\"",
+      "platformId": "platform_claude_code",
+      "categoryId": "cat_claude_cli",
+      "examples": [
+        "claude \"帮我重构这个函数\"",
+        "claude \"fix the bug in auth module\""
+      ],
+      "parameters": [],
+      "title": { "zh-CN": "传入提示词启动", "en-US": "Start with prompt" },
+      "description": { "zh-CN": "传入提示词直接启动 Claude Code 会话", "en-US": "Start a Claude Code session with a direct prompt" },
+      "tags": { "zh-CN": ["提示词", "启动", "单次"], "en-US": ["prompt", "start", "single"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_claude_print_mode",
+      "command": "claude -p \"prompt\"",
+      "platformId": "platform_claude_code",
+      "categoryId": "cat_claude_cli",
+      "examples": [
+        "claude -p \"list all TODOs in this project\"",
+        "claude -p \"check for security vulnerabilities\""
+      ],
+      "parameters": [],
+      "title": { "zh-CN": "非交互式打印模式", "en-US": "Non-interactive print mode" },
+      "description": { "zh-CN": "以非交互式模式运行，输出结果后自动退出（适合脚本）", "en-US": "Run non-interactively, output result and exit (suitable for scripts)" },
+      "tags": { "zh-CN": ["非交互", "脚本", "管道"], "en-US": ["non-interactive", "script", "pipe"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_claude_help_flag",
+      "command": "claude --help",
+      "platformId": "platform_claude_code",
+      "categoryId": "cat_claude_cli",
+      "examples": [
+        "claude --help"
+      ],
+      "parameters": [],
+      "title": { "zh-CN": "查看帮助信息", "en-US": "Show help info" },
+      "description": { "zh-CN": "显示 CLI 帮助信息和所有可用参数", "en-US": "Display CLI help info and all available arguments" },
+      "tags": { "zh-CN": ["帮助", "参数"], "en-US": ["help", "arguments"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_claude_config_cmd",
+      "command": "claude config",
+      "platformId": "platform_claude_code",
+      "categoryId": "cat_claude_cli",
+      "examples": [
+        "claude config",
+        "claude config set --global preferredNotifChannel terminal_bell"
+      ],
+      "parameters": [],
+      "title": { "zh-CN": "配置管理命令", "en-US": "Config management command" },
+      "description": { "zh-CN": "通过 CLI 管理 Claude Code 的全局和项目级配置", "en-US": "Manage Claude Code global and project config via CLI" },
+      "tags": { "zh-CN": ["配置", "管理"], "en-US": ["config", "manage"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_claude_config_set",
+      "command": "claude config set",
+      "platformId": "platform_claude_code",
+      "categoryId": "cat_claude_cli",
+      "examples": [
+        "claude config set --global model claude-sonnet-4-20250514",
+        "claude config set --global apiBaseUrl https://api.anthropic.com"
+      ],
+      "parameters": [],
+      "title": { "zh-CN": "设置配置项", "en-US": "Set config value" },
+      "description": { "zh-CN": "设置 Claude Code 的全局或项目级配置值", "en-US": "Set a global or project-level config value for Claude Code" },
+      "tags": { "zh-CN": ["设置", "配置"], "en-US": ["set", "config"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_claude_config_get",
+      "command": "claude config get",
+      "platformId": "platform_claude_code",
+      "categoryId": "cat_claude_cli",
+      "examples": [
+        "claude config get model",
+        "claude config get --global apiBaseUrl"
+      ],
+      "parameters": [],
+      "title": { "zh-CN": "获取配置值", "en-US": "Get config value" },
+      "description": { "zh-CN": "获取 Claude Code 的某个配置项的当前值", "en-US": "Get the current value of a Claude Code config item" },
+      "tags": { "zh-CN": ["获取", "配置"], "en-US": ["get", "config"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_claude_config_list",
+      "command": "claude config list",
+      "platformId": "platform_claude_code",
+      "categoryId": "cat_claude_cli",
+      "examples": [
+        "claude config list",
+        "claude config list --global"
+      ],
+      "parameters": [],
+      "title": { "zh-CN": "列出所有配置", "en-US": "List all config" },
+      "description": { "zh-CN": "列出所有已设置的配置项及其值", "en-US": "List all configured items and their values" },
+      "tags": { "zh-CN": ["列表", "配置"], "en-US": ["list", "config"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_claude_resume",
+      "command": "claude --resume",
+      "platformId": "platform_claude_code",
+      "categoryId": "cat_claude_cli",
+      "examples": [
+        "claude --resume",
+        "claude --resume abc123"
+      ],
+      "parameters": [],
+      "title": { "zh-CN": "恢复会话", "en-US": "Resume session" },
+      "description": { "zh-CN": "恢复之前的会话，可指定会话 ID", "en-US": "Resume a previous session, optionally specifying a session ID" },
+      "tags": { "zh-CN": ["恢复", "会话", "历史"], "en-US": ["resume", "session", "history"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_claude_continue",
+      "command": "claude --continue",
+      "platformId": "platform_claude_code",
+      "categoryId": "cat_claude_cli",
+      "examples": [
+        "claude --continue"
+      ],
+      "parameters": [],
+      "title": { "zh-CN": "继续上次会话", "en-US": "Continue last session" },
+      "description": { "zh-CN": "自动恢复最近一次会话继续对话", "en-US": "Automatically resume the most recent session" },
+      "tags": { "zh-CN": ["继续", "最近", "会话"], "en-US": ["continue", "last", "session"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_claude_model_flag",
+      "command": "claude --model",
+      "platformId": "platform_claude_code",
+      "categoryId": "cat_claude_cli",
+      "examples": [
+        "claude --model claude-sonnet-4-20250514",
+        "claude --model claude-opus-4-20250514 -p \"explain this code\""
+      ],
+      "parameters": [],
+      "title": { "zh-CN": "指定模型启动", "en-US": "Start with specific model" },
+      "description": { "zh-CN": "使用指定模型启动 Claude Code 会话", "en-US": "Start a Claude Code session with a specific model" },
+      "tags": { "zh-CN": ["模型", "启动", "指定"], "en-US": ["model", "start", "specify"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_claude_verbose",
+      "command": "claude --verbose",
+      "platformId": "platform_claude_code",
+      "categoryId": "cat_claude_cli",
+      "examples": [
+        "claude --verbose -p \"explain this function\""
+      ],
+      "parameters": [],
+      "title": { "zh-CN": "详细输出模式", "en-US": "Verbose output mode" },
+      "description": { "zh-CN": "启用详细输出，显示工具调用和中间过程", "en-US": "Enable verbose output showing tool calls and intermediate steps" },
+      "tags": { "zh-CN": ["详细", "调试", "输出"], "en-US": ["verbose", "debug", "output"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_claude_output_format",
+      "command": "claude --output-format json",
+      "platformId": "platform_claude_code",
+      "categoryId": "cat_claude_cli",
+      "examples": [
+        "claude -p \"list files\" --output-format json"
+      ],
+      "parameters": [],
+      "title": { "zh-CN": "JSON 输出格式", "en-US": "JSON output format" },
+      "description": { "zh-CN": "以 JSON 格式输出结果，适合程序化处理", "en-US": "Output result in JSON format, suitable for programmatic processing" },
+      "tags": { "zh-CN": ["JSON", "输出", "格式"], "en-US": ["JSON", "output", "format"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_claude_permission_mode",
+      "command": "claude --permission-mode",
+      "platformId": "platform_claude_code",
+      "categoryId": "cat_claude_cli",
+      "examples": [
+        "claude --permission-mode plan",
+        "claude --permission-mode full-auto -p \"run tests\""
+      ],
+      "parameters": [],
+      "title": { "zh-CN": "权限模式", "en-US": "Permission mode" },
+      "description": { "zh-CN": "设置工具调用的权限模式（plan / default / full-auto）", "en-US": "Set tool invocation permission mode (plan / default / full-auto)" },
+      "tags": { "zh-CN": ["权限", "模式", "安全"], "en-US": ["permission", "mode", "security"] },
+      "notes": { "zh-CN": "full-auto 模式会跳过所有权限确认，请谨慎使用", "en-US": "full-auto mode skips all permission confirmations — use with caution" }
+    },
+    {
+      "id": "cmd_claude_version",
+      "command": "claude --version",
+      "platformId": "platform_claude_code",
+      "categoryId": "cat_claude_cli",
+      "examples": ["claude --version"],
+      "parameters": [],
+      "title": { "zh-CN": "查看版本", "en-US": "Show version" },
+      "description": { "zh-CN": "显示 Claude Code 的当前版本号", "en-US": "Display the current version of Claude Code" },
+      "tags": { "zh-CN": ["版本", "信息"], "en-US": ["version", "info"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_claude_debug",
+      "command": "claude --debug",
+      "platformId": "platform_claude_code",
+      "categoryId": "cat_claude_cli",
+      "examples": [
+        "claude --debug",
+        "claude --debug api,hooks"
+      ],
+      "parameters": [],
+      "title": { "zh-CN": "调试模式", "en-US": "Debug mode" },
+      "description": { "zh-CN": "启用调试模式，可按类别过滤调试输出（如 api,hooks）", "en-US": "Enable debug mode with optional category filter (e.g., api,hooks)" },
+      "tags": { "zh-CN": ["调试", "日志", "排错"], "en-US": ["debug", "logging", "troubleshoot"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_claude_name",
+      "command": "claude --name",
+      "platformId": "platform_claude_code",
+      "categoryId": "cat_claude_cli",
+      "examples": ["claude --name \"auth-refactor\""],
+      "parameters": [],
+      "title": { "zh-CN": "命名会话", "en-US": "Name session" },
+      "description": { "zh-CN": "为当前会话设置显示名称，便于后续查找", "en-US": "Set a display name for the current session for easy reference" },
+      "tags": { "zh-CN": ["会话", "命名", "管理"], "en-US": ["session", "name", "manage"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_claude_worktree_flag",
+      "command": "claude --worktree",
+      "platformId": "platform_claude_code",
+      "categoryId": "cat_claude_cli",
+      "examples": [
+        "claude --worktree",
+        "claude --worktree feature-branch"
+      ],
+      "parameters": [],
+      "title": { "zh-CN": "Git Worktree 模式", "en-US": "Git worktree mode" },
+      "description": { "zh-CN": "在独立的 git worktree 中启动会话，不影响当前工作区", "en-US": "Start session in an isolated git worktree, without affecting current workspace" },
+      "tags": { "zh-CN": ["worktree", "git", "隔离", "分支"], "en-US": ["worktree", "git", "isolation", "branch"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_claude_effort",
+      "command": "claude --effort",
+      "platformId": "platform_claude_code",
+      "categoryId": "cat_claude_cli",
+      "examples": [
+        "claude --effort low -p \"list files\"",
+        "claude --effort max -p \"design the architecture\""
+      ],
+      "parameters": [],
+      "title": { "zh-CN": "推理努力程度", "en-US": "Reasoning effort level" },
+      "description": { "zh-CN": "控制 Claude 的推理深度：low / medium / high / xhigh / max", "en-US": "Control Claude's reasoning depth: low / medium / high / xhigh / max" },
+      "tags": { "zh-CN": ["推理", "努力", "深度", "性能"], "en-US": ["reasoning", "effort", "depth", "performance"] },
+      "notes": { "zh-CN": "low 更快但浅，max 更深但慢且贵", "en-US": "low is faster but shallow, max is deeper but slower and costlier" }
+    },
+    {
+      "id": "cmd_claude_system_prompt",
+      "command": "claude --system-prompt",
+      "platformId": "platform_claude_code",
+      "categoryId": "cat_claude_cli",
+      "examples": [
+        "claude --system-prompt \"You are a Go expert\"",
+        "claude --append-system-prompt \"Always use Chinese\""
+      ],
+      "parameters": [],
+      "title": { "zh-CN": "自定义系统提示词", "en-US": "Custom system prompt" },
+      "description": { "zh-CN": "覆盖或追加系统提示词，--system-prompt 覆盖，--append-system-prompt 追加", "en-US": "Override or append system prompt: --system-prompt overrides, --append-system-prompt appends" },
+      "tags": { "zh-CN": ["系统提示词", "自定义", "指令"], "en-US": ["system prompt", "custom", "instructions"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_claude_max_budget",
+      "command": "claude --max-budget-usd",
+      "platformId": "platform_claude_code",
+      "categoryId": "cat_claude_cli",
+      "examples": [
+        "claude --max-budget-usd 1.0 -p \"refactor this module\"",
+        "claude --max-budget-usd 0.5 --continue"
+      ],
+      "parameters": [],
+      "title": { "zh-CN": "预算上限", "en-US": "Budget limit" },
+      "description": { "zh-CN": "设置本次会话的最大 API 花费上限（美元），仅 print 模式", "en-US": "Set max API spend limit (USD) for this session, print mode only" },
+      "tags": { "zh-CN": ["预算", "费用", "限制"], "en-US": ["budget", "cost", "limit"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_claude_allowed_tools",
+      "command": "claude --allowedTools",
+      "platformId": "platform_claude_code",
+      "categoryId": "cat_claude_cli",
+      "examples": [
+        "claude --allowedTools \"Bash(git *)\" Edit",
+        "claude --allowedTools Read Write -p \"fix the typo\""
+      ],
+      "parameters": [],
+      "title": { "zh-CN": "允许工具列表", "en-US": "Allowed tools list" },
+      "description": { "zh-CN": "指定本次会话允许使用的工具（如 Bash(git *)、Edit、Read）", "en-US": "Specify tools allowed in this session (e.g., Bash(git *), Edit, Read)" },
+      "tags": { "zh-CN": ["工具", "权限", "安全"], "en-US": ["tools", "permissions", "security"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_claude_mcp_config",
+      "command": "claude --mcp-config",
+      "platformId": "platform_claude_code",
+      "categoryId": "cat_claude_cli",
+      "examples": [
+        "claude --mcp-config ./mcp.json",
+        "claude --mcp-config '{\"servers\":{}}'"
+      ],
+      "parameters": [],
+      "title": { "zh-CN": "MCP 服务器配置", "en-US": "MCP server config" },
+      "description": { "zh-CN": "从 JSON 文件或字符串加载 MCP 服务器配置", "en-US": "Load MCP server configuration from JSON file or string" },
+      "tags": { "zh-CN": ["MCP", "服务器", "配置"], "en-US": ["MCP", "server", "config"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_claude_json_schema",
+      "command": "claude --json-schema",
+      "platformId": "platform_claude_code",
+      "categoryId": "cat_claude_cli",
+      "examples": [
+        "claude --json-schema '{\"type\":\"object\"}' -p 'extract entities'"
+      ],
+      "parameters": [],
+      "title": { "zh-CN": "结构化输出", "en-US": "Structured output" },
+      "description": { "zh-CN": "指定 JSON Schema 约束输出格式，仅 print 模式", "en-US": "Specify JSON Schema to validate output format, print mode only" },
+      "tags": { "zh-CN": ["JSON", "结构化", "输出", "Schema"], "en-US": ["JSON", "structured", "output", "Schema"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_claude_from_pr",
+      "command": "claude --from-pr",
+      "platformId": "platform_claude_code",
+      "categoryId": "cat_claude_cli",
+      "examples": [
+        "claude --from-pr 123",
+        "claude --from-pr"
+      ],
+      "parameters": [],
+      "title": { "zh-CN": "从 PR 恢复会话", "en-US": "Resume from PR" },
+      "description": { "zh-CN": "恢复与指定 Pull Request 关联的会话", "en-US": "Resume the session linked to a specific Pull Request" },
+      "tags": { "zh-CN": ["PR", "恢复", "会话"], "en-US": ["PR", "resume", "session"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_claude_fork_session",
+      "command": "claude --fork-session",
+      "platformId": "platform_claude_code",
+      "categoryId": "cat_claude_cli",
+      "examples": ["claude --fork-session --resume abc123"],
+      "parameters": [],
+      "title": { "zh-CN": "分叉会话", "en-US": "Fork session" },
+      "description": { "zh-CN": "恢复会话时创建新的会话 ID，不影响原会话", "en-US": "Create a new session ID when resuming, without affecting the original session" },
+      "tags": { "zh-CN": ["分叉", "会话", "恢复"], "en-US": ["fork", "session", "resume"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_claude_add_dir",
+      "command": "claude --add-dir",
+      "platformId": "platform_claude_code",
+      "categoryId": "cat_claude_cli",
+      "examples": [
+        "claude --add-dir ../shared-lib ../api-server"
+      ],
+      "parameters": [],
+      "title": { "zh-CN": "添加工具访问目录", "en-US": "Add tool access directories" },
+      "description": { "zh-CN": "为工具访问添加额外目录（如跨项目引用）", "en-US": "Add additional directories for tool access (e.g., cross-project references)" },
+      "tags": { "zh-CN": ["目录", "访问", "跨项目"], "en-US": ["directory", "access", "cross-project"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_claude_auth",
+      "command": "claude auth",
+      "platformId": "platform_claude_code",
+      "categoryId": "cat_claude_cli",
+      "examples": [
+        "claude auth login",
+        "claude auth status",
+        "claude auth logout"
+      ],
+      "parameters": [],
+      "title": { "zh-CN": "认证管理", "en-US": "Auth management" },
+      "description": { "zh-CN": "管理 Claude Code 的登录认证状态", "en-US": "Manage Claude Code authentication status" },
+      "tags": { "zh-CN": ["认证", "登录", "API Key"], "en-US": ["auth", "login", "API Key"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_claude_mcp_cmd",
+      "command": "claude mcp",
+      "platformId": "platform_claude_code",
+      "categoryId": "cat_claude_cli",
+      "examples": [
+        "claude mcp list",
+        "claude mcp add my-server -- npx -y @my/mcp-server",
+        "claude mcp remove my-server"
+      ],
+      "parameters": [],
+      "title": { "zh-CN": "MCP 服务器管理", "en-US": "MCP server management" },
+      "description": { "zh-CN": "通过 CLI 添加、列出、移除 MCP 服务器", "en-US": "Add, list, and remove MCP servers via CLI" },
+      "tags": { "zh-CN": ["MCP", "服务器", "CLI"], "en-US": ["MCP", "server", "CLI"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_claude_install",
+      "command": "claude install",
+      "platformId": "platform_claude_code",
+      "categoryId": "cat_claude_cli",
+      "examples": [
+        "claude install",
+        "claude install latest",
+        "claude install 1.0.5"
+      ],
+      "parameters": [],
+      "title": { "zh-CN": "安装/更新版本", "en-US": "Install/update version" },
+      "description": { "zh-CN": "安装指定版本或更新 Claude Code（stable / latest / 版本号）", "en-US": "Install a specific version or update Claude Code (stable / latest / version number)" },
+      "tags": { "zh-CN": ["安装", "更新", "版本"], "en-US": ["install", "update", "version"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_claude_update",
+      "command": "claude update",
+      "platformId": "platform_claude_code",
+      "categoryId": "cat_claude_cli",
+      "examples": ["claude update"],
+      "parameters": [],
+      "title": { "zh-CN": "检查更新", "en-US": "Check for updates" },
+      "description": { "zh-CN": "检查并安装 Claude Code 的可用更新", "en-US": "Check for and install available Claude Code updates" },
+      "tags": { "zh-CN": ["更新", "升级"], "en-US": ["update", "upgrade"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_claude_escape",
+      "command": "Escape",
+      "platformId": "platform_claude_code",
+      "categoryId": "cat_claude_keyboard",
+      "examples": [],
+      "parameters": [],
+      "title": { "zh-CN": "Escape 键", "en-US": "Escape key" },
+      "description": { "zh-CN": "取消当前操作 / 关闭弹窗 / 退出 vim normal 模式", "en-US": "Cancel current operation / close dialog / exit vim normal mode" },
+      "tags": { "zh-CN": ["Escape", "取消", "关闭"], "en-US": ["Escape", "cancel", "close"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_claude_ctrl_c",
+      "command": "Ctrl+C",
+      "platformId": "platform_claude_code",
+      "categoryId": "cat_claude_keyboard",
+      "examples": [],
+      "parameters": [],
+      "title": { "zh-CN": "中断当前操作", "en-US": "Interrupt current operation" },
+      "description": { "zh-CN": "中断 Claude 正在执行的操作，连续按两次退出会话", "en-US": "Interrupt Claude's current operation; press twice to exit session" },
+      "tags": { "zh-CN": ["中断", "停止", "退出"], "en-US": ["interrupt", "stop", "exit"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_claude_ctrl_l",
+      "command": "Ctrl+L",
+      "platformId": "platform_claude_code",
+      "categoryId": "cat_claude_keyboard",
+      "examples": [],
+      "parameters": [],
+      "title": { "zh-CN": "清屏", "en-US": "Clear screen" },
+      "description": { "zh-CN": "清除终端屏幕内容，等效于 clear 命令", "en-US": "Clear terminal screen, equivalent to the clear command" },
+      "tags": { "zh-CN": ["清屏", "清除"], "en-US": ["clear", "screen"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_claude_shift_tab",
+      "command": "Shift+Tab",
+      "platformId": "platform_claude_code",
+      "categoryId": "cat_claude_keyboard",
+      "examples": [],
+      "parameters": [],
+      "title": { "zh-CN": "切换自动补全", "en-US": "Toggle autocomplete" },
+      "description": { "zh-CN": "接受或切换自动补全建议", "en-US": "Accept or cycle through autocomplete suggestions" },
+      "tags": { "zh-CN": ["补全", "建议", "切换"], "en-US": ["autocomplete", "suggestion", "cycle"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_claude_arrows",
+      "command": "Up / Down arrows",
+      "platformId": "platform_claude_code",
+      "categoryId": "cat_claude_keyboard",
+      "examples": [],
+      "parameters": [],
+      "title": { "zh-CN": "历史命令 / 列表导航", "en-US": "History / list navigation" },
+      "description": { "zh-CN": "在输入框中浏览历史命令；在列表中上下移动选中项", "en-US": "Browse history in input field; navigate up/down through list items" },
+      "tags": { "zh-CN": ["历史", "导航", "列表"], "en-US": ["history", "navigate", "list"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_claude_shift_enter",
+      "command": "Shift+Enter",
+      "platformId": "platform_claude_code",
+      "categoryId": "cat_claude_keyboard",
+      "examples": [],
+      "parameters": [],
+      "title": { "zh-CN": "换行输入", "en-US": "New line in input" },
+      "description": { "zh-CN": "在输入框中插入换行，而非发送消息", "en-US": "Insert a newline in the input field instead of sending" },
+      "tags": { "zh-CN": ["换行", "多行", "输入"], "en-US": ["newline", "multi-line", "input"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_claude_tab",
+      "command": "Tab",
+      "platformId": "platform_claude_code",
+      "categoryId": "cat_claude_keyboard",
+      "examples": [],
+      "parameters": [],
+      "title": { "zh-CN": "补全路径 / 文件名", "en-US": "Complete path / filename" },
+      "description": { "zh-CN": "在输入框中补全文件路径或命令名称", "en-US": "Complete file paths or command names in the input field" },
+      "tags": { "zh-CN": ["补全", "路径", "文件"], "en-US": ["complete", "path", "file"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_claude_enter",
+      "command": "Enter",
+      "platformId": "platform_claude_code",
+      "categoryId": "cat_claude_keyboard",
+      "examples": [],
+      "parameters": [],
+      "title": { "zh-CN": "发送消息", "en-US": "Send message" },
+      "description": { "zh-CN": "发送当前输入的消息给 Claude", "en-US": "Send the current input message to Claude" },
+      "tags": { "zh-CN": ["发送", "提交", "确认"], "en-US": ["send", "submit", "confirm"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_claude_ctrl_o",
+      "command": "Ctrl+O",
+      "platformId": "platform_claude_code",
+      "categoryId": "cat_claude_keyboard",
+      "examples": [],
+      "parameters": [],
+      "title": { "zh-CN": "切换思考过程显示", "en-US": "Toggle thinking visibility" },
+      "description": { "zh-CN": "显示或隐藏 Claude 的思考/推理过程", "en-US": "Show or hide Claude's thinking/reasoning process" },
+      "tags": { "zh-CN": ["思考", "推理", "显示"], "en-US": ["thinking", "reasoning", "toggle"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_claude_ctrl_j",
+      "command": "Ctrl+J",
+      "platformId": "platform_claude_code",
+      "categoryId": "cat_claude_keyboard",
+      "examples": [],
+      "parameters": [],
+      "title": { "zh-CN": "插入换行", "en-US": "Insert newline" },
+      "description": { "zh-CN": "在输入框中插入换行（多行输入）", "en-US": "Insert a newline in the input field (multi-line input)" },
+      "tags": { "zh-CN": ["换行", "多行", "输入"], "en-US": ["newline", "multi-line", "input"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_claude_ctrl_d",
+      "command": "Ctrl+D",
+      "platformId": "platform_claude_code",
+      "categoryId": "cat_claude_keyboard",
+      "examples": [],
+      "parameters": [],
+      "title": { "zh-CN": "退出会话", "en-US": "Exit session" },
+      "description": { "zh-CN": "在空输入时退出 Claude Code 会话（EOF）", "en-US": "Exit Claude Code session when input is empty (EOF)" },
+      "tags": { "zh-CN": ["退出", "结束", "EOF"], "en-US": ["exit", "quit", "EOF"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_claude_hash_ref",
+      "command": "#filename",
+      "platformId": "platform_claude_code",
+      "categoryId": "cat_claude_keyboard",
+      "examples": [
+        "#src/App.tsx 请解释这个文件",
+        "#package.json 检查依赖版本"
+      ],
+      "parameters": [],
+      "title": { "zh-CN": "快速文件引用", "en-US": "Quick file reference" },
+      "description": { "zh-CN": "在输入框中用 # 前缀快速引用文件，自动补全路径", "en-US": "Use # prefix in input to quickly reference files with path autocomplete" },
+      "tags": { "zh-CN": ["文件引用", "快捷", "路径"], "en-US": ["file reference", "shortcut", "path"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_claude_commit",
+      "command": "claude commit",
+      "platformId": "platform_claude_code",
+      "categoryId": "cat_claude_workflow",
+      "examples": [
+        "claude commit",
+        "claude commit --message \"fix: resolve auth redirect loop\""
+      ],
+      "parameters": [],
+      "title": { "zh-CN": "AI 生成提交", "en-US": "AI-generated commit" },
+      "description": { "zh-CN": "让 Claude 分析变更并生成规范的 git commit", "en-US": "Have Claude analyze changes and generate a conventional git commit" },
+      "tags": { "zh-CN": ["git", "提交", "commit"], "en-US": ["git", "commit", "submit"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_claude_review_work",
+      "command": "claude review",
+      "platformId": "platform_claude_code",
+      "categoryId": "cat_claude_workflow",
+      "examples": [
+        "claude review",
+        "claude review HEAD~3..HEAD"
+      ],
+      "parameters": [],
+      "title": { "zh-CN": "审查代码变更", "en-US": "Review code changes" },
+      "description": { "zh-CN": "审查当前分支或指定范围的代码变更", "en-US": "Review code changes on the current branch or specified range" },
+      "tags": { "zh-CN": ["审查", "代码", "PR"], "en-US": ["review", "code", "PR"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_claude_create_pr",
+      "command": "claude create-pr",
+      "platformId": "platform_claude_code",
+      "categoryId": "cat_claude_workflow",
+      "examples": [
+        "claude create-pr",
+        "claude create-pr --title \"feat: add user auth\" --base main"
+      ],
+      "parameters": [],
+      "title": { "zh-CN": "创建 Pull Request", "en-US": "Create Pull Request" },
+      "description": { "zh-CN": "让 Claude 分析变更并创建规范的 Pull Request", "en-US": "Have Claude analyze changes and create a conventional Pull Request" },
+      "tags": { "zh-CN": ["PR", "创建", "GitHub"], "en-US": ["PR", "create", "GitHub"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_claude_explain",
+      "command": "claude \"explain\"",
+      "platformId": "platform_claude_code",
+      "categoryId": "cat_claude_workflow",
+      "examples": [
+        "claude \"explain src/utils/auth.ts\"",
+        "claude \"explain how the middleware pipeline works\""
+      ],
+      "parameters": [],
+      "title": { "zh-CN": "解释代码", "en-US": "Explain code" },
+      "description": { "zh-CN": "让 Claude 解释指定文件或概念的实现逻辑", "en-US": "Have Claude explain the logic of a specified file or concept" },
+      "tags": { "zh-CN": ["解释", "代码", "理解"], "en-US": ["explain", "code", "understand"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_claude_fix",
+      "command": "claude \"fix\"",
+      "platformId": "platform_claude_code",
+      "categoryId": "cat_claude_workflow",
+      "examples": [
+        "claude \"fix the failing test in user.test.ts\"",
+        "claude \"fix the memory leak in WebSocket handler\""
+      ],
+      "parameters": [],
+      "title": { "zh-CN": "修复问题", "en-US": "Fix issue" },
+      "description": { "zh-CN": "让 Claude 分析并修复指定的 bug 或问题", "en-US": "Have Claude analyze and fix a specified bug or issue" },
+      "tags": { "zh-CN": ["修复", "bug", "调试"], "en-US": ["fix", "bug", "debug"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_claude_refactor",
+      "command": "claude \"refactor\"",
+      "platformId": "platform_claude_code",
+      "categoryId": "cat_claude_workflow",
+      "examples": [
+        "claude \"refactor the database access layer\"",
+        "claude \"refactor to use dependency injection\""
+      ],
+      "parameters": [],
+      "title": { "zh-CN": "重构代码", "en-US": "Refactor code" },
+      "description": { "zh-CN": "让 Claude 对指定代码进行重构优化", "en-US": "Have Claude refactor and optimize the specified code" },
+      "tags": { "zh-CN": ["重构", "优化", "架构"], "en-US": ["refactor", "optimize", "architecture"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_claude_write_tests",
+      "command": "claude \"write tests\"",
+      "platformId": "platform_claude_code",
+      "categoryId": "cat_claude_workflow",
+      "examples": [
+        "claude \"write tests for src/services/payment.ts\"",
+        "claude \"write tests covering edge cases for the auth module\""
+      ],
+      "parameters": [],
+      "title": { "zh-CN": "编写测试", "en-US": "Write tests" },
+      "description": { "zh-CN": "让 Claude 为指定代码编写单元测试", "en-US": "Have Claude write unit tests for the specified code" },
+      "tags": { "zh-CN": ["测试", "单元测试", "覆盖率"], "en-US": ["tests", "unit tests", "coverage"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_claude_summarize",
+      "command": "claude \"summarize\"",
+      "platformId": "platform_claude_code",
+      "categoryId": "cat_claude_workflow",
+      "examples": [
+        "claude \"summarize the recent changes\"",
+        "claude \"summarize this PR\""
+      ],
+      "parameters": [],
+      "title": { "zh-CN": "总结变更", "en-US": "Summarize changes" },
+      "description": { "zh-CN": "让 Claude 总结当前变更或 PR 的核心内容", "en-US": "Have Claude summarize the core content of current changes or a PR" },
+      "tags": { "zh-CN": ["总结", "变更", "摘要"], "en-US": ["summarize", "changes", "summary"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_claude_claude_md",
+      "command": "CLAUDE.md",
+      "platformId": "platform_claude_code",
+      "categoryId": "cat_claude_workflow",
+      "examples": [
+        "在项目根目录创建 CLAUDE.md",
+        "在子目录创建 CLAUDE.md 覆盖全局指令"
+      ],
+      "parameters": [],
+      "title": { "zh-CN": "项目指令文件", "en-US": "Project instructions file" },
+      "description": { "zh-CN": "在项目根目录放置 CLAUDE.md 文件，为 Claude 提供项目级指令和上下文", "en-US": "Place a CLAUDE.md file at project root to provide project-level instructions and context for Claude" },
+      "tags": { "zh-CN": ["指令", "配置", "项目", "上下文"], "en-US": ["instructions", "config", "project", "context"] },
+      "notes": { "zh-CN": "CLAUDE.md 支持多级目录覆盖，子目录的指令优先级更高", "en-US": "CLAUDE.md supports multi-level directory overrides — subdirectory instructions have higher priority" }
+    }
+  ]
+}

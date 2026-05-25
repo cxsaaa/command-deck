@@ -9,21 +9,28 @@ export function sortCommands(
 
   switch (sortMode) {
     case "createdAt":
-      sorted.sort((a, b) => b.createdAt.localeCompare(a.createdAt));
+      sorted.sort((a, b) => {
+        const cmp = b.createdAt.localeCompare(a.createdAt);
+        if (cmp !== 0) return cmp;
+        return a.id.localeCompare(b.id);
+      });
       break;
 
     case "usageCount":
       sorted.sort((a, b) => {
         if (a.usageCount !== b.usageCount) return b.usageCount - a.usageCount;
-        return b.createdAt.localeCompare(a.createdAt);
+        const cmp = b.createdAt.localeCompare(a.createdAt);
+        if (cmp !== 0) return cmp;
+        return a.id.localeCompare(b.id);
       });
       break;
 
     case "favoritedAt":
-      // Favorites first, then by createdAt desc
       sorted.sort((a, b) => {
         if (a.isFavorite !== b.isFavorite) return a.isFavorite ? -1 : 1;
-        return b.createdAt.localeCompare(a.createdAt);
+        const cmp = b.createdAt.localeCompare(a.createdAt);
+        if (cmp !== 0) return cmp;
+        return a.id.localeCompare(b.id);
       });
       break;
   }

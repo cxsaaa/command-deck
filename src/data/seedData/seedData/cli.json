@@ -1,0 +1,1142 @@
+{
+  "platform": {
+    "id": "platform_cli",
+    "icon": null,
+    "color": "#64748B",
+    "sortOrder": 1,
+    "name": { "zh-CN": "终端/CLI", "en-US": "Terminal/CLI" },
+    "description": { "zh-CN": "常用命令行工具", "en-US": "Common command line tools" }
+  },
+  "categories": [
+    {
+      "id": "cat_cli_navigation",
+      "platformId": "platform_cli",
+      "sortOrder": 1,
+      "name": { "zh-CN": "导航", "en-US": "Navigation" }
+    },
+    {
+      "id": "cat_cli_files",
+      "platformId": "platform_cli",
+      "sortOrder": 2,
+      "name": { "zh-CN": "文件操作", "en-US": "Files" }
+    },
+    {
+      "id": "cat_cli_text",
+      "platformId": "platform_cli",
+      "sortOrder": 3,
+      "name": { "zh-CN": "文本处理", "en-US": "Text Processing" }
+    },
+    {
+      "id": "cat_cli_system",
+      "platformId": "platform_cli",
+      "sortOrder": 4,
+      "name": { "zh-CN": "系统", "en-US": "System" }
+    },
+    {
+      "id": "cat_cli_network",
+      "platformId": "platform_cli",
+      "sortOrder": 5,
+      "name": { "zh-CN": "网络", "en-US": "Network" }
+    },
+    {
+      "id": "cat_cli_archive",
+      "platformId": "platform_cli",
+      "sortOrder": 6,
+      "name": { "zh-CN": "归档压缩", "en-US": "Archive & Compression" }
+    },
+    {
+      "id": "cat_cli_git",
+      "platformId": "platform_cli",
+      "sortOrder": 7,
+      "name": { "zh-CN": "Git", "en-US": "Git" }
+    }
+  ],
+  "commands": [
+    {
+      "id": "cmd_cli_cd",
+      "command": "cd <path>",
+      "platformId": "platform_cli",
+      "categoryId": "cat_cli_navigation",
+      "examples": ["cd /usr/local", "cd ..", "cd ~", "cd -"],
+      "parameters": [
+        { "name": "<path>", "description": { "zh-CN": "目标路径", "en-US": "Target directory path" } }
+      ],
+      "title": { "zh-CN": "切换目录", "en-US": "Change directory" },
+      "description": { "zh-CN": "切换当前工作目录", "en-US": "Change the current working directory" },
+      "tags": { "zh-CN": ["导航", "目录"], "en-US": ["navigation", "directory"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_cli_pwd",
+      "command": "pwd",
+      "platformId": "platform_cli",
+      "categoryId": "cat_cli_navigation",
+      "examples": ["pwd"],
+      "parameters": [],
+      "title": { "zh-CN": "显示当前路径", "en-US": "Print working directory" },
+      "description": { "zh-CN": "输出当前工作目录的完整路径", "en-US": "Print the full path of the current working directory" },
+      "tags": { "zh-CN": ["导航", "路径"], "en-US": ["navigation", "path"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_cli_ls",
+      "command": "ls <options> <path>",
+      "platformId": "platform_cli",
+      "categoryId": "cat_cli_navigation",
+      "examples": ["ls -la", "ls -lh /var/log", "ls -1", "ls --color=auto"],
+      "parameters": [
+        { "name": "<options>", "description": { "zh-CN": "选项参数", "en-US": "Option flags" } },
+        { "name": "<path>", "description": { "zh-CN": "目标路径", "en-US": "Target directory path" } }
+      ],
+      "title": { "zh-CN": "列出目录内容", "en-US": "List directory contents" },
+      "description": { "zh-CN": "列出目录中的文件和子目录", "en-US": "List files and subdirectories in a directory" },
+      "tags": { "zh-CN": ["导航", "文件列表"], "en-US": ["navigation", "file list"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_cli_cp",
+      "command": "cp <source> <destination>",
+      "platformId": "platform_cli",
+      "categoryId": "cat_cli_files",
+      "examples": ["cp file.txt backup.txt", "cp -r dir1/ dir2/", "cp -p file.txt /backup/", "cp *.jpg /photos/"],
+      "parameters": [
+        { "name": "<source>", "description": { "zh-CN": "源文件路径", "en-US": "Source file path" } },
+        { "name": "<destination>", "description": { "zh-CN": "目标路径", "en-US": "Destination path" } }
+      ],
+      "title": { "zh-CN": "复制文件", "en-US": "Copy files" },
+      "description": { "zh-CN": "复制文件或目录到目标位置", "en-US": "Copy files or directories to a destination" },
+      "tags": { "zh-CN": ["文件", "复制"], "en-US": ["file", "copy"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_cli_mv",
+      "command": "mv <source> <destination>",
+      "platformId": "platform_cli",
+      "categoryId": "cat_cli_files",
+      "examples": ["mv old.txt new.txt", "mv file.txt /archive/", "mv -i *.log /logs/", "mv -v file.txt ~/docs/"],
+      "parameters": [
+        { "name": "<source>", "description": { "zh-CN": "源文件路径", "en-US": "Source file path" } },
+        { "name": "<destination>", "description": { "zh-CN": "目标路径", "en-US": "Destination path" } }
+      ],
+      "title": { "zh-CN": "移动/重命名文件", "en-US": "Move or rename files" },
+      "description": { "zh-CN": "移动文件到新位置或重命名文件", "en-US": "Move files to a new location or rename them" },
+      "tags": { "zh-CN": ["文件", "移动", "重命名"], "en-US": ["file", "move", "rename"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_cli_rm",
+      "command": "rm <options> <path>",
+      "platformId": "platform_cli",
+      "categoryId": "cat_cli_files",
+      "examples": ["rm file.txt", "rm -r directory/", "rm -rf node_modules/", "rm -i *.tmp"],
+      "parameters": [
+        { "name": "<options>", "description": { "zh-CN": "选项参数", "en-US": "Option flags" } },
+        { "name": "<path>", "description": { "zh-CN": "目标文件或目录", "en-US": "Target file or directory" } }
+      ],
+      "title": { "zh-CN": "删除文件", "en-US": "Remove files" },
+      "description": { "zh-CN": "删除指定的文件或目录", "en-US": "Remove files or directories" },
+      "tags": { "zh-CN": ["文件", "删除"], "en-US": ["file", "delete"] },
+      "notes": "rm -rf 会递归强制删除，不可恢复，使用时务必确认路径正确"
+    },
+    {
+      "id": "cmd_cli_mkdir",
+      "command": "mkdir <options> <directory>",
+      "platformId": "platform_cli",
+      "categoryId": "cat_cli_files",
+      "examples": ["mkdir newdir", "mkdir -p path/to/nested/dir", "mkdir -m 755 public", "mkdir ~/projects/{a,b,c}"],
+      "parameters": [
+        { "name": "<options>", "description": { "zh-CN": "选项参数", "en-US": "Option flags" } },
+        { "name": "<directory>", "description": { "zh-CN": "目录名称", "en-US": "Directory name" } }
+      ],
+      "title": { "zh-CN": "创建目录", "en-US": "Create directory" },
+      "description": { "zh-CN": "创建新目录", "en-US": "Create new directories" },
+      "tags": { "zh-CN": ["文件", "目录", "创建"], "en-US": ["file", "directory", "create"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_cli_touch",
+      "command": "touch <file>",
+      "platformId": "platform_cli",
+      "categoryId": "cat_cli_files",
+      "examples": ["touch newfile.txt", "touch -t 202501011200 file.txt", "touch file{1..5}.log", "touch -r ref.txt target.txt"],
+      "parameters": [
+        { "name": "<file>", "description": { "zh-CN": "文件名", "en-US": "File name" } }
+      ],
+      "title": { "zh-CN": "创建空文件", "en-US": "Create empty file" },
+      "description": { "zh-CN": "创建空文件或更新文件时间戳", "en-US": "Create an empty file or update file timestamps" },
+      "tags": { "zh-CN": ["文件", "创建"], "en-US": ["file", "create"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_cli_ln",
+      "command": "ln <options> <target> <link_name>",
+      "platformId": "platform_cli",
+      "categoryId": "cat_cli_files",
+      "examples": ["ln -s /usr/bin/python3 python", "ln config.yaml /etc/app/config.yaml", "ln -sf new_version old_link", "ln -s ../shared/lib ."],
+      "parameters": [
+        { "name": "<options>", "description": { "zh-CN": "选项参数", "en-US": "Option flags" } },
+        { "name": "<target>", "description": { "zh-CN": "目标文件", "en-US": "Target file" } },
+        { "name": "<link_name>", "description": { "zh-CN": "链接名称", "en-US": "Link name" } }
+      ],
+      "title": { "zh-CN": "创建链接", "en-US": "Create link" },
+      "description": { "zh-CN": "创建文件的硬链接或符号链接", "en-US": "Create hard or symbolic links to files" },
+      "tags": { "zh-CN": ["文件", "链接"], "en-US": ["file", "link"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_cli_find",
+      "command": "find <path> <expression>",
+      "platformId": "platform_cli",
+      "categoryId": "cat_cli_files",
+      "examples": ["find . -name '*.log'", "find /var -type f -size +100M", "find . -mtime -7 -name '*.js'", "find . -empty -delete"],
+      "parameters": [
+        { "name": "<path>", "description": { "zh-CN": "搜索起始路径", "en-US": "Starting search path" } },
+        { "name": "<expression>", "description": { "zh-CN": "搜索表达式", "en-US": "Search expression" } }
+      ],
+      "title": { "zh-CN": "查找文件", "en-US": "Find files" },
+      "description": { "zh-CN": "在目录树中搜索文件", "en-US": "Search for files in a directory tree" },
+      "tags": { "zh-CN": ["文件", "搜索", "查找"], "en-US": ["file", "search", "find"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_cli_stat",
+      "command": "stat <file>",
+      "platformId": "platform_cli",
+      "categoryId": "cat_cli_files",
+      "examples": ["stat file.txt", "stat -c '%a %U %n' file.txt", "stat -f '%z' file.txt", "stat --format='%s bytes' image.png"],
+      "parameters": [
+        { "name": "<file>", "description": { "zh-CN": "目标文件", "en-US": "Target file" } }
+      ],
+      "title": { "zh-CN": "查看文件状态", "en-US": "Display file status" },
+      "description": { "zh-CN": "显示文件的详细元数据信息", "en-US": "Display detailed metadata about a file" },
+      "tags": { "zh-CN": ["文件", "元数据", "信息"], "en-US": ["file", "metadata", "info"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_cli_realpath",
+      "command": "realpath <path>",
+      "platformId": "platform_cli",
+      "categoryId": "cat_cli_files",
+      "examples": ["realpath file.txt", "realpath ../sibling/./file.txt", "realpath -q symlink", "realpath --relative-to=. file.txt"],
+      "parameters": [
+        { "name": "<path>", "description": { "zh-CN": "文件路径", "en-US": "File path" } }
+      ],
+      "title": { "zh-CN": "解析真实路径", "en-US": "Resolve real path" },
+      "description": { "zh-CN": "解析符号链接并返回绝对路径", "en-US": "Resolve symlinks and return the absolute path" },
+      "tags": { "zh-CN": ["文件", "路径", "链接"], "en-US": ["file", "path", "symlink"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_cli_tree",
+      "command": "tree <options> <path>",
+      "platformId": "platform_cli",
+      "categoryId": "cat_cli_files",
+      "examples": ["tree -L 2", "tree -d src/", "tree -I 'node_modules|.git' --charset ascii", "tree -L 1 -h"],
+      "parameters": [
+        { "name": "<options>", "description": { "zh-CN": "选项参数", "en-US": "Option flags" } },
+        { "name": "<path>", "description": { "zh-CN": "目标路径", "en-US": "Target directory" } }
+      ],
+      "title": { "zh-CN": "目录树", "en-US": "Directory tree" },
+      "description": { "zh-CN": "以树状结构显示目录内容", "en-US": "Display directory contents in a tree structure" },
+      "tags": { "zh-CN": ["目录", "树", "结构"], "en-US": ["directory", "tree", "structure"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_cli_diff",
+      "command": "diff <options> <file1> <file2>",
+      "platformId": "platform_cli",
+      "categoryId": "cat_cli_files",
+      "examples": ["diff file1.txt file2.txt", "diff -u old.conf new.conf", "diff -rq dir1/ dir2/", "diff --color=auto a.txt b.txt"],
+      "parameters": [
+        { "name": "<options>", "description": { "zh-CN": "选项参数", "en-US": "Option flags" } },
+        { "name": "<file1>", "description": { "zh-CN": "第一个文件", "en-US": "First file" } },
+        { "name": "<file2>", "description": { "zh-CN": "第二个文件", "en-US": "Second file" } }
+      ],
+      "title": { "zh-CN": "比较文件差异", "en-US": "Compare files" },
+      "description": { "zh-CN": "逐行比较两个文件的差异", "en-US": "Compare files line by line" },
+      "tags": { "zh-CN": ["文件", "比较", "差异"], "en-US": ["file", "compare", "diff"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_cli_wc",
+      "command": "wc <options> <file>",
+      "platformId": "platform_cli",
+      "categoryId": "cat_cli_files",
+      "examples": ["wc -l file.txt", "wc -w *.md", "wc -c access.log", "cat file.txt | wc -l"],
+      "parameters": [
+        { "name": "<options>", "description": { "zh-CN": "选项参数", "en-US": "Option flags" } },
+        { "name": "<file>", "description": { "zh-CN": "目标文件", "en-US": "Target file" } }
+      ],
+      "title": { "zh-CN": "统计字数", "en-US": "Word count" },
+      "description": { "zh-CN": "统计文件的行数、单词数和字节数", "en-US": "Count lines, words, and bytes in a file" },
+      "tags": { "zh-CN": ["文件", "统计", "字数"], "en-US": ["file", "count", "words"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_cli_grep",
+      "command": "grep <options> <pattern> <file>",
+      "platformId": "platform_cli",
+      "categoryId": "cat_cli_text",
+      "examples": ["grep 'error' app.log", "grep -rn 'TODO' src/", "grep -i 'hello' *.txt", "grep -E '^[0-9]+' data.csv"],
+      "parameters": [
+        { "name": "<options>", "description": { "zh-CN": "选项参数", "en-US": "Option flags" } },
+        { "name": "<pattern>", "description": { "zh-CN": "搜索模式", "en-US": "Search pattern" } },
+        { "name": "<file>", "description": { "zh-CN": "目标文件", "en-US": "Target file" } }
+      ],
+      "title": { "zh-CN": "搜索文本", "en-US": "Search text" },
+      "description": { "zh-CN": "在文件中搜索匹配指定模式的行", "en-US": "Search for lines matching a pattern in files" },
+      "tags": { "zh-CN": ["文本", "搜索", "匹配"], "en-US": ["text", "search", "match"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_cli_sed",
+      "command": "sed '<command>' <file>",
+      "platformId": "platform_cli",
+      "categoryId": "cat_cli_text",
+      "examples": ["sed -i 's/old/new/g' file.txt", "sed -n '10,20p' file.txt", "sed '/^#/d' config.conf", "sed -i.bak 's/foo/bar/' file.txt"],
+      "parameters": [
+        { "name": "<command>", "description": { "zh-CN": "sed 命令", "en-US": "Sed command" } },
+        { "name": "<file>", "description": { "zh-CN": "目标文件", "en-US": "Target file" } }
+      ],
+      "title": { "zh-CN": "流编辑器", "en-US": "Stream editor" },
+      "description": { "zh-CN": "使用正则表达式对文本进行过滤和转换", "en-US": "Filter and transform text using regular expressions" },
+      "tags": { "zh-CN": ["文本", "替换", "编辑"], "en-US": ["text", "replace", "edit"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_cli_awk",
+      "command": "awk '<program>' <file>",
+      "platformId": "platform_cli",
+      "categoryId": "cat_cli_text",
+      "examples": ["awk '{print $1}' data.csv", "awk -F: '{print $1, $3}' /etc/passwd", "awk 'NR==5' file.txt", "awk '{sum+=$1} END {print sum}' numbers.txt"],
+      "parameters": [
+        { "name": "<program>", "description": { "zh-CN": "awk 程序", "en-US": "Awk program" } },
+        { "name": "<file>", "description": { "zh-CN": "目标文件", "en-US": "Target file" } }
+      ],
+      "title": { "zh-CN": "文本处理", "en-US": "Text processing" },
+      "description": { "zh-CN": "基于模式匹配的文本扫描和处理语言", "en-US": "Pattern-based text scanning and processing language" },
+      "tags": { "zh-CN": ["文本", "处理", "列"], "en-US": ["text", "process", "column"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_cli_cut",
+      "command": "cut <options> <file>",
+      "platformId": "platform_cli",
+      "categoryId": "cat_cli_text",
+      "examples": ["cut -d',' -f1,3 data.csv", "cut -c1-10 file.txt", "cut -d':' -f1 /etc/passwd", "echo 'hello world' | cut -d' ' -f2"],
+      "parameters": [
+        { "name": "<options>", "description": { "zh-CN": "选项参数", "en-US": "Option flags" } },
+        { "name": "<file>", "description": { "zh-CN": "目标文件", "en-US": "Target file" } }
+      ],
+      "title": { "zh-CN": "截取字段", "en-US": "Cut fields" },
+      "description": { "zh-CN": "从每行中提取指定部分", "en-US": "Extract sections from each line" },
+      "tags": { "zh-CN": ["文本", "截取", "字段"], "en-US": ["text", "cut", "field"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_cli_sort",
+      "command": "sort <options> <file>",
+      "platformId": "platform_cli",
+      "categoryId": "cat_cli_text",
+      "examples": ["sort names.txt", "sort -u names.txt", "sort -t',' -k2,2 data.csv", "sort -rn -k3 scores.txt"],
+      "parameters": [
+        { "name": "<options>", "description": { "zh-CN": "选项参数", "en-US": "Option flags" } },
+        { "name": "<file>", "description": { "zh-CN": "目标文件", "en-US": "Target file" } }
+      ],
+      "title": { "zh-CN": "排序", "en-US": "Sort" },
+      "description": { "zh-CN": "对文件的行进行排序", "en-US": "Sort lines of a file" },
+      "tags": { "zh-CN": ["文本", "排序"], "en-US": ["text", "sort"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_cli_uniq",
+      "command": "uniq <options> <file>",
+      "platformId": "platform_cli",
+      "categoryId": "cat_cli_text",
+      "examples": ["sort names.txt | uniq", "sort names.txt | uniq -c | sort -rn", "uniq -d file.txt", "uniq -i file.txt"],
+      "parameters": [
+        { "name": "<options>", "description": { "zh-CN": "选项参数", "en-US": "Option flags" } },
+        { "name": "<file>", "description": { "zh-CN": "目标文件", "en-US": "Target file" } }
+      ],
+      "title": { "zh-CN": "去重", "en-US": "Unique lines" },
+      "description": { "zh-CN": "过滤文件中的相邻重复行", "en-US": "Filter out adjacent duplicate lines from a file" },
+      "tags": { "zh-CN": ["文本", "去重", "过滤"], "en-US": ["text", "unique", "filter"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_cli_xargs",
+      "command": "xargs <options> <command>",
+      "platformId": "platform_cli",
+      "categoryId": "cat_cli_text",
+      "examples": ["find . -name '*.tmp' | xargs rm", "cat urls.txt | xargs -I {} curl -s {}", "echo 'a b c' | xargs -n1", "ls *.log | xargs -P4 -I {} gzip {}"],
+      "parameters": [
+        { "name": "<options>", "description": { "zh-CN": "选项参数", "en-US": "Option flags" } },
+        { "name": "<command>", "description": { "zh-CN": "要执行的命令", "en-US": "Command to execute" } }
+      ],
+      "title": { "zh-CN": "参数传递", "en-US": "Build and execute commands" },
+      "description": { "zh-CN": "将标准输入转换为命令参数并执行", "en-US": "Convert standard input to arguments and execute a command" },
+      "tags": { "zh-CN": ["文本", "管道", "执行"], "en-US": ["text", "pipe", "execute"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_cli_tr",
+      "command": "tr <options> <set1> <set2>",
+      "platformId": "platform_cli",
+      "categoryId": "cat_cli_text",
+      "examples": ["echo 'Hello' | tr 'A-Z' 'a-z'", "tr -d '\\r' < file.txt", "echo 'hello   world' | tr -s ' ' ", "cat file.txt | tr '\\t' ' '"],
+      "parameters": [
+        { "name": "<options>", "description": { "zh-CN": "选项参数", "en-US": "Option flags" } },
+        { "name": "<set1>", "description": { "zh-CN": "原始字符集", "en-US": "Original character set" } },
+        { "name": "<set2>", "description": { "zh-CN": "目标字符集", "en-US": "Translated character set" } }
+      ],
+      "title": { "zh-CN": "字符转换", "en-US": "Translate characters" },
+      "description": { "zh-CN": "对字符进行删除、替换或压缩", "en-US": "Delete, squeeze, or translate characters" },
+      "tags": { "zh-CN": ["文本", "转换", "字符"], "en-US": ["text", "translate", "character"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_cli_tee",
+      "command": "tee <options> <file>",
+      "platformId": "platform_cli",
+      "categoryId": "cat_cli_text",
+      "examples": ["make 2>&1 | tee build.log", "echo 'test' | tee -a log.txt", "ls | tee files.txt | grep '.js'", "tee out1.txt out2.txt < input.txt"],
+      "parameters": [
+        { "name": "<options>", "description": { "zh-CN": "选项参数", "en-US": "Option flags" } },
+        { "name": "<file>", "description": { "zh-CN": "输出文件", "en-US": "Output file" } }
+      ],
+      "title": { "zh-CN": "输出并保存", "en-US": "Tee output" },
+      "description": { "zh-CN": "将标准输入同时输出到屏幕和文件", "en-US": "Read from standard input and write to both screen and files" },
+      "tags": { "zh-CN": ["文本", "管道", "日志"], "en-US": ["text", "pipe", "log"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_cli_head",
+      "command": "head <options> <file>",
+      "platformId": "platform_cli",
+      "categoryId": "cat_cli_text",
+      "examples": ["head -n 20 file.txt", "head -c 100 file.txt", "head -5 *.csv", "head -n 1 /etc/passwd"],
+      "parameters": [
+        { "name": "<options>", "description": { "zh-CN": "选项参数", "en-US": "Option flags" } },
+        { "name": "<file>", "description": { "zh-CN": "目标文件", "en-US": "Target file" } }
+      ],
+      "title": { "zh-CN": "显示文件头部", "en-US": "Display file head" },
+      "description": { "zh-CN": "输出文件的前几行", "en-US": "Output the first lines of a file" },
+      "tags": { "zh-CN": ["文本", "查看", "头部"], "en-US": ["text", "view", "head"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_cli_tail",
+      "command": "tail <options> <file>",
+      "platformId": "platform_cli",
+      "categoryId": "cat_cli_text",
+      "examples": ["tail -n 50 app.log", "tail -f /var/log/syslog", "tail -n +100 file.txt", "tail -f --pid=1234 log.txt"],
+      "parameters": [
+        { "name": "<options>", "description": { "zh-CN": "选项参数", "en-US": "Option flags" } },
+        { "name": "<file>", "description": { "zh-CN": "目标文件", "en-US": "Target file" } }
+      ],
+      "title": { "zh-CN": "显示文件尾部", "en-US": "Display file tail" },
+      "description": { "zh-CN": "输出文件的最后几行，支持实时跟踪", "en-US": "Output the last lines of a file, with live follow mode" },
+      "tags": { "zh-CN": ["文本", "日志", "监控"], "en-US": ["text", "log", "monitor"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_cli_column",
+      "command": "column <options> <file>",
+      "platformId": "platform_cli",
+      "categoryId": "cat_cli_text",
+      "examples": ["cat /etc/passwd | column -t -s:", "mount | column -t", "echo 'a,b,c' | column -t -s,", "column -t -s'\\t' data.tsv"],
+      "parameters": [
+        { "name": "<options>", "description": { "zh-CN": "选项参数", "en-US": "Option flags" } },
+        { "name": "<file>", "description": { "zh-CN": "目标文件", "en-US": "Target file" } }
+      ],
+      "title": { "zh-CN": "格式化列", "en-US": "Format columns" },
+      "description": { "zh-CN": "将输入格式化为对齐的列", "en-US": "Format input into aligned columns" },
+      "tags": { "zh-CN": ["文本", "格式化", "表格"], "en-US": ["text", "format", "table"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_cli_ps",
+      "command": "ps <options>",
+      "platformId": "platform_cli",
+      "categoryId": "cat_cli_system",
+      "examples": ["ps aux", "ps -ef | grep node", "ps -eo pid,ppid,cmd | head", "ps -u $(whoami)"],
+      "parameters": [
+        { "name": "<options>", "description": { "zh-CN": "选项参数", "en-US": "Option flags" } }
+      ],
+      "title": { "zh-CN": "查看进程", "en-US": "List processes" },
+      "description": { "zh-CN": "显示当前运行的进程信息", "en-US": "Display information about running processes" },
+      "tags": { "zh-CN": ["系统", "进程", "查看"], "en-US": ["system", "process", "list"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_cli_top",
+      "command": "top <options>",
+      "platformId": "platform_cli",
+      "categoryId": "cat_cli_system",
+      "examples": ["top", "top -u mysql", "top -bn1 | head -20", "top -p $(pgrep -d, node)"],
+      "parameters": [
+        { "name": "<options>", "description": { "zh-CN": "选项参数", "en-US": "Option flags" } }
+      ],
+      "title": { "zh-CN": "进程监控", "en-US": "Process monitor" },
+      "description": { "zh-CN": "实时显示系统进程和资源使用情况", "en-US": "Display real-time system processes and resource usage" },
+      "tags": { "zh-CN": ["系统", "监控", "资源"], "en-US": ["system", "monitor", "resource"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_cli_kill",
+      "command": "kill <options> <pid>",
+      "platformId": "platform_cli",
+      "categoryId": "cat_cli_system",
+      "examples": ["kill 1234", "kill -9 1234", "kill -15 1234", "kill $(pgrep -f 'python script.py')"],
+      "parameters": [
+        { "name": "<options>", "description": { "zh-CN": "信号选项", "en-US": "Signal options" } },
+        { "name": "<pid>", "description": { "zh-CN": "进程 ID", "en-US": "Process ID" } }
+      ],
+      "title": { "zh-CN": "终止进程", "en-US": "Kill process" },
+      "description": { "zh-CN": "向指定进程发送信号以终止它", "en-US": "Send a signal to terminate a process" },
+      "tags": { "zh-CN": ["系统", "进程", "终止"], "en-US": ["system", "process", "kill"] },
+      "notes": "kill -9 (SIGKILL) 会强制终止进程，进程无法捕获该信号，可能导致数据丢失"
+    },
+    {
+      "id": "cmd_cli_lsof",
+      "command": "lsof <options> <file>",
+      "platformId": "platform_cli",
+      "categoryId": "cat_cli_system",
+      "examples": ["lsof -i :8080", "lsof /var/log/syslog", "lsof -u www", "lsof -p $(pgrep nginx)"],
+      "parameters": [
+        { "name": "<options>", "description": { "zh-CN": "选项参数", "en-US": "Option flags" } },
+        { "name": "<file>", "description": { "zh-CN": "目标文件", "en-US": "Target file" } }
+      ],
+      "title": { "zh-CN": "列出打开文件", "en-US": "List open files" },
+      "description": { "zh-CN": "显示系统中被进程打开的文件信息", "en-US": "List information about files opened by processes" },
+      "tags": { "zh-CN": ["系统", "文件", "端口"], "en-US": ["system", "file", "port"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_cli_df",
+      "command": "df <options> <path>",
+      "platformId": "platform_cli",
+      "categoryId": "cat_cli_system",
+      "examples": ["df -h", "df -h /home", "df -T", "df -ih"],
+      "parameters": [
+        { "name": "<options>", "description": { "zh-CN": "选项参数", "en-US": "Option flags" } },
+        { "name": "<path>", "description": { "zh-CN": "挂载点路径", "en-US": "Mount point path" } }
+      ],
+      "title": { "zh-CN": "磁盘空间", "en-US": "Disk free" },
+      "description": { "zh-CN": "显示文件系统的磁盘空间使用情况", "en-US": "Display disk space usage of file systems" },
+      "tags": { "zh-CN": ["系统", "磁盘", "空间"], "en-US": ["system", "disk", "space"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_cli_du",
+      "command": "du <options> <path>",
+      "platformId": "platform_cli",
+      "categoryId": "cat_cli_system",
+      "examples": ["du -sh /var/log", "du -h --max-depth=1 .", "du -sh * | sort -rh | head -10", "du -sh ./"],
+      "parameters": [
+        { "name": "<options>", "description": { "zh-CN": "选项参数", "en-US": "Option flags" } },
+        { "name": "<path>", "description": { "zh-CN": "目标路径", "en-US": "Target path" } }
+      ],
+      "title": { "zh-CN": "磁盘用量", "en-US": "Disk usage" },
+      "description": { "zh-CN": "估算文件和目录的磁盘使用量", "en-US": "Estimate disk usage of files and directories" },
+      "tags": { "zh-CN": ["系统", "磁盘", "用量"], "en-US": ["system", "disk", "usage"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_cli_uname",
+      "command": "uname <options>",
+      "platformId": "platform_cli",
+      "categoryId": "cat_cli_system",
+      "examples": ["uname -a", "uname -s", "uname -r", "uname -m"],
+      "parameters": [
+        { "name": "<options>", "description": { "zh-CN": "选项参数", "en-US": "Option flags" } }
+      ],
+      "title": { "zh-CN": "系统信息", "en-US": "System information" },
+      "description": { "zh-CN": "打印操作系统和硬件信息", "en-US": "Print system and hardware information" },
+      "tags": { "zh-CN": ["系统", "信息", "版本"], "en-US": ["system", "info", "version"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_cli_whoami",
+      "command": "whoami",
+      "platformId": "platform_cli",
+      "categoryId": "cat_cli_system",
+      "examples": ["whoami"],
+      "parameters": [],
+      "title": { "zh-CN": "当前用户", "en-US": "Current user" },
+      "description": { "zh-CN": "显示当前登录用户的用户名", "en-US": "Display the current logged-in username" },
+      "tags": { "zh-CN": ["系统", "用户", "身份"], "en-US": ["system", "user", "identity"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_cli_env",
+      "command": "env <options>",
+      "platformId": "platform_cli",
+      "categoryId": "cat_cli_system",
+      "examples": ["env", "env | grep PATH", "env -i HOME=/root bash", "MY_VAR=value env | grep MY_VAR"],
+      "parameters": [
+        { "name": "<options>", "description": { "zh-CN": "选项参数", "en-US": "Option flags" } }
+      ],
+      "title": { "zh-CN": "环境变量", "en-US": "Environment variables" },
+      "description": { "zh-CN": "显示或设置环境变量", "en-US": "Display or set environment variables" },
+      "tags": { "zh-CN": ["系统", "环境", "变量"], "en-US": ["system", "environment", "variable"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_cli_history",
+      "command": "history <options>",
+      "platformId": "platform_cli",
+      "categoryId": "cat_cli_system",
+      "examples": ["history", "history | tail -20", "history | grep 'git'", "history -c"],
+      "parameters": [
+        { "name": "<options>", "description": { "zh-CN": "选项参数", "en-US": "Option flags" } }
+      ],
+      "title": { "zh-CN": "命令历史", "en-US": "Command history" },
+      "description": { "zh-CN": "显示之前执行过的命令历史记录", "en-US": "Display previously executed commands" },
+      "tags": { "zh-CN": ["系统", "历史", "命令"], "en-US": ["system", "history", "command"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_cli_chmod",
+      "command": "chmod <mode> <file>",
+      "platformId": "platform_cli",
+      "categoryId": "cat_cli_system",
+      "examples": ["chmod +x script.sh", "chmod 755 file.sh", "chmod -R 644 /var/www/", "chmod u+x deploy.sh"],
+      "parameters": [
+        { "name": "<mode>", "description": { "zh-CN": "权限模式", "en-US": "Permission mode" } },
+        { "name": "<file>", "description": { "zh-CN": "目标文件", "en-US": "Target file" } }
+      ],
+      "title": { "zh-CN": "修改权限", "en-US": "Change permissions" },
+      "description": { "zh-CN": "修改文件或目录的访问权限", "en-US": "Change the access permissions of files or directories" },
+      "tags": { "zh-CN": ["系统", "权限", "安全"], "en-US": ["system", "permission", "security"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_cli_chown",
+      "command": "chown <owner> <file>",
+      "platformId": "platform_cli",
+      "categoryId": "cat_cli_system",
+      "examples": ["chown user:group file.txt", "chown -R www-data:www-data /var/www/", "chown :admin shared/", "chown $(whoami) file.txt"],
+      "parameters": [
+        { "name": "<owner>", "description": { "zh-CN": "所有者[:组]", "en-US": "Owner[:group]" } },
+        { "name": "<file>", "description": { "zh-CN": "目标文件", "en-US": "Target file" } }
+      ],
+      "title": { "zh-CN": "修改所有者", "en-US": "Change owner" },
+      "description": { "zh-CN": "修改文件或目录的所有者和所属组", "en-US": "Change the owner and group of files or directories" },
+      "tags": { "zh-CN": ["系统", "权限", "所有者"], "en-US": ["system", "permission", "owner"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_cli_sudo",
+      "command": "sudo <command>",
+      "platformId": "platform_cli",
+      "categoryId": "cat_cli_system",
+      "examples": ["sudo apt update", "sudo -u www-data nginx -t", "sudo !!", "sudo -k"],
+      "parameters": [
+        { "name": "<command>", "description": { "zh-CN": "要执行的命令", "en-US": "Command to execute" } }
+      ],
+      "title": { "zh-CN": "以超级用户执行", "en-US": "Execute as superuser" },
+      "description": { "zh-CN": "以 root 权限执行命令", "en-US": "Execute a command with root privileges" },
+      "tags": { "zh-CN": ["系统", "权限", "管理员"], "en-US": ["system", "permission", "admin"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_cli_crontab",
+      "command": "crontab <options>",
+      "platformId": "platform_cli",
+      "categoryId": "cat_cli_system",
+      "examples": ["crontab -e", "crontab -l", "crontab -l | grep 'backup'", "echo '0 2 * * * /scripts/backup.sh' | crontab -"],
+      "parameters": [
+        { "name": "<options>", "description": { "zh-CN": "选项参数", "en-US": "Option flags" } }
+      ],
+      "title": { "zh-CN": "定时任务", "en-US": "Cron jobs" },
+      "description": { "zh-CN": "管理用户级定时任务计划", "en-US": "Manage user-level cron jobs" },
+      "tags": { "zh-CN": ["系统", "定时", "任务"], "en-US": ["system", "cron", "schedule"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_cli_free",
+      "command": "free <options>",
+      "platformId": "platform_cli",
+      "categoryId": "cat_cli_system",
+      "examples": ["free -h", "free -m", "free -g", "free -h -s 3"],
+      "parameters": [
+        { "name": "<options>", "description": { "zh-CN": "选项参数", "en-US": "Option flags" } }
+      ],
+      "title": { "zh-CN": "内存使用", "en-US": "Memory usage" },
+      "description": { "zh-CN": "显示系统内存的使用情况", "en-US": "Display system memory usage" },
+      "tags": { "zh-CN": ["系统", "内存", "资源"], "en-US": ["system", "memory", "resource"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_cli_date",
+      "command": "date <options>",
+      "platformId": "platform_cli",
+      "categoryId": "cat_cli_system",
+      "examples": ["date", "date '+%Y-%m-%d %H:%M:%S'", "date -d '2 days ago'", "date -u '+%Y-%m-%dT%H:%M:%SZ'"],
+      "parameters": [
+        { "name": "<options>", "description": { "zh-CN": "选项参数", "en-US": "Option flags" } }
+      ],
+      "title": { "zh-CN": "日期时间", "en-US": "Date and time" },
+      "description": { "zh-CN": "显示或设置系统日期和时间", "en-US": "Display or set the system date and time" },
+      "tags": { "zh-CN": ["系统", "日期", "时间"], "en-US": ["system", "date", "time"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_cli_curl",
+      "command": "curl <options> <url>",
+      "platformId": "platform_cli",
+      "categoryId": "cat_cli_network",
+      "examples": ["curl https://api.example.com/health", "curl -X POST -H 'Content-Type: application/json' -d '{}' https://api.example.com/data", "curl -o file.zip https://example.com/download.zip", "curl -I https://example.com"],
+      "parameters": [
+        { "name": "<options>", "description": { "zh-CN": "选项参数", "en-US": "Option flags" } },
+        { "name": "<url>", "description": { "zh-CN": "请求 URL", "en-US": "Request URL" } }
+      ],
+      "title": { "zh-CN": "网络请求", "en-US": "HTTP request" },
+      "description": { "zh-CN": "发送 HTTP/HTTPS 网络请求", "en-US": "Send HTTP/HTTPS network requests" },
+      "tags": { "zh-CN": ["网络", "HTTP", "请求"], "en-US": ["network", "HTTP", "request"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_cli_wget",
+      "command": "wget <options> <url>",
+      "platformId": "platform_cli",
+      "categoryId": "cat_cli_network",
+      "examples": ["wget https://example.com/file.tar.gz", "wget -c https://example.com/large.zip", "wget -r -np https://example.com/docs/", "wget -q -O - https://api.example.com/data"],
+      "parameters": [
+        { "name": "<options>", "description": { "zh-CN": "选项参数", "en-US": "Option flags" } },
+        { "name": "<url>", "description": { "zh-CN": "下载 URL", "en-US": "Download URL" } }
+      ],
+      "title": { "zh-CN": "下载文件", "en-US": "Download files" },
+      "description": { "zh-CN": "从网络下载文件，支持断点续传", "en-US": "Download files from the web with resume support" },
+      "tags": { "zh-CN": ["网络", "下载", "HTTP"], "en-US": ["network", "download", "HTTP"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_cli_ssh",
+      "command": "ssh <options> <user@host>",
+      "platformId": "platform_cli",
+      "categoryId": "cat_cli_network",
+      "examples": ["ssh user@192.168.1.100", "ssh -i ~/.ssh/id_rsa user@server.com", "ssh -p 2222 user@host", "ssh -L 8080:localhost:80 user@remote"],
+      "parameters": [
+        { "name": "<options>", "description": { "zh-CN": "选项参数", "en-US": "Option flags" } },
+        { "name": "<user@host>", "description": { "zh-CN": "用户@主机", "en-US": "User@Host" } }
+      ],
+      "title": { "zh-CN": "安全远程登录", "en-US": "Secure remote login" },
+      "description": { "zh-CN": "通过加密连接登录远程服务器", "en-US": "Log in to a remote server over an encrypted connection" },
+      "tags": { "zh-CN": ["网络", "远程", "登录"], "en-US": ["network", "remote", "login"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_cli_scp",
+      "command": "scp <options> <source> <dest>",
+      "platformId": "platform_cli",
+      "categoryId": "cat_cli_network",
+      "examples": ["scp file.txt user@remote:/tmp/", "scp user@remote:/var/log/app.log ./", "scp -r ./dir/ user@remote:/backup/", "scp -P 2222 file.txt user@host:/data/"],
+      "parameters": [
+        { "name": "<options>", "description": { "zh-CN": "选项参数", "en-US": "Option flags" } },
+        { "name": "<source>", "description": { "zh-CN": "源路径", "en-US": "Source path" } },
+        { "name": "<dest>", "description": { "zh-CN": "目标路径", "en-US": "Destination path" } }
+      ],
+      "title": { "zh-CN": "安全复制文件", "en-US": "Secure copy" },
+      "description": { "zh-CN": "通过 SSH 加密传输文件到远程主机", "en-US": "Copy files between hosts over SSH" },
+      "tags": { "zh-CN": ["网络", "复制", "远程"], "en-US": ["network", "copy", "remote"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_cli_rsync",
+      "command": "rsync <options> <source> <dest>",
+      "platformId": "platform_cli",
+      "categoryId": "cat_cli_network",
+      "examples": ["rsync -avz ./dir/ user@remote:/backup/", "rsync -avz --delete src/ dest/", "rsync -avz -e 'ssh -p 2222' ./ user@host:/data/", "rsync --dry-run -avz ./ remote:/backup/"],
+      "parameters": [
+        { "name": "<options>", "description": { "zh-CN": "选项参数", "en-US": "Option flags" } },
+        { "name": "<source>", "description": { "zh-CN": "源路径", "en-US": "Source path" } },
+        { "name": "<dest>", "description": { "zh-CN": "目标路径", "en-US": "Destination path" } }
+      ],
+      "title": { "zh-CN": "增量同步", "en-US": "Incremental sync" },
+      "description": { "zh-CN": "在本地和远程之间同步文件，只传输变化部分", "en-US": "Synchronize files locally or remotely, transferring only changes" },
+      "tags": { "zh-CN": ["网络", "同步", "备份"], "en-US": ["network", "sync", "backup"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_cli_ping",
+      "command": "ping <options> <host>",
+      "platformId": "platform_cli",
+      "categoryId": "cat_cli_network",
+      "examples": ["ping google.com", "ping -c 4 8.8.8.8", "ping -i 0.2 192.168.1.1", "ping -s 1024 -c 5 example.com"],
+      "parameters": [
+        { "name": "<options>", "description": { "zh-CN": "选项参数", "en-US": "Option flags" } },
+        { "name": "<host>", "description": { "zh-CN": "目标主机", "en-US": "Target host" } }
+      ],
+      "title": { "zh-CN": "网络连通测试", "en-US": "Network connectivity test" },
+      "description": { "zh-CN": "测试与目标主机的网络连通性", "en-US": "Test network connectivity to a target host" },
+      "tags": { "zh-CN": ["网络", "测试", "延迟"], "en-US": ["network", "test", "latency"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_cli_traceroute",
+      "command": "traceroute <options> <host>",
+      "platformId": "platform_cli",
+      "categoryId": "cat_cli_network",
+      "examples": ["traceroute google.com", "traceroute -I example.com", "traceroute -n 8.8.8.8", "traceroute -m 20 example.com"],
+      "parameters": [
+        { "name": "<options>", "description": { "zh-CN": "选项参数", "en-US": "Option flags" } },
+        { "name": "<host>", "description": { "zh-CN": "目标主机", "en-US": "Target host" } }
+      ],
+      "title": { "zh-CN": "路由追踪", "en-US": "Route tracing" },
+      "description": { "zh-CN": "追踪数据包到达目标主机的网络路径", "en-US": "Trace the network path to a target host" },
+      "tags": { "zh-CN": ["网络", "路由", "诊断"], "en-US": ["network", "route", "diagnostic"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_cli_dig",
+      "command": "dig <options> <domain>",
+      "platformId": "platform_cli",
+      "categoryId": "cat_cli_network",
+      "examples": ["dig example.com", "dig example.com MX", "dig @8.8.8.8 google.com", "dig +short example.com"],
+      "parameters": [
+        { "name": "<options>", "description": { "zh-CN": "选项参数", "en-US": "Option flags" } },
+        { "name": "<domain>", "description": { "zh-CN": "域名", "en-US": "Domain name" } }
+      ],
+      "title": { "zh-CN": "DNS 查询", "en-US": "DNS lookup" },
+      "description": { "zh-CN": "查询域名的 DNS 解析信息", "en-US": "Query DNS records for a domain" },
+      "tags": { "zh-CN": ["网络", "DNS", "解析"], "en-US": ["network", "DNS", "resolve"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_cli_ss",
+      "command": "ss <options>",
+      "platformId": "platform_cli",
+      "categoryId": "cat_cli_network",
+      "examples": ["ss -tlnp", "ss -an | grep :80", "ss -ulnp", "ss -s"],
+      "parameters": [
+        { "name": "<options>", "description": { "zh-CN": "选项参数", "en-US": "Option flags" } }
+      ],
+      "title": { "zh-CN": "套接字统计", "en-US": "Socket statistics" },
+      "description": { "zh-CN": "显示网络套接字连接和统计信息", "en-US": "Display network socket connections and statistics" },
+      "tags": { "zh-CN": ["网络", "端口", "连接"], "en-US": ["network", "port", "connection"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_cli_ip",
+      "command": "ip <object> <action>",
+      "platformId": "platform_cli",
+      "categoryId": "cat_cli_network",
+      "examples": ["ip addr show", "ip route show", "ip link set eth0 up", "ip neigh show"],
+      "parameters": [
+        { "name": "<object>", "description": { "zh-CN": "网络对象", "en-US": "Network object" } },
+        { "name": "<action>", "description": { "zh-CN": "操作命令", "en-US": "Action command" } }
+      ],
+      "title": { "zh-CN": "网络配置", "en-US": "Network configuration" },
+      "description": { "zh-CN": "显示和管理网络接口、路由等配置", "en-US": "Display and manage network interfaces and routes" },
+      "tags": { "zh-CN": ["网络", "接口", "配置"], "en-US": ["network", "interface", "config"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_cli_tar",
+      "command": "tar <options> <archive> <files>",
+      "platformId": "platform_cli",
+      "categoryId": "cat_cli_archive",
+      "examples": ["tar -czf archive.tar.gz ./dir/", "tar -xzf archive.tar.gz", "tar -tf archive.tar.gz", "tar -xzf archive.tar.gz -C /tmp/"],
+      "parameters": [
+        { "name": "<options>", "description": { "zh-CN": "选项参数", "en-US": "Option flags" } },
+        { "name": "<archive>", "description": { "zh-CN": "归档文件名", "en-US": "Archive file name" } },
+        { "name": "<files>", "description": { "zh-CN": "要处理的文件", "en-US": "Files to process" } }
+      ],
+      "title": { "zh-CN": "归档打包", "en-US": "Archive files" },
+      "description": { "zh-CN": "将多个文件归档打包或解压", "en-US": "Archive multiple files or extract an archive" },
+      "tags": { "zh-CN": ["归档", "压缩", "打包"], "en-US": ["archive", "compress", "pack"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_cli_zip",
+      "command": "zip <options> <archive> <files>",
+      "platformId": "platform_cli",
+      "categoryId": "cat_cli_archive",
+      "examples": ["zip archive.zip file1.txt file2.txt", "zip -r archive.zip ./dir/", "zip -e archive.zip sensitive.txt", "zip -r -9 archive.zip ./dir/"],
+      "parameters": [
+        { "name": "<options>", "description": { "zh-CN": "选项参数", "en-US": "Option flags" } },
+        { "name": "<archive>", "description": { "zh-CN": "压缩包名称", "en-US": "Archive file name" } },
+        { "name": "<files>", "description": { "zh-CN": "要压缩的文件", "en-US": "Files to compress" } }
+      ],
+      "title": { "zh-CN": "ZIP 压缩", "en-US": "ZIP compression" },
+      "description": { "zh-CN": "将文件压缩为 ZIP 格式", "en-US": "Compress files into ZIP format" },
+      "tags": { "zh-CN": ["归档", "压缩", "ZIP"], "en-US": ["archive", "compress", "ZIP"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_cli_gzip",
+      "command": "gzip <options> <file>",
+      "platformId": "platform_cli",
+      "categoryId": "cat_cli_archive",
+      "examples": ["gzip largefile.log", "gzip -d archive.gz", "gzip -k file.txt", "gzip -9 file.txt"],
+      "parameters": [
+        { "name": "<options>", "description": { "zh-CN": "选项参数", "en-US": "Option flags" } },
+        { "name": "<file>", "description": { "zh-CN": "目标文件", "en-US": "Target file" } }
+      ],
+      "title": { "zh-CN": "GZIP 压缩", "en-US": "GZIP compression" },
+      "description": { "zh-CN": "使用 GZIP 算法压缩或解压文件", "en-US": "Compress or decompress files using GZIP algorithm" },
+      "tags": { "zh-CN": ["归档", "压缩", "GZIP"], "en-US": ["archive", "compress", "GZIP"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_cli_git_clone",
+      "command": "git clone <url> <directory>",
+      "platformId": "platform_cli",
+      "categoryId": "cat_cli_git",
+      "examples": ["git clone https://github.com/user/repo.git", "git clone --depth 1 https://github.com/user/repo.git", "git clone -b develop https://github.com/user/repo.git", "git clone --recurse-submodules https://github.com/user/repo.git"],
+      "parameters": [
+        { "name": "<url>", "description": { "zh-CN": "仓库 URL", "en-US": "Repository URL" } },
+        { "name": "<directory>", "description": { "zh-CN": "目标目录", "en-US": "Target directory" } }
+      ],
+      "title": { "zh-CN": "克隆仓库", "en-US": "Clone repository" },
+      "description": { "zh-CN": "将远程仓库完整复制到本地", "en-US": "Copy a remote repository to local" },
+      "tags": { "zh-CN": ["Git", "克隆", "仓库"], "en-US": ["Git", "clone", "repository"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_cli_git_init",
+      "command": "git init <directory>",
+      "platformId": "platform_cli",
+      "categoryId": "cat_cli_git",
+      "examples": ["git init", "git init my-project", "git init --initial-branch=main", "git init -b main"],
+      "parameters": [
+        { "name": "<directory>", "description": { "zh-CN": "项目目录", "en-US": "Project directory" } }
+      ],
+      "title": { "zh-CN": "初始化仓库", "en-US": "Initialize repository" },
+      "description": { "zh-CN": "将当前目录初始化为 Git 仓库", "en-US": "Initialize a new Git repository in the current directory" },
+      "tags": { "zh-CN": ["Git", "初始化", "仓库"], "en-US": ["Git", "init", "repository"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_cli_git_add",
+      "command": "git add <path>",
+      "platformId": "platform_cli",
+      "categoryId": "cat_cli_git",
+      "examples": ["git add .", "git add -p", "git add src/main.ts", "git add -A"],
+      "parameters": [
+        { "name": "<path>", "description": { "zh-CN": "文件路径", "en-US": "File path" } }
+      ],
+      "title": { "zh-CN": "暂存文件", "en-US": "Stage files" },
+      "description": { "zh-CN": "将文件变更添加到暂存区", "en-US": "Add file changes to the staging area" },
+      "tags": { "zh-CN": ["Git", "暂存", "添加"], "en-US": ["Git", "stage", "add"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_cli_git_commit",
+      "command": "git commit -m '<message>'",
+      "platformId": "platform_cli",
+      "categoryId": "cat_cli_git",
+      "examples": ["git commit -m 'feat: add user auth'", "git commit -am 'fix: resolve login bug'", "git commit --amend -m 'updated message'", "git commit -S -m 'signed commit'"],
+      "parameters": [
+        { "name": "<message>", "description": { "zh-CN": "提交信息", "en-US": "Commit message" } }
+      ],
+      "title": { "zh-CN": "提交变更", "en-US": "Commit changes" },
+      "description": { "zh-CN": "将暂存区的变更记录为一次提交", "en-US": "Record staged changes as a commit" },
+      "tags": { "zh-CN": ["Git", "提交", "版本"], "en-US": ["Git", "commit", "version"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_cli_git_push",
+      "command": "git push <remote> <branch>",
+      "platformId": "platform_cli",
+      "categoryId": "cat_cli_git",
+      "examples": ["git push origin main", "git push -u origin feature/auth", "git push --force-with-lease origin main", "git push --tags"],
+      "parameters": [
+        { "name": "<remote>", "description": { "zh-CN": "远程仓库名称", "en-US": "Remote name" } },
+        { "name": "<branch>", "description": { "zh-CN": "分支名称", "en-US": "Branch name" } }
+      ],
+      "title": { "zh-CN": "推送提交", "en-US": "Push commits" },
+      "description": { "zh-CN": "将本地提交推送到远程仓库", "en-US": "Push local commits to a remote repository" },
+      "tags": { "zh-CN": ["Git", "推送", "远程"], "en-US": ["Git", "push", "remote"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_cli_git_pull",
+      "command": "git pull <remote> <branch>",
+      "platformId": "platform_cli",
+      "categoryId": "cat_cli_git",
+      "examples": ["git pull origin main", "git pull --rebase origin main", "git pull --ff-only origin develop", "git pull --all"],
+      "parameters": [
+        { "name": "<remote>", "description": { "zh-CN": "远程仓库名称", "en-US": "Remote name" } },
+        { "name": "<branch>", "description": { "zh-CN": "分支名称", "en-US": "Branch name" } }
+      ],
+      "title": { "zh-CN": "拉取更新", "en-US": "Pull updates" },
+      "description": { "zh-CN": "从远程仓库拉取并合并变更", "en-US": "Fetch and merge changes from a remote repository" },
+      "tags": { "zh-CN": ["Git", "拉取", "同步"], "en-US": ["Git", "pull", "sync"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_cli_git_branch",
+      "command": "git branch <options> <branch>",
+      "platformId": "platform_cli",
+      "categoryId": "cat_cli_git",
+      "examples": ["git branch -a", "git branch feature/auth", "git branch -d old-branch", "git branch -m old-name new-name"],
+      "parameters": [
+        { "name": "<options>", "description": { "zh-CN": "选项参数", "en-US": "Option flags" } },
+        { "name": "<branch>", "description": { "zh-CN": "分支名称", "en-US": "Branch name" } }
+      ],
+      "title": { "zh-CN": "分支管理", "en-US": "Branch management" },
+      "description": { "zh-CN": "列出、创建或删除分支", "en-US": "List, create, or delete branches" },
+      "tags": { "zh-CN": ["Git", "分支", "管理"], "en-US": ["Git", "branch", "manage"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_cli_git_checkout",
+      "command": "git checkout <branch>",
+      "platformId": "platform_cli",
+      "categoryId": "cat_cli_git",
+      "examples": ["git checkout main", "git checkout -b feature/new-feature", "git checkout -- file.txt", "git checkout v1.0.0"],
+      "parameters": [
+        { "name": "<branch>", "description": { "zh-CN": "分支或提交", "en-US": "Branch or commit" } }
+      ],
+      "title": { "zh-CN": "切换分支", "en-US": "Switch branch" },
+      "description": { "zh-CN": "切换到指定分支或恢复工作树文件", "en-US": "Switch to a branch or restore working tree files" },
+      "tags": { "zh-CN": ["Git", "分支", "切换"], "en-US": ["Git", "branch", "switch"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_cli_git_merge",
+      "command": "git merge <branch>",
+      "platformId": "platform_cli",
+      "categoryId": "cat_cli_git",
+      "examples": ["git merge feature/auth", "git merge --no-ff feature/auth", "git merge --abort", "git merge --squash feature/auth"],
+      "parameters": [
+        { "name": "<branch>", "description": { "zh-CN": "要合并的分支", "en-US": "Branch to merge" } }
+      ],
+      "title": { "zh-CN": "合并分支", "en-US": "Merge branches" },
+      "description": { "zh-CN": "将指定分支的变更合并到当前分支", "en-US": "Merge changes from a branch into the current branch" },
+      "tags": { "zh-CN": ["Git", "合并", "分支"], "en-US": ["Git", "merge", "branch"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_cli_git_rebase",
+      "command": "git rebase <branch>",
+      "platformId": "platform_cli",
+      "categoryId": "cat_cli_git",
+      "examples": ["git rebase main", "git rebase -i HEAD~3", "git rebase --abort", "git rebase --continue"],
+      "parameters": [
+        { "name": "<branch>", "description": { "zh-CN": "目标分支", "en-US": "Target branch" } }
+      ],
+      "title": { "zh-CN": "变基", "en-US": "Rebase" },
+      "description": { "zh-CN": "将当前分支的提交重放到指定分支之上", "en-US": "Reapply commits on top of another branch" },
+      "tags": { "zh-CN": ["Git", "变基", "提交历史"], "en-US": ["Git", "rebase", "history"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_cli_git_stash",
+      "command": "git stash <options>",
+      "platformId": "platform_cli",
+      "categoryId": "cat_cli_git",
+      "examples": ["git stash", "git stash pop", "git stash list", "git stash apply stash@{1}"],
+      "parameters": [
+        { "name": "<options>", "description": { "zh-CN": "选项参数", "en-US": "Option flags" } }
+      ],
+      "title": { "zh-CN": "暂存工作区", "en-US": "Stash changes" },
+      "description": { "zh-CN": "临时保存工作区的变更", "en-US": "Temporarily save working directory changes" },
+      "tags": { "zh-CN": ["Git", "暂存", "工作区"], "en-US": ["Git", "stash", "working"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_cli_git_log",
+      "command": "git log <options>",
+      "platformId": "platform_cli",
+      "categoryId": "cat_cli_git",
+      "examples": ["git log --oneline -10", "git log --graph --all --oneline", "git log --author='John' --since='2 weeks ago'", "git log -p -- src/main.ts"],
+      "parameters": [
+        { "name": "<options>", "description": { "zh-CN": "选项参数", "en-US": "Option flags" } }
+      ],
+      "title": { "zh-CN": "查看提交历史", "en-US": "View commit history" },
+      "description": { "zh-CN": "显示仓库的提交历史记录", "en-US": "Display the commit history of a repository" },
+      "tags": { "zh-CN": ["Git", "历史", "日志"], "en-US": ["Git", "log", "history"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_cli_git_diff",
+      "command": "git diff <options>",
+      "platformId": "platform_cli",
+      "categoryId": "cat_cli_git",
+      "examples": ["git diff", "git diff --staged", "git diff main..feature", "git diff --stat"],
+      "parameters": [
+        { "name": "<options>", "description": { "zh-CN": "选项参数", "en-US": "Option flags" } }
+      ],
+      "title": { "zh-CN": "查看差异", "en-US": "View differences" },
+      "description": { "zh-CN": "比较文件在不同状态之间的差异", "en-US": "Compare file differences between states" },
+      "tags": { "zh-CN": ["Git", "差异", "比较"], "en-US": ["Git", "diff", "compare"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_cli_git_cherry_pick",
+      "command": "git cherry-pick <commit>",
+      "platformId": "platform_cli",
+      "categoryId": "cat_cli_git",
+      "examples": ["git cherry-pick abc123", "git cherry-pick abc123..def456", "git cherry-pick --no-commit abc123", "git cherry-pick -n HEAD~3"],
+      "parameters": [
+        { "name": "<commit>", "description": { "zh-CN": "提交哈希", "en-US": "Commit hash" } }
+      ],
+      "title": { "zh-CN": "选择提交", "en-US": "Cherry-pick commits" },
+      "description": { "zh-CN": "将指定提交的变更应用到当前分支", "en-US": "Apply changes from specific commits to the current branch" },
+      "tags": { "zh-CN": ["Git", "提交", "选择"], "en-US": ["Git", "commit", "cherry-pick"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_cli_git_reset",
+      "command": "git reset <mode> <commit>",
+      "platformId": "platform_cli",
+      "categoryId": "cat_cli_git",
+      "examples": ["git reset HEAD~1", "git reset --soft HEAD~1", "git reset --hard HEAD~3", "git reset --mixed abc123 -- file.txt"],
+      "parameters": [
+        { "name": "<mode>", "description": { "zh-CN": "重置模式 (soft/mixed/hard)", "en-US": "Reset mode (soft/mixed/hard)" } },
+        { "name": "<commit>", "description": { "zh-CN": "目标提交", "en-US": "Target commit" } }
+      ],
+      "title": { "zh-CN": "重置提交", "en-US": "Reset commits" },
+      "description": { "zh-CN": "将当前分支重置到指定提交状态", "en-US": "Reset the current branch to a specified state" },
+      "tags": { "zh-CN": ["Git", "重置", "回退"], "en-US": ["Git", "reset", "undo"] },
+      "notes": "git reset --hard 会丢弃所有未提交的变更和指定提交之后的所有提交，不可恢复"
+    },
+    {
+      "id": "cmd_cli_git_revert",
+      "command": "git revert <commit>",
+      "platformId": "platform_cli",
+      "categoryId": "cat_cli_git",
+      "examples": ["git revert abc123", "git revert --no-commit abc123", "git revert HEAD", "git revert abc123..def456"],
+      "parameters": [
+        { "name": "<commit>", "description": { "zh-CN": "要撤销的提交", "en-US": "Commit to revert" } }
+      ],
+      "title": { "zh-CN": "撤销提交", "en-US": "Revert commits" },
+      "description": { "zh-CN": "通过创建新提交来撤销指定提交的变更", "en-US": "Create a new commit that undoes the changes from a specified commit" },
+      "tags": { "zh-CN": ["Git", "撤销", "安全"], "en-US": ["Git", "revert", "safe"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_cli_git_reflog",
+      "command": "git reflog <options>",
+      "platformId": "platform_cli",
+      "categoryId": "cat_cli_git",
+      "examples": ["git reflog", "git reflog show HEAD", "git reflog --all", "git reflog expire --expire=now --all"],
+      "parameters": [
+        { "name": "<options>", "description": { "zh-CN": "选项参数", "en-US": "Option flags" } }
+      ],
+      "title": { "zh-CN": "引用日志", "en-US": "Reference log" },
+      "description": { "zh-CN": "显示本地分支引用的更新历史", "en-US": "Show the reference log of local branch updates" },
+      "tags": { "zh-CN": ["Git", "日志", "恢复"], "en-US": ["Git", "log", "recover"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_cli_git_tag",
+      "command": "git tag <options> <tag>",
+      "platformId": "platform_cli",
+      "categoryId": "cat_cli_git",
+      "examples": ["git tag v1.0.0", "git tag -a v1.0.0 -m 'Release version 1.0.0'", "git tag -d old-tag", "git push origin v1.0.0"],
+      "parameters": [
+        { "name": "<options>", "description": { "zh-CN": "选项参数", "en-US": "Option flags" } },
+        { "name": "<tag>", "description": { "zh-CN": "标签名称", "en-US": "Tag name" } }
+      ],
+      "title": { "zh-CN": "标签管理", "en-US": "Tag management" },
+      "description": { "zh-CN": "创建、列出或删除版本标签", "en-US": "Create, list, or delete version tags" },
+      "tags": { "zh-CN": ["Git", "标签", "版本"], "en-US": ["Git", "tag", "release"] },
+      "notes": null
+    }
+  ]
+}

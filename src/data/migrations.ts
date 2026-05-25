@@ -150,7 +150,7 @@ export async function runMigrations(db: Database): Promise<void> {
         await db.execute(stmt);
       }
 
-      await db.execute("INSERT INTO schema_migrations (version, applied_at) VALUES ($1, $2)", [
+      await db.execute("INSERT OR IGNORE INTO schema_migrations (version, applied_at) VALUES ($1, $2)", [
         migration.version,
         new Date().toISOString(),
       ]);

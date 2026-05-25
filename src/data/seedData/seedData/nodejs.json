@@ -1,0 +1,777 @@
+{
+  "platform": {
+    "id": "platform_nodejs",
+    "icon": null,
+    "color": "#339933",
+    "sortOrder": 3,
+    "name": { "zh-CN": "Node.js", "en-US": "Node.js" },
+    "description": { "zh-CN": "基于 Chrome V8 引擎的 JavaScript 运行时", "en-US": "JavaScript runtime built on Chrome V8 engine" }
+  },
+  "categories": [
+    {
+      "id": "cat_node_npm",
+      "platformId": "platform_nodejs",
+      "sortOrder": 1,
+      "name": { "zh-CN": "npm 包管理", "en-US": "npm Package Management" }
+    },
+    {
+      "id": "cat_node_npx",
+      "platformId": "platform_nodejs",
+      "sortOrder": 2,
+      "name": { "zh-CN": "npx 与工具", "en-US": "npx & Tools" }
+    },
+    {
+      "id": "cat_node_script",
+      "platformId": "platform_nodejs",
+      "sortOrder": 3,
+      "name": { "zh-CN": "脚本", "en-US": "Scripts" }
+    },
+    {
+      "id": "cat_node_workspace",
+      "platformId": "platform_nodejs",
+      "sortOrder": 4,
+      "name": { "zh-CN": "工作区", "en-US": "Workspaces" }
+    },
+    {
+      "id": "cat_node_debug",
+      "platformId": "platform_nodejs",
+      "sortOrder": 5,
+      "name": { "zh-CN": "调试", "en-US": "Debug" }
+    }
+  ],
+  "commands": [
+    {
+      "id": "cmd_node_npm_init",
+      "command": "npm init",
+      "platformId": "platform_nodejs",
+      "categoryId": "cat_node_npm",
+      "examples": ["npm init", "npm init -y", "npm init --scope=@myorg"],
+      "parameters": [
+        { "name": "-y", "description": { "zh-CN": "使用默认值，跳过交互式问答", "en-US": "Use defaults, skip interactive prompts" } },
+        { "name": "--scope", "description": { "zh-CN": "设置包的作用域", "en-US": "Set the scope of the package" } }
+      ],
+      "title": { "zh-CN": "初始化项目", "en-US": "Initialize project" },
+      "description": { "zh-CN": "创建 package.json 文件", "en-US": "Create a package.json file" },
+      "tags": { "zh-CN": ["初始化", "项目"], "en-US": ["init", "project"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_node_npm_install",
+      "command": "npm install",
+      "platformId": "platform_nodejs",
+      "categoryId": "cat_node_npm",
+      "examples": ["npm install", "npm install express", "npm install -D typescript", "npm install -g nodemon"],
+      "parameters": [
+        { "name": "-D", "description": { "zh-CN": "安装为开发依赖", "en-US": "Install as dev dependency" } },
+        { "name": "-g", "description": { "zh-CN": "全局安装", "en-US": "Install globally" } },
+        { "name": "--save", "description": { "zh-CN": "保存到 dependencies（默认行为）", "en-US": "Save to dependencies (default)" } },
+        { "name": "--save-exact", "description": { "zh-CN": "安装精确版本号", "en-US": "Install exact version" } }
+      ],
+      "title": { "zh-CN": "安装依赖", "en-US": "Install dependencies" },
+      "description": { "zh-CN": "根据 package.json 安装依赖包", "en-US": "Install packages based on package.json" },
+      "tags": { "zh-CN": ["安装", "依赖"], "en-US": ["install", "dependency"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_node_npm_ci",
+      "command": "npm ci",
+      "platformId": "platform_nodejs",
+      "categoryId": "cat_node_npm",
+      "examples": ["npm ci", "npm ci --ignore-scripts", "npm ci --prefer-offline"],
+      "parameters": [
+        { "name": "--ignore-scripts", "description": { "zh-CN": "忽略 pre/post 脚本", "en-US": "Ignore pre/post scripts" } },
+        { "name": "--prefer-offline", "description": { "zh-CN": "优先使用缓存", "en-US": "Prefer cached packages" } }
+      ],
+      "title": { "zh-CN": "干净安装", "en-US": "Clean install" },
+      "description": { "zh-CN": "严格按 package-lock.json 安装，适用于 CI 环境", "en-US": "Install exactly per package-lock.json, for CI environments" },
+      "tags": { "zh-CN": ["安装", "CI", "锁文件"], "en-US": ["install", "CI", "lockfile"] },
+      "notes": "会删除现有 node_modules 并重新安装，确保依赖树与锁文件一致"
+    },
+    {
+      "id": "cmd_node_npm_uninstall",
+      "command": "npm uninstall",
+      "platformId": "platform_nodejs",
+      "categoryId": "cat_node_npm",
+      "examples": ["npm uninstall lodash", "npm uninstall -g nodemon", "npm uninstall --save-dev jest"],
+      "parameters": [
+        { "name": "-g", "description": { "zh-CN": "全局卸载", "en-US": "Uninstall globally" } },
+        { "name": "--save-dev", "description": { "zh-CN": "从 devDependencies 移除", "en-US": "Remove from devDependencies" } }
+      ],
+      "title": { "zh-CN": "卸载依赖", "en-US": "Uninstall dependencies" },
+      "description": { "zh-CN": "从项目中移除指定的依赖包", "en-US": "Remove specified packages from the project" },
+      "tags": { "zh-CN": ["卸载", "依赖"], "en-US": ["uninstall", "dependency"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_node_npm_update",
+      "command": "npm update",
+      "platformId": "platform_nodejs",
+      "categoryId": "cat_node_npm",
+      "examples": ["npm update", "npm update express", "npm update --global", "npm update --depth 2"],
+      "parameters": [
+        { "name": "--global", "description": { "zh-CN": "更新全局包", "en-US": "Update global packages" } },
+        { "name": "--depth", "description": { "zh-CN": "指定依赖树搜索深度", "en-US": "Specify dependency tree depth" } }
+      ],
+      "title": { "zh-CN": "更新依赖", "en-US": "Update dependencies" },
+      "description": { "zh-CN": "更新 package.json 中指定范围内的包到最新版本", "en-US": "Update packages to the latest semver-compatible version" },
+      "tags": { "zh-CN": ["更新", "依赖"], "en-US": ["update", "dependency"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_node_npm_outdated",
+      "command": "npm outdated",
+      "platformId": "platform_nodejs",
+      "categoryId": "cat_node_npm",
+      "examples": ["npm outdated", "npm outdated --json", "npm outdated --long"],
+      "parameters": [
+        { "name": "--json", "description": { "zh-CN": "以 JSON 格式输出", "en-US": "Output in JSON format" } },
+        { "name": "--long", "description": { "zh-CN": "显示额外详情", "en-US": "Show additional details" } }
+      ],
+      "title": { "zh-CN": "检查过时依赖", "en-US": "Check outdated dependencies" },
+      "description": { "zh-CN": "列出所有可更新的依赖包", "en-US": "List all packages that have newer versions available" },
+      "tags": { "zh-CN": ["检查", "版本", "更新"], "en-US": ["check", "version", "update"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_node_npm_ls",
+      "command": "npm ls",
+      "platformId": "platform_nodejs",
+      "categoryId": "cat_node_npm",
+      "examples": ["npm ls", "npm ls --depth 0", "npm ls --all --json"],
+      "parameters": [
+        { "name": "--depth", "description": { "zh-CN": "控制依赖树显示深度", "en-US": "Control display depth" } },
+        { "name": "--all", "description": { "zh-CN": "显示所有依赖（包括间接依赖）", "en-US": "Show all dependencies (including transitive)" } },
+        { "name": "--json", "description": { "zh-CN": "以 JSON 格式输出", "en-US": "Output in JSON format" } }
+      ],
+      "title": { "zh-CN": "查看依赖树", "en-US": "List dependency tree" },
+      "description": { "zh-CN": "以树状结构显示当前项目的依赖关系", "en-US": "Display the dependency tree of the current project" },
+      "tags": { "zh-CN": ["列表", "依赖树"], "en-US": ["list", "tree"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_node_npm_audit",
+      "command": "npm audit",
+      "platformId": "platform_nodejs",
+      "categoryId": "cat_node_npm",
+      "examples": ["npm audit", "npm audit fix", "npm audit fix --force", "npm audit --json"],
+      "parameters": [
+        { "name": "fix", "description": { "zh-CN": "自动修复漏洞", "en-US": "Automatically fix vulnerabilities" } },
+        { "name": "--force", "description": { "zh-CN": "强制修复（可能引入破坏性变更）", "en-US": "Force fix (may introduce breaking changes)" } },
+        { "name": "--json", "description": { "zh-CN": "以 JSON 格式输出", "en-US": "Output in JSON format" } }
+      ],
+      "title": { "zh-CN": "安全审计", "en-US": "Security audit" },
+      "description": { "zh-CN": "检查依赖包中已知的安全漏洞", "en-US": "Check for known vulnerabilities in dependencies" },
+      "tags": { "zh-CN": ["安全", "审计", "漏洞"], "en-US": ["security", "audit", "vulnerability"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_node_npm_pack",
+      "command": "npm pack",
+      "platformId": "platform_nodejs",
+      "categoryId": "cat_node_npm",
+      "examples": ["npm pack", "npm pack --dry-run", "npm pack --pack-destination ./dist"],
+      "parameters": [
+        { "name": "--dry-run", "description": { "zh-CN": "仅预览而不实际打包", "en-US": "Preview without creating tarball" } },
+        { "name": "--pack-destination", "description": { "zh-CN": "指定输出目录", "en-US": "Specify output directory" } }
+      ],
+      "title": { "zh-CN": "打包包文件", "en-US": "Pack package tarball" },
+      "description": { "zh-CN": "将当前项目打包为 .tgz 压缩文件", "en-US": "Package the current project into a .tgz tarball" },
+      "tags": { "zh-CN": ["打包", "发布"], "en-US": ["pack", "publish"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_node_npm_publish",
+      "command": "npm publish",
+      "platformId": "platform_nodejs",
+      "categoryId": "cat_node_npm",
+      "examples": ["npm publish", "npm publish --access public", "npm publish --tag beta"],
+      "parameters": [
+        { "name": "--access", "description": { "zh-CN": "设置包的访问级别（public/restricted）", "en-US": "Set package access level (public/restricted)" } },
+        { "name": "--tag", "description": { "zh-CN": "指定发布标签（如 beta、next）", "en-US": "Specify release tag (e.g., beta, next)" } }
+      ],
+      "title": { "zh-CN": "发布包", "en-US": "Publish package" },
+      "description": { "zh-CN": "将包发布到 npm 注册表", "en-US": "Publish a package to the npm registry" },
+      "tags": { "zh-CN": ["发布", "注册表"], "en-US": ["publish", "registry"] },
+      "notes": "作用域包默认为 restricted，使用 --access public 使包公开可见"
+    },
+    {
+      "id": "cmd_node_npm_version",
+      "command": "npm version",
+      "platformId": "platform_nodejs",
+      "categoryId": "cat_node_npm",
+      "examples": ["npm version patch", "npm version minor", "npm version major", "npm version 2.0.0"],
+      "parameters": [
+        { "name": "patch", "description": { "zh-CN": "补丁版本 +1（1.0.x）", "en-US": "Bump patch version (+1.0.x)" } },
+        { "name": "minor", "description": { "zh-CN": "次版本 +1（x.1.0）", "en-US": "Bump minor version (x.1.0)" } },
+        { "name": "major", "description": { "zh-CN": "主版本 +1（1.0.0）", "en-US": "Bump major version (1.0.0)" } }
+      ],
+      "title": { "zh-CN": "更新版本号", "en-US": "Bump version" },
+      "description": { "zh-CN": "更新 package.json 中的版本号并自动创建 git tag", "en-US": "Update version in package.json and auto-create git tag" },
+      "tags": { "zh-CN": ["版本", "标签"], "en-US": ["version", "tag"] },
+      "notes": "默认自动创建 git commit 和 tag，使用 --no-git-tag-version 可跳过"
+    },
+    {
+      "id": "cmd_node_npm_view",
+      "command": "npm view",
+      "platformId": "platform_nodejs",
+      "categoryId": "cat_node_npm",
+      "examples": ["npm view express", "npm view react version", "npm view lodash --json"],
+      "parameters": [
+        { "name": "version", "description": { "zh-CN": "仅显示最新版本号", "en-US": "Show only latest version" } },
+        { "name": "--json", "description": { "zh-CN": "以 JSON 格式输出完整信息", "en-US": "Output full info in JSON format" } }
+      ],
+      "title": { "zh-CN": "查看包信息", "en-US": "View package info" },
+      "description": { "zh-CN": "查看 npm 注册表中包的详细信息", "en-US": "View detailed package info from the npm registry" },
+      "tags": { "zh-CN": ["查看", "包信息"], "en-US": ["view", "package info"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_node_npm_search",
+      "command": "npm search",
+      "platformId": "platform_nodejs",
+      "categoryId": "cat_node_npm",
+      "examples": ["npm search http client", "npm search --json react-component"],
+      "parameters": [
+        { "name": "--json", "description": { "zh-CN": "以 JSON 格式输出", "en-US": "Output in JSON format" } }
+      ],
+      "title": { "zh-CN": "搜索包", "en-US": "Search packages" },
+      "description": { "zh-CN": "在 npm 注册表中搜索包", "en-US": "Search the npm registry for packages" },
+      "tags": { "zh-CN": ["搜索", "包"], "en-US": ["search", "package"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_node_npm_config",
+      "command": "npm config",
+      "platformId": "platform_nodejs",
+      "categoryId": "cat_node_npm",
+      "examples": ["npm config list", "npm config get registry", "npm config set registry https://registry.npmmirror.com"],
+      "parameters": [
+        { "name": "list", "description": { "zh-CN": "列出所有配置项", "en-US": "List all configuration" } },
+        { "name": "get", "description": { "zh-CN": "获取指定配置值", "en-US": "Get a config value" } },
+        { "name": "set", "description": { "zh-CN": "设置配置值", "en-US": "Set a config value" } }
+      ],
+      "title": { "zh-CN": "管理配置", "en-US": "Manage configuration" },
+      "description": { "zh-CN": "查看或修改 npm 全局/本地配置", "en-US": "View or modify npm global/local configuration" },
+      "tags": { "zh-CN": ["配置", "设置"], "en-US": ["config", "settings"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_node_npm_cache",
+      "command": "npm cache",
+      "platformId": "platform_nodejs",
+      "categoryId": "cat_node_npm",
+      "examples": ["npm cache ls", "npm cache clean --force", "npm cache verify"],
+      "parameters": [
+        { "name": "--force", "description": { "zh-CN": "强制清理（跳过确认）", "en-US": "Force clean (skip confirmation)" } }
+      ],
+      "title": { "zh-CN": "管理缓存", "en-US": "Manage cache" },
+      "description": { "zh-CN": "查看或清理 npm 缓存", "en-US": "View or clean the npm cache" },
+      "tags": { "zh-CN": ["缓存", "清理"], "en-US": ["cache", "clean"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_node_npm_link",
+      "command": "npm link",
+      "platformId": "platform_nodejs",
+      "categoryId": "cat_node_npm",
+      "examples": ["npm link", "npm link my-lib", "npm link --global my-lib"],
+      "parameters": [
+        { "name": "--global", "description": { "zh-CN": "创建全局符号链接", "en-US": "Create global symlink" } }
+      ],
+      "title": { "zh-CN": "本地符号链接", "en-US": "Local symlink" },
+      "description": { "zh-CN": "将本地包链接为全局包，或将全局链接到当前项目", "en-US": "Link a local package globally or into current project" },
+      "tags": { "zh-CN": ["链接", "本地开发"], "en-US": ["link", "local dev"] },
+      "notes": "开发本地库时特别有用，可避免反复发布和安装"
+    },
+    {
+      "id": "cmd_node_npm_dedupe",
+      "command": "npm dedupe",
+      "platformId": "platform_nodejs",
+      "categoryId": "cat_node_npm",
+      "examples": ["npm dedupe", "npm dedupe --dry-run"],
+      "parameters": [
+        { "name": "--dry-run", "description": { "zh-CN": "仅预览而不实际执行", "en-US": "Preview without making changes" } }
+      ],
+      "title": { "zh-CN": "依赖扁平化", "en-US": "Flatten dependency tree" },
+      "description": { "zh-CN": "将重复依赖提升到顶层以减小 node_modules 体积", "en-US": "Reduce duplication by hoisting duplicate dependencies" },
+      "tags": { "zh-CN": ["扁平化", "去重", "node_modules"], "en-US": ["dedupe", "flatten", "node_modules"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_node_npm_login",
+      "command": "npm login",
+      "platformId": "platform_nodejs",
+      "categoryId": "cat_node_npm",
+      "examples": ["npm login", "npm login --scope=@myorg", "npm login --auth-type=legacy"],
+      "parameters": [
+        { "name": "--scope", "description": { "zh-CN": "为指定作用域登录", "en-US": "Log in for a specific scope" } },
+        { "name": "--auth-type", "description": { "zh-CN": "指定认证类型", "en-US": "Specify auth type" } }
+      ],
+      "title": { "zh-CN": "登录 npm", "en-US": "Log in to npm" },
+      "description": { "zh-CN": "在终端中登录 npm 账户", "en-US": "Authenticate with npm in the terminal" },
+      "tags": { "zh-CN": ["登录", "认证"], "en-US": ["login", "auth"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_node_npm_logout",
+      "command": "npm logout",
+      "platformId": "platform_nodejs",
+      "categoryId": "cat_node_npm",
+      "examples": ["npm logout", "npm logout --scope=@myorg"],
+      "parameters": [
+        { "name": "--scope", "description": { "zh-CN": "退出指定作用域的登录", "en-US": "Log out from a specific scope" } }
+      ],
+      "title": { "zh-CN": "退出 npm", "en-US": "Log out of npm" },
+      "description": { "zh-CN": "从当前终端会话中退出 npm 登录", "en-US": "Log out of the current npm session" },
+      "tags": { "zh-CN": ["退出", "认证"], "en-US": ["logout", "auth"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_node_npm_explain",
+      "command": "npm explain",
+      "platformId": "platform_nodejs",
+      "categoryId": "cat_node_npm",
+      "examples": ["npm explain lodash", "npm explain --json glob"],
+      "parameters": [
+        { "name": "--json", "description": { "zh-CN": "以 JSON 格式输出", "en-US": "Output in JSON format" } }
+      ],
+      "title": { "zh-CN": "解释依赖关系", "en-US": "Explain dependency" },
+      "description": { "zh-CN": "解释一个包为何被安装及其依赖链路", "en-US": "Explain why a package is installed and its dependency chain" },
+      "tags": { "zh-CN": ["解释", "依赖", "排查"], "en-US": ["explain", "dependency", "troubleshoot"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_node_npm_pkg",
+      "command": "npm pkg",
+      "platformId": "platform_nodejs",
+      "categoryId": "cat_node_npm",
+      "examples": ["npm pkg get name", "npm pkg set description=\"My package\"", "npm pkg set scripts.dev=\"vite\"", "npm pkg delete scripts.test"],
+      "parameters": [
+        { "name": "get", "description": { "zh-CN": "获取 package.json 字段值", "en-US": "Get a package.json field value" } },
+        { "name": "set", "description": { "zh-CN": "设置 package.json 字段值", "en-US": "Set a package.json field value" } },
+        { "name": "delete", "description": { "zh-CN": "删除 package.json 字段", "en-US": "Delete a package.json field" } }
+      ],
+      "title": { "zh-CN": "操作 package.json", "en-US": "Manipulate package.json" },
+      "description": { "zh-CN": "通过命令行直接读写 package.json 字段", "en-US": "Directly read/write package.json fields via CLI" },
+      "tags": { "zh-CN": ["package.json", "配置"], "en-US": ["package.json", "config"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_node_npx",
+      "command": "npx",
+      "platformId": "platform_nodejs",
+      "categoryId": "cat_node_npx",
+      "examples": ["npx create-react-app my-app", "npx --yes tsc --version", "npx -p typescript tsc index.ts"],
+      "parameters": [
+        { "name": "--yes", "description": { "zh-CN": "自动确认安装提示", "en-US": "Automatically confirm install prompts" } },
+        { "name": "-p", "description": { "zh-CN": "指定安装的包名", "en-US": "Specify the package to install" } }
+      ],
+      "title": { "zh-CN": "临时执行包", "en-US": "Execute package temporarily" },
+      "description": { "zh-CN": "无需全局安装即可临时运行 npm 包中的命令", "en-US": "Run npm packages without installing globally" },
+      "tags": { "zh-CN": ["执行", "临时", "工具"], "en-US": ["execute", "temp", "tool"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_node_node",
+      "command": "node",
+      "platformId": "platform_nodejs",
+      "categoryId": "cat_node_npx",
+      "examples": ["node app.js", "node -e \"console.log('Hello')\"", "node --experimental-modules server.mjs"],
+      "parameters": [
+        { "name": "-e", "description": { "zh-CN": "直接执行字符串代码", "en-US": "Evaluate inline code string" } },
+        { "name": "--experimental-modules", "description": { "zh-CN": "启用 ES 模块支持", "en-US": "Enable ES modules support" } }
+      ],
+      "title": { "zh-CN": "运行 Node.js", "en-US": "Run Node.js" },
+      "description": { "zh-CN": "执行 JavaScript 文件或内联代码", "en-US": "Execute a JavaScript file or inline code" },
+      "tags": { "zh-CN": ["运行", "脚本"], "en-US": ["run", "script"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_node_nodemon",
+      "command": "nodemon",
+      "platformId": "platform_nodejs",
+      "categoryId": "cat_node_npx",
+      "examples": ["nodemon app.js", "nodemon --watch src --ext ts app.ts", "nodemon --exec ts-node src/index.ts"],
+      "parameters": [
+        { "name": "--watch", "description": { "zh-CN": "监听指定目录变更", "en-US": "Watch specified directories" } },
+        { "name": "--ext", "description": { "zh-CN": "监听指定扩展名文件", "en-US": "Watch specified file extensions" } },
+        { "name": "--exec", "description": { "zh-CN": "指定启动命令", "en-US": "Specify the exec command" } }
+      ],
+      "title": { "zh-CN": "文件变更自动重启", "en-US": "Auto-restart on file changes" },
+      "description": { "zh-CN": "监听文件变更并自动重启 Node.js 进程", "en-US": "Monitor files and auto-restart Node.js process" },
+      "tags": { "zh-CN": ["热重载", "开发", "监听"], "en-US": ["hot reload", "dev", "watch"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_node_tsnode",
+      "command": "ts-node",
+      "platformId": "platform_nodejs",
+      "categoryId": "cat_node_npx",
+      "examples": ["ts-node src/index.ts", "ts-node --transpile-only app.ts", "ts-node --esm module.ts"],
+      "parameters": [
+        { "name": "--transpile-only", "description": { "zh-CN": "跳过类型检查以加速", "en-US": "Skip type checking for faster execution" } },
+        { "name": "--esm", "description": { "zh-CN": "启用 ES 模块模式", "en-US": "Enable ES module mode" } }
+      ],
+      "title": { "zh-CN": "直接运行 TypeScript", "en-US": "Run TypeScript directly" },
+      "description": { "zh-CN": "无需预编译即可执行 TypeScript 文件", "en-US": "Execute TypeScript files without pre-compilation" },
+      "tags": { "zh-CN": ["TypeScript", "运行", "开发"], "en-US": ["TypeScript", "run", "dev"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_node_tsx",
+      "command": "tsx",
+      "platformId": "platform_nodejs",
+      "categoryId": "cat_node_npx",
+      "examples": ["tsx src/index.ts", "tsx --watch src/server.ts", "tsx --import tsx/esm index.mts"],
+      "parameters": [
+        { "name": "--watch", "description": { "zh-CN": "监听文件变更并自动重启", "en-US": "Watch files and auto-restart" } },
+        { "name": "--import", "description": { "zh-CN": "注册 ESM loader", "en-US": "Register ESM loader" } }
+      ],
+      "title": { "zh-CN": "快速运行 TypeScript", "en-US": "Fast TypeScript execution" },
+      "description": { "zh-CN": "高性能的 TypeScript/ESM 运行工具，ts-node 的替代品", "en-US": "High-performance TypeScript/ESM runner, alternative to ts-node" },
+      "tags": { "zh-CN": ["TypeScript", "ESM", "快速"], "en-US": ["TypeScript", "ESM", "fast"] },
+      "notes": "比 ts-node 更快且原生支持 ESM，推荐新项目使用"
+    },
+    {
+      "id": "cmd_node_eslint",
+      "command": "eslint",
+      "platformId": "platform_nodejs",
+      "categoryId": "cat_node_npx",
+      "examples": ["eslint src/", "eslint --fix src/", "eslint --config .eslintrc.js src/"],
+      "parameters": [
+        { "name": "--fix", "description": { "zh-CN": "自动修复可修复的问题", "en-US": "Automatically fix fixable issues" } },
+        { "name": "--config", "description": { "zh-CN": "指定配置文件路径", "en-US": "Specify config file path" } }
+      ],
+      "title": { "zh-CN": "代码检查", "en-US": "Lint code" },
+      "description": { "zh-CN": "JavaScript/TypeScript 静态代码分析工具", "en-US": "JavaScript/TypeScript static code analysis tool" },
+      "tags": { "zh-CN": ["代码质量", "检查", "规范"], "en-US": ["code quality", "lint", "style"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_node_prettier",
+      "command": "prettier",
+      "platformId": "platform_nodejs",
+      "categoryId": "cat_node_npx",
+      "examples": ["prettier --write src/", "prettier --check src/", "prettier --write \"**/*.ts\""],
+      "parameters": [
+        { "name": "--write", "description": { "zh-CN": "格式化并写入文件", "en-US": "Format and write to file" } },
+        { "name": "--check", "description": { "zh-CN": "仅检查是否需要格式化（不修改）", "en-US": "Check if formatting is needed (no changes)" } }
+      ],
+      "title": { "zh-CN": "代码格式化", "en-US": "Format code" },
+      "description": { "zh-CN": "支持多种语言的代码格式化工具", "en-US": "Opinionated code formatter for many languages" },
+      "tags": { "zh-CN": ["格式化", "代码风格"], "en-US": ["format", "style"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_node_npm_run",
+      "command": "npm run",
+      "platformId": "platform_nodejs",
+      "categoryId": "cat_node_script",
+      "examples": ["npm run build", "npm run test", "npm run --workspaces build"],
+      "parameters": [
+        { "name": "script", "description": { "zh-CN": "要执行的脚本名称", "en-US": "Name of the script to execute" } },
+        { "name": "--workspaces", "description": { "zh-CN": "在所有工作区中运行", "en-US": "Run across all workspaces" } }
+      ],
+      "title": { "zh-CN": "运行脚本", "en-US": "Run script" },
+      "description": { "zh-CN": "执行 package.json 中 scripts 定义的脚本", "en-US": "Execute scripts defined in package.json scripts" },
+      "tags": { "zh-CN": ["脚本", "运行"], "en-US": ["script", "run"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_node_npm_start",
+      "command": "npm start",
+      "platformId": "platform_nodejs",
+      "categoryId": "cat_node_script",
+      "examples": ["npm start", "npm start -- --port 3000"],
+      "parameters": [
+        { "name": "--", "description": { "zh-CN": "传递参数给底层脚本", "en-US": "Pass arguments to the underlying script" } }
+      ],
+      "title": { "zh-CN": "启动应用", "en-US": "Start application" },
+      "description": { "zh-CN": "执行 package.json 中定义的 start 脚本", "en-US": "Execute the start script defined in package.json" },
+      "tags": { "zh-CN": ["启动", "应用"], "en-US": ["start", "app"] },
+      "notes": "等同于 npm run start，start 是预定义脚本"
+    },
+    {
+      "id": "cmd_node_npm_test",
+      "command": "npm test",
+      "platformId": "platform_nodejs",
+      "categoryId": "cat_node_script",
+      "examples": ["npm test", "npm test -- --coverage", "npm test -- --watchAll"],
+      "parameters": [
+        { "name": "--coverage", "description": { "zh-CN": "生成测试覆盖率报告", "en-US": "Generate test coverage report" } },
+        { "name": "--watchAll", "description": { "zh-CN": "监听所有文件变更持续运行", "en-US": "Watch all files and keep running" } }
+      ],
+      "title": { "zh-CN": "运行测试", "en-US": "Run tests" },
+      "description": { "zh-CN": "执行 package.json 中定义的 test 脚本", "en-US": "Execute the test script defined in package.json" },
+      "tags": { "zh-CN": ["测试"], "en-US": ["test"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_node_npm_build",
+      "command": "npm run build",
+      "platformId": "platform_nodejs",
+      "categoryId": "cat_node_script",
+      "examples": ["npm run build", "npm run build -- --mode production"],
+      "parameters": [
+        { "name": "--mode", "description": { "zh-CN": "指定构建模式（如 development/production）", "en-US": "Specify build mode (e.g., development/production)" } }
+      ],
+      "title": { "zh-CN": "构建项目", "en-US": "Build project" },
+      "description": { "zh-CN": "执行 package.json 中定义的 build 脚本进行项目构建", "en-US": "Execute the build script for project compilation" },
+      "tags": { "zh-CN": ["构建", "编译"], "en-US": ["build", "compile"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_node_npm_restart",
+      "command": "npm restart",
+      "platformId": "platform_nodejs",
+      "categoryId": "cat_node_script",
+      "examples": ["npm restart", "npm restart -- --force"],
+      "parameters": [
+        { "name": "--force", "description": { "zh-CN": "强制重启", "en-US": "Force restart" } }
+      ],
+      "title": { "zh-CN": "重启应用", "en-US": "Restart application" },
+      "description": { "zh-CN": "先执行 stop 再执行 start 脚本", "en-US": "Run the stop script followed by the start script" },
+      "tags": { "zh-CN": ["重启"], "en-US": ["restart"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_node_npm_stop",
+      "command": "npm run stop",
+      "platformId": "platform_nodejs",
+      "categoryId": "cat_node_script",
+      "examples": ["npm run stop"],
+      "parameters": [],
+      "title": { "zh-CN": "停止应用", "en-US": "Stop application" },
+      "description": { "zh-CN": "执行 package.json 中定义的 stop 脚本", "en-US": "Execute the stop script defined in package.json" },
+      "tags": { "zh-CN": ["停止"], "en-US": ["stop"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_node_npm_run_env",
+      "command": "npm run --env",
+      "platformId": "platform_nodejs",
+      "categoryId": "cat_node_script",
+      "examples": ["NODE_ENV=production npm run build", "PORT=3001 npm start", "DEBUG=app:* npm run dev"],
+      "parameters": [
+        { "name": "NODE_ENV", "description": { "zh-CN": "设置 Node.js 环境", "en-US": "Set Node.js environment" } },
+        { "name": "PORT", "description": { "zh-CN": "指定服务端口", "en-US": "Specify server port" } },
+        { "name": "DEBUG", "description": { "zh-CN": "设置调试日志模式", "en-US": "Set debug logging pattern" } }
+      ],
+      "title": { "zh-CN": "带环境变量运行脚本", "en-US": "Run script with env vars" },
+      "description": { "zh-CN": "在脚本执行前设置环境变量", "en-US": "Set environment variables before running scripts" },
+      "tags": { "zh-CN": ["环境变量", "脚本"], "en-US": ["env", "script"] },
+      "notes": "Windows 下使用 cross-env 包兼容：cross-env NODE_ENV=production npm run build"
+    },
+    {
+      "id": "cmd_node_workspaces",
+      "command": "npm workspaces",
+      "platformId": "platform_nodejs",
+      "categoryId": "cat_node_workspace",
+      "examples": ["npm workspaces list", "npm workspaces info", "npm init -w packages/app"],
+      "parameters": [
+        { "name": "list", "description": { "zh-CN": "列出所有工作区", "en-US": "List all workspaces" } },
+        { "name": "info", "description": { "zh-CN": "显示工作区详细信息", "en-US": "Show workspace details" } },
+        { "name": "-w", "description": { "zh-CN": "在指定工作区执行操作", "en-US": "Run command in specified workspace" } }
+      ],
+      "title": { "zh-CN": "工作区管理", "en-US": "Manage workspaces" },
+      "description": { "zh-CN": "管理 monorepo 中的 npm 工作区", "en-US": "Manage npm workspaces in monorepo" },
+      "tags": { "zh-CN": ["monorepo", "工作区"], "en-US": ["monorepo", "workspace"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_node_npm_install_workspaces",
+      "command": "npm install --workspaces",
+      "platformId": "platform_nodejs",
+      "categoryId": "cat_node_workspace",
+      "examples": ["npm install --workspaces", "npm install --workspace=packages/app", "npm install lodash --workspace=packages/core"],
+      "parameters": [
+        { "name": "--workspaces", "description": { "zh-CN": "在所有工作区中安装", "en-US": "Install in all workspaces" } },
+        { "name": "--workspace", "description": { "zh-CN": "在指定工作区中安装", "en-US": "Install in a specific workspace" } }
+      ],
+      "title": { "zh-CN": "工作区安装依赖", "en-US": "Install in workspaces" },
+      "description": { "zh-CN": "在 monorepo 的工作区中安装依赖", "en-US": "Install dependencies in monorepo workspaces" },
+      "tags": { "zh-CN": ["工作区", "安装", "monorepo"], "en-US": ["workspace", "install", "monorepo"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_node_yarn_add",
+      "command": "yarn add",
+      "platformId": "platform_nodejs",
+      "categoryId": "cat_node_workspace",
+      "examples": ["yarn add react", "yarn add -D typescript", "yarn add --peer react-router-dom"],
+      "parameters": [
+        { "name": "-D", "description": { "zh-CN": "添加为开发依赖", "en-US": "Add as dev dependency" } },
+        { "name": "--peer", "description": { "zh-CN": "添加为 peer 依赖", "en-US": "Add as peer dependency" } }
+      ],
+      "title": { "zh-CN": "Yarn 添加依赖", "en-US": "Yarn add dependency" },
+      "description": { "zh-CN": "使用 Yarn 添加依赖包到项目", "en-US": "Add a package to the project using Yarn" },
+      "tags": { "zh-CN": ["yarn", "安装", "依赖"], "en-US": ["yarn", "add", "dependency"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_node_yarn_install",
+      "command": "yarn install",
+      "platformId": "platform_nodejs",
+      "categoryId": "cat_node_workspace",
+      "examples": ["yarn install", "yarn install --frozen-lockfile", "yarn install --network-timeout 60000"],
+      "parameters": [
+        { "name": "--frozen-lockfile", "description": { "zh-CN": "不允许修改 yarn.lock", "en-US": "Do not allow modification of yarn.lock" } },
+        { "name": "--network-timeout", "description": { "zh-CN": "设置网络超时时间（毫秒）", "en-US": "Set network timeout in milliseconds" } }
+      ],
+      "title": { "zh-CN": "Yarn 安装依赖", "en-US": "Yarn install dependencies" },
+      "description": { "zh-CN": "使用 Yarn 根据 yarn.lock 安装所有依赖", "en-US": "Install all dependencies using Yarn from yarn.lock" },
+      "tags": { "zh-CN": ["yarn", "安装"], "en-US": ["yarn", "install"] },
+      "notes": "Yarn 1 使用 yarn.lock，Yarn Berry (2+) 使用 yarn.lock 但格式不同"
+    },
+    {
+      "id": "cmd_node_pnpm_install",
+      "command": "pnpm install",
+      "platformId": "platform_nodejs",
+      "categoryId": "cat_node_workspace",
+      "examples": ["pnpm install", "pnpm install --frozen-lockfile", "pnpm install --filter @myorg/core"],
+      "parameters": [
+        { "name": "--frozen-lockfile", "description": { "zh-CN": "严格按 pnpm-lock.yaml 安装", "en-US": "Install strictly from pnpm-lock.yaml" } },
+        { "name": "--filter", "description": { "zh-CN": "仅在指定包中安装", "en-US": "Install only in specified package" } }
+      ],
+      "title": { "zh-CN": "pnpm 安装依赖", "en-US": "pnpm install dependencies" },
+      "description": { "zh-CN": "使用 pnpm 安装依赖，支持硬链接和内容寻址存储", "en-US": "Install dependencies with pnpm using hard links and content-addressable storage" },
+      "tags": { "zh-CN": ["pnpm", "安装"], "en-US": ["pnpm", "install"] },
+      "notes": "pnpm 使用全局 content-addressable store，磁盘占用显著小于 npm/yarn"
+    },
+    {
+      "id": "cmd_node_pnpm_add",
+      "command": "pnpm add",
+      "platformId": "platform_nodejs",
+      "categoryId": "cat_node_workspace",
+      "examples": ["pnpm add react", "pnpm add -D typescript", "pnpm add -g nodemon", "pnpm add -O react-dom"],
+      "parameters": [
+        { "name": "-D", "description": { "zh-CN": "添加为开发依赖", "en-US": "Add as dev dependency" } },
+        { "name": "-g", "description": { "zh-CN": "全局安装", "en-US": "Install globally" } },
+        { "name": "-O", "description": { "zh-CN": "添加为可选依赖", "en-US": "Add as optional dependency" } }
+      ],
+      "title": { "zh-CN": "pnpm 添加依赖", "en-US": "pnpm add dependency" },
+      "description": { "zh-CN": "使用 pnpm 添加依赖包到项目", "en-US": "Add a package to the project using pnpm" },
+      "tags": { "zh-CN": ["pnpm", "添加", "依赖"], "en-US": ["pnpm", "add", "dependency"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_node_pnpm_dlx",
+      "command": "pnpm dlx",
+      "platformId": "platform_nodejs",
+      "categoryId": "cat_node_workspace",
+      "examples": ["pnpm dlx create-react-app my-app", "pnpm dlx --yes typescript --version"],
+      "parameters": [
+        { "name": "--yes", "description": { "zh-CN": "自动确认安装提示", "en-US": "Automatically confirm install prompts" } }
+      ],
+      "title": { "zh-CN": "pnpm 临时执行", "en-US": "pnpm execute temporarily" },
+      "description": { "zh-CN": "无需安装即可临时执行 npm 包，类似 npx", "en-US": "Execute npm packages without installing, similar to npx" },
+      "tags": { "zh-CN": ["pnpm", "临时", "执行"], "en-US": ["pnpm", "temp", "execute"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_node_pnpm_outdated",
+      "command": "pnpm outdated",
+      "platformId": "platform_nodejs",
+      "categoryId": "cat_node_workspace",
+      "examples": ["pnpm outdated", "pnpm outdated --recursive", "pnpm outdated --format=list"],
+      "parameters": [
+        { "name": "--recursive", "description": { "zh-CN": "检查所有工作区的依赖", "en-US": "Check dependencies in all workspaces" } },
+        { "name": "--format", "description": { "zh-CN": "指定输出格式", "en-US": "Specify output format" } }
+      ],
+      "title": { "zh-CN": "pnpm 检查过时依赖", "en-US": "pnpm check outdated" },
+      "description": { "zh-CN": "使用 pnpm 列出所有可更新的依赖包", "en-US": "List all packages with newer versions using pnpm" },
+      "tags": { "zh-CN": ["pnpm", "检查", "更新"], "en-US": ["pnpm", "outdated", "update"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_node_pnpm_audit",
+      "command": "pnpm audit",
+      "platformId": "platform_nodejs",
+      "categoryId": "cat_node_workspace",
+      "examples": ["pnpm audit", "pnpm audit --fix", "pnpm audit --audit-level=high"],
+      "parameters": [
+        { "name": "--fix", "description": { "zh-CN": "自动修复漏洞", "en-US": "Automatically fix vulnerabilities" } },
+        { "name": "--audit-level", "description": { "zh-CN": "仅报告指定级别以上的漏洞", "en-US": "Only report vulnerabilities above specified level" } }
+      ],
+      "title": { "zh-CN": "pnpm 安全审计", "en-US": "pnpm security audit" },
+      "description": { "zh-CN": "使用 pnpm 检查依赖中的已知安全漏洞", "en-US": "Check for known vulnerabilities using pnpm" },
+      "tags": { "zh-CN": ["pnpm", "安全", "审计"], "en-US": ["pnpm", "security", "audit"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_node_pnpm_patch",
+      "command": "pnpm patch",
+      "platformId": "platform_nodejs",
+      "categoryId": "cat_node_workspace",
+      "examples": ["pnpm patch express", "pnpm patch-commit ./patches/express+4.18.0.patch"],
+      "parameters": [
+        { "name": "patch-commit", "description": { "zh-CN": "提交补丁文件并应用", "en-US": "Commit and apply patch file" } }
+      ],
+      "title": { "zh-CN": "pnpm 打补丁", "en-US": "pnpm patch dependency" },
+      "description": { "zh-CN": "为 node_modules 中的包创建本地补丁", "en-US": "Create local patches for packages in node_modules" },
+      "tags": { "zh-CN": ["pnpm", "补丁", "修复"], "en-US": ["pnpm", "patch", "fix"] },
+      "notes": "补丁文件存储在 patches/ 目录，安装时自动应用"
+    },
+    {
+      "id": "cmd_node_pnpm_prune",
+      "command": "pnpm prune",
+      "platformId": "platform_nodejs",
+      "categoryId": "cat_node_workspace",
+      "examples": ["pnpm prune", "pnpm prune --global"],
+      "parameters": [
+        { "name": "--global", "description": { "zh-CN": "清理全局安装的包", "en-US": "Prune globally installed packages" } }
+      ],
+      "title": { "zh-CN": "pnpm 清理依赖", "en-US": "pnpm prune dependencies" },
+      "description": { "zh-CN": "从 node_modules 中移除未使用的包", "en-US": "Remove unused packages from node_modules" },
+      "tags": { "zh-CN": ["pnpm", "清理", "依赖"], "en-US": ["pnpm", "prune", "cleanup"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_node_inspect",
+      "command": "node --inspect",
+      "platformId": "platform_nodejs",
+      "categoryId": "cat_node_debug",
+      "examples": ["node --inspect app.js", "node --inspect-brk app.js", "node --inspect=127.0.0.1:9230 app.js"],
+      "parameters": [
+        { "name": "--inspect", "description": { "zh-CN": "启用 V8 调试器监听端口", "en-US": "Enable V8 debugger on port" } },
+        { "name": "--inspect-brk", "description": { "zh-CN": "启用调试器并在第一行暂停", "en-US": "Enable debugger and break on first line" } },
+        { "name": "host:port", "description": { "zh-CN": "指定调试器绑定地址和端口", "en-US": "Specify debugger bind address and port" } }
+      ],
+      "title": { "zh-CN": "启用调试器", "en-US": "Enable debugger" },
+      "description": { "zh-CN": "启动 Node.js 并启用 V8 调试器，可连接 Chrome DevTools", "en-US": "Start Node.js with V8 debugger, connect via Chrome DevTools" },
+      "tags": { "zh-CN": ["调试", "断点", "DevTools"], "en-US": ["debug", "breakpoint", "DevTools"] },
+      "notes": "打开 chrome://inspect 可发现运行中的 Node.js 调试目标"
+    },
+    {
+      "id": "cmd_node_prof",
+      "command": "node --prof",
+      "platformId": "platform_nodejs",
+      "categoryId": "cat_node_debug",
+      "examples": ["node --prof app.js", "node --prof-process isolate-*.log"],
+      "parameters": [
+        { "name": "--prof", "description": { "zh-CN": "启用 V8 采样分析器", "en-US": "Enable V8 sampling profiler" } },
+        { "name": "--prof-process", "description": { "zh-CN": "处理分析日志为可读格式", "en-US": "Process profiling log to readable format" } }
+      ],
+      "title": { "zh-CN": "V8 性能分析", "en-US": "V8 profiling" },
+      "description": { "zh-CN": "使用 V8 采样分析器收集性能数据", "en-US": "Collect performance data using V8 sampling profiler" },
+      "tags": { "zh-CN": ["性能", "分析", "profiling"], "en-US": ["performance", "profiling", "V8"] },
+      "notes": null
+    },
+    {
+      "id": "cmd_node_trace_warnings",
+      "command": "node --trace-warnings",
+      "platformId": "platform_nodejs",
+      "categoryId": "cat_node_debug",
+      "examples": ["node --trace-warnings app.js", "node --trace-deprecation app.js", "node --throw-deprecation app.js"],
+      "parameters": [
+        { "name": "--trace-warnings", "description": { "zh-CN": "打印警告的完整堆栈跟踪", "en-US": "Print full stack trace for warnings" } },
+        { "name": "--trace-deprecation", "description": { "zh-CN": "打印弃用警告的堆栈", "en-US": "Print stack trace for deprecation warnings" } },
+        { "name": "--throw-deprecation", "description": { "zh-CN": "将弃用警告转为错误抛出", "en-US": "Throw deprecation warnings as errors" } }
+      ],
+      "title": { "zh-CN": "追踪警告", "en-US": "Trace warnings" },
+      "description": { "zh-CN": "打印警告信息的完整堆栈跟踪，便于定位来源", "en-US": "Print full stack traces for warnings to locate sources" },
+      "tags": { "zh-CN": ["警告", "调试", "堆栈"], "en-US": ["warning", "debug", "stack trace"] },
+      "notes": "--throw-deprecation 可在 CI 中将弃用警告变为错误，强制升级"
+    }
+  ]
+}
